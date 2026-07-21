@@ -8,7 +8,12 @@
     "vite": "^8.1.5"
   },
   "devDependencies": {
+    "@hey-api/openapi-ts": "^0.99.0",
     "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3"
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "generate-api": "openapi-ts -i http://localhost:8000/openapi.json -o source/api/generated"
   }
 }
