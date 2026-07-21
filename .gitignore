@@ -1,0 +1,91 @@
+# =========================
+# General
+# =========================
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# Frontend (Vite + React)
+# =========================
+
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# npm logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+
+# =========================
+# Backend (Python + FastAPI)
+# =========================
+
+backend/.venv/
+backend/venv/
+backend/env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# Packaging
+*.whl
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Type checking / linting
+.mypy_cache/
+.ruff_cache/
+
+
+# =========================
+# Database / Docker
+# =========================
+
+# PostgreSQL data volumes
+postgres-data/
+pgdata/
+
+# Docker overrides
+docker-compose.override.yml
+
+
+# =========================
+# Logs
+# =========================
+
+*.log
+logs/
+
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.swp
+*.bak

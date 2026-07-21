@@ -1,0 +1,26 @@
+services:
+  database:
+    container_name: database
+    image: postgis/postgis:18-3.6
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  application:
+    container_name: application
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:password@database:5432/postgres
