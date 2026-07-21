@@ -15,7 +15,6 @@ Thumbs.db
 .env.*
 !.env.example
 
-
 # =========================
 # Frontend (Vite + React)
 # =========================
@@ -89,3 +88,4 @@ logs/
 *.tmp
 *.swp
 *.bak
+notes
