@@ -1,23 +1,42 @@
 {
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.2.0",
     "@mui/material": "^9.2.0",
     "@tanstack/react-query": "^5.101.4",
     "@types/leaflet": "^1.9.21",
     "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-leaflet": "^5.0.0",
-    "vite": "^8.1.5"
+    "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
     "@hey-api/openapi-ts": "^0.99.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "typescript": "^5.9.3"
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "eslint": "^10.7.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "prettier": "^3.9.6",
+    "prettier-plugin-sort-json": "^4.2.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5"
   },
   "scripts": {
-    "generate-api": "openapi-ts -i http://localhost:8000/openapi.json -o source/api/generated"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate-api": "openapi-ts -i http://localhost:8000/openapi.json -o source/api/generated",
+    "format": "prettier --write .",
+    "lint": "eslint source",
+    "lint-fix": "eslint source --fix",
+    "check": "npm run lint && npm run format"
   }
 }
