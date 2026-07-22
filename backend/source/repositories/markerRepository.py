@@ -1,25 +1,21 @@
-from ast import stmt
-
 from database.connection import SessionLocal
 from database.models import Marker
-from sqlalchemy import insert, select
+from sqlalchemy import select
 
 class MarkerRepository:
     async def create(self, marker: Marker) -> Marker:
-        statement = insert(Marker).values(**marker)
-
         async with SessionLocal() as session:
-            created_marker = await session.execute(statement)
+            session.add(marker)
             await session.commit()
+            await session.refresh(marker)
 
-        return created_marker.scalar_one()
+            return marker
     
     async def get_by_id(self, id) -> Marker:
         statement = select(Marker).where(Marker.id == id)
 
         async with SessionLocal() as session:
             queried_marker = await session.execute(statement)
-            await session.commit()
 
         return queried_marker.scalar_one_or_none()
     
@@ -28,7 +24,6 @@ class MarkerRepository:
 
         async with SessionLocal() as session:
             markers = await session.execute(statement)
-            await session.commit()
 
         return markers.scalars().all()
     
@@ -45,12 +40,13 @@ class MarkerRepository:
             if existing_marker is None:
                 return None
 
-            for key, value in marker.items():
+            for key, value in marker.model_dump(exclude_unset=True).items():
                 setattr(existing_marker, key, value)
 
             await session.commit()
+            await session.refresh(existing_marker)
 
-        return existing_marker
+            return existing_marker
     
     async def delete(self, id) -> bool:
         statement = (
