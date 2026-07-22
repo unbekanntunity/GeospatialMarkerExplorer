@@ -1,43 +1,207 @@
-import { Box, Paper, TextField, Typography } from "@mui/material";
-import { LatLng } from "leaflet";
-import { useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography
+} from "@mui/material";
+import L from "leaflet";
+import {
+  Dispatch,
+  forwardRef,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from "react";
 import { useTranslation } from "react-i18next";
 import { useMapEvents } from "react-leaflet";
 
-const CreateMarkerSlider = () => {
-  const { t } = useTranslation();
+import { useCreateMarker } from "../../models/MarkerModel";
+import { IFormState } from "./types/IFormState";
+import { convertToCoordinate } from "./utils/CoordinationUtils";
 
-  const [clickedPosition, setClickedPosition] = useState<LatLng | null>(null);
+interface ICreateMarkerSliderProps {
+  formState: IFormState;
+  setFormState: Dispatch<SetStateAction<IFormState>>;
+}
 
-  useMapEvents({
-    click(e) {
-      console.log(e.latlng.lat, e.latlng.lng);
-      setClickedPosition(e.latlng);
-    }
-  });
+const CreateMarkerSlider = forwardRef<HTMLDivElement, ICreateMarkerSliderProps>(
+  (props, ref) => {
+    const { formState, setFormState } = props;
 
-  return (
-    <Box
-      sx={{
-        position: "fixed",
-        height: "100vh",
-        width: "20vw",
-        zIndex: 1000
-      }}
-    >
-      <Paper elevation={4} sx={{ height: "100%", p: 2, textAlign: "center" }}>
-        <TextField label={t("Marker name")} variant="standard" />
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="subtitle2">
-            {t(`at latitude: ${clickedPosition?.lat}`)}
-          </Typography>
-          <Typography variant="subtitle2">
-            {t(`at longitude: ${clickedPosition?.lng}`)}
-          </Typography>
-        </Box>
-      </Paper>
-    </Box>
-  );
-};
+    const { t } = useTranslation();
+
+    const createMarker = useCreateMarker();
+
+    const validFormState = useMemo(() => {
+      return formState.name !== "";
+    }, [formState]);
+
+    const maps = useMapEvents({});
+
+    const onChangeName = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormState((prev) => ({
+          ...prev,
+          name: e.target.value
+        }));
+      },
+      [setFormState]
+    );
+
+    const onChangeLatitude = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormState((prev) => {
+          const coordinates = convertToCoordinate(
+            e.target.value,
+            prev.longitude.toString()
+          );
+
+          if (coordinates) {
+            maps.flyTo(coordinates);
+          }
+
+          return {
+            ...prev,
+            latitude: coordinates ? coordinates[0] : prev.latitude
+          };
+        });
+      },
+      [maps, setFormState]
+    );
+
+    const onChangeLongitude = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormState((prev) => {
+          const coordinates = convertToCoordinate(
+            prev.latitude.toString(),
+            e.target.value
+          );
+
+          if (coordinates) {
+            maps.flyTo(coordinates);
+          }
+
+          return {
+            ...prev,
+            longitude: coordinates ? coordinates[1] : prev.longitude
+          };
+        });
+      },
+      [maps, setFormState]
+    );
+
+    const onChangeDescription = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormState((prev) => ({
+          ...prev,
+          description: e.target.value
+        }));
+      },
+      [setFormState]
+    );
+
+    const onSubmit = useCallback(() => {
+      createMarker.mutate({
+        ...formState
+      });
+    }, [formState, createMarker]);
+
+    const paperRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      if (!paperRef.current) {
+        return;
+      }
+
+      L.DomEvent.disableClickPropagation(paperRef.current);
+      L.DomEvent.disableScrollPropagation(paperRef.current);
+    }, []);
+
+    return (
+      <Box
+        ref={ref}
+        sx={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          width: "25vw",
+          zIndex: 1000
+        }}
+      >
+        <Paper
+          ref={paperRef}
+          sx={{
+            border: "4px solid yellow",
+            height: "100%",
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            boxSizing: "border-box"
+          }}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              alignItems: "center",
+              gridTemplateColumns: "auto auto",
+              gap: 2,
+              mt: 4
+            }}
+          >
+            <Typography variant="subtitle2">{t(`Name`)}</Typography>
+            <TextField
+              id="name-textfield"
+              label={t("Name")}
+              value={formState.name}
+              onChange={onChangeName}
+            />
+            <Typography variant="subtitle2">{t(`Latitude`)}</Typography>
+            <TextField
+              id="latitude-textarea"
+              label={t("Latitude")}
+              value={formState.latitude}
+              onChange={onChangeLatitude}
+            />
+            <Typography variant="subtitle2">{t(`Longitude:`)}</Typography>
+            <TextField
+              id="longitude-textfield"
+              label={t("Longitude")}
+              value={formState.longitude}
+              onChange={onChangeLongitude}
+            />
+
+            <Typography variant="subtitle2">{t(`Description`)}</Typography>
+            <TextField
+              id="description-textarea"
+              label={t("Description")}
+              multiline
+              value={formState.description}
+              onChange={onChangeDescription}
+            />
+          </Box>
+          <Button
+            sx={{ mt: 8, alignSelf: "center" }}
+            color="secondary"
+            variant="contained"
+            disabled={!validFormState || createMarker.isPending}
+            onClick={onSubmit}
+          >
+            {t("Create marker")}
+          </Button>
+
+          {createMarker.error && (
+            <Box sx={{ mt: "auto" }}>
+              <Alert severity="error">{t(createMarker.error.message)}</Alert>
+            </Box>
+          )}
+        </Paper>
+      </Box>
+    );
+  }
+);
 
 export default CreateMarkerSlider;
