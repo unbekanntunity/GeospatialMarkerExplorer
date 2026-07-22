@@ -2,20 +2,18 @@ import { Slide } from "@mui/material";
 import { useMemo, useState } from "react";
 import { Marker, useMapEvents } from "react-leaflet";
 
+import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderAction } from "../sliders/SliderAction";
 import CreateMarkerSlider from "./CreateMarkerSlider";
 import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
-interface IMarkerCreatorProps {
-  open: boolean;
-  onOpen: () => void;
-}
-
-const MarkerCreator = (props: IMarkerCreatorProps) => {
-  const { open, onOpen } = props;
+const MarkerCreator = () => {
+  const { state, dispatch } = useSlider();
 
   const [formState, setFormState] = useState<IFormState>({
     name: "",
+    description: "",
     latitude: 0,
     longitude: 0
   });
@@ -28,7 +26,13 @@ const MarkerCreator = (props: IMarkerCreatorProps) => {
         longitude: e.latlng.lng
       }));
 
-      onOpen();
+      dispatch({
+        type: SliderAction.ShowSlider,
+        slider: "createMarkerSlider",
+        payload: {
+          position: "left"
+        }
+      });
     }
   });
 
@@ -41,9 +45,14 @@ const MarkerCreator = (props: IMarkerCreatorProps) => {
 
   return (
     <>
-      {open && (
+      {state.createMarkerSlider && (
         <>
-          <Slide direction="right" in={open} mountOnEnter unmountOnExit>
+          <Slide
+            direction="right"
+            in={!!state.createMarkerSlider}
+            mountOnEnter
+            unmountOnExit
+          >
             <CreateMarkerSlider
               formState={formState}
               setFormState={setFormState}

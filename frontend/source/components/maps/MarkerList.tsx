@@ -1,25 +1,27 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
+  IconButton,
   List,
-  ListItem,
-  ListItemText,
   Paper,
-  Typography
+  Typography,
+  useTheme
 } from "@mui/material";
 import L from "leaflet";
 import { forwardRef, useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useMarkers } from "../../models/MarkerModel";
+import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderAction } from "../sliders/SliderAction";
+import MarkerAccordion from "./MarkerAccordion";
 
 const MarkerList = forwardRef<HTMLDivElement>((props, ref) => {
   const { data: markers } = useMarkers();
 
+  const { dispatch } = useSlider();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
 
@@ -45,7 +47,12 @@ const MarkerList = forwardRef<HTMLDivElement>((props, ref) => {
     L.DomEvent.disableScrollPropagation(sliderRef.current);
   }, []);
 
-  console.log(markers);
+  const onClose = useCallback(() => {
+    dispatch({
+      type: SliderAction.HideSlider,
+      slider: "markerListSlider"
+    });
+  }, [dispatch]);
 
   return (
     <Box
@@ -55,7 +62,7 @@ const MarkerList = forwardRef<HTMLDivElement>((props, ref) => {
         top: 0,
         bottom: 0,
         right: 0,
-        width: "20vw",
+        width: "25vw",
         zIndex: 1000,
         overflow: "hidden"
       }}
@@ -69,6 +76,28 @@ const MarkerList = forwardRef<HTMLDivElement>((props, ref) => {
           boxSizing: "border-box"
         }}
       >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            color: theme.palette.primary.main,
+            backgroundColor: theme.palette.secondary.main,
+            p: 2
+          }}
+        >
+          <Typography
+            sx={{
+              textTransform: "uppercase",
+              fontWeight: 600
+            }}
+          >
+            {t(`Markers`)}
+          </Typography>
+          <IconButton color="primary" onClick={onClose}>
+            <ClearOutlinedIcon />
+          </IconButton>
+        </Box>
         {markers && markers.length !== 0 && (
           <List
             sx={{
@@ -77,26 +106,7 @@ const MarkerList = forwardRef<HTMLDivElement>((props, ref) => {
             }}
           >
             {markers?.map((marker) => (
-              <Accordion key={marker.id}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <ListItem>
-                    <ListItemText
-                      primary={marker.name}
-                      secondary={
-                        <>
-                          <Typography variant="body2">{`lat: ${marker.latitude}`}</Typography>
-                          <Typography variant="body2">{`long: ${marker.longitude}`}</Typography>
-                        </>
-                      }
-                    />
-                  </ListItem>
-                </AccordionSummary>
-                <AccordionDetails>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </AccordionDetails>
-              </Accordion>
+              <MarkerAccordion marker={marker} />
             ))}
           </List>
         )}

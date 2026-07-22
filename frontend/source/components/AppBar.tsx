@@ -5,24 +5,56 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-interface ICustomAppBarProps {
-  isCreateMarkerSliderOpen?: boolean;
-  isListMarkerSliderOpen?: boolean;
-  onClickAddMarker?: () => void;
-  onClickListMarker?: () => void;
-}
+import { useSlider } from "./sliders/hooks/useSliders";
+import { SliderAction } from "./sliders/SliderAction";
 
-const CustomAppBar = (props: ICustomAppBarProps) => {
-  const {
-    isCreateMarkerSliderOpen,
-    isListMarkerSliderOpen,
-    onClickAddMarker,
-    onClickListMarker
-  } = props;
+const CustomAppBar = () => {
+  const { state, dispatch } = useSlider();
 
   const { t } = useTranslation();
+
+  const onToggleCreateMarkerSlider = useCallback(
+    (isOpen: boolean) => {
+      if (isOpen) {
+        dispatch({
+          type: SliderAction.HideSlider,
+          slider: "createMarkerSlider"
+        });
+      } else {
+        dispatch({
+          type: SliderAction.ShowSlider,
+          slider: "createMarkerSlider",
+          payload: {
+            position: "left"
+          }
+        });
+      }
+    },
+    [dispatch]
+  );
+
+  const onToggleMarkerListSlider = useCallback(
+    (isOpen: boolean) => {
+      if (isOpen) {
+        dispatch({
+          type: SliderAction.HideSlider,
+          slider: "markerListSlider"
+        });
+      } else {
+        dispatch({
+          type: SliderAction.ShowSlider,
+          slider: "markerListSlider",
+          payload: {
+            position: "right"
+          }
+        });
+      }
+    },
+    [dispatch]
+  );
 
   return (
     <Box>
@@ -35,16 +67,18 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
           <IconButton
             size="large"
             aria-label="add markers"
-            color={isCreateMarkerSliderOpen ? "secondary" : "inherit"}
-            onClick={onClickAddMarker}
+            color={!!state.createMarkerSlider ? "secondary" : "inherit"}
+            onClick={() =>
+              onToggleCreateMarkerSlider(!!state.createMarkerSlider)
+            }
           >
             <AddLocationAltOutlinedIcon />
           </IconButton>
           <IconButton
             size="large"
             aria-label="markers"
-            color={isListMarkerSliderOpen ? "secondary" : "inherit"}
-            onClick={onClickListMarker}
+            color={!!state.markerListSlider ? "secondary" : "inherit"}
+            onClick={() => onToggleMarkerListSlider(!!state.markerListSlider)}
           >
             <LocationOnOutlinedIcon />
           </IconButton>

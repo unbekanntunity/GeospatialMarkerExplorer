@@ -1,6 +1,6 @@
 export interface IFormState {
-  name: string;
-  description?: string;
+  name: string | null;
+  description: string | null;
   latitude: number;
   longitude: number;
 }
