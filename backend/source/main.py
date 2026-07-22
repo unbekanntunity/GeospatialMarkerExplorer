@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from routes import markers
 
+
 app = FastAPI(
     title="Geospatial Marker Explorer API"
 )

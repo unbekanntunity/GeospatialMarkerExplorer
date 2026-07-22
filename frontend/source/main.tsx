@@ -1,3 +1,4 @@
+import "./api/config";
 import "leaflet/dist/leaflet.css";
 
 import { ThemeProvider } from "@emotion/react";
