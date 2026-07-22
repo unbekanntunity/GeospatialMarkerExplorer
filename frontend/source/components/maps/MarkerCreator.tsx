@@ -1,3 +1,4 @@
+import { Slide } from "@mui/material";
 import { useMemo, useState } from "react";
 import { Marker, useMapEvents } from "react-leaflet";
 
@@ -42,10 +43,12 @@ const MarkerCreator = (props: IMarkerCreatorProps) => {
     <>
       {open && (
         <>
-          <CreateMarkerSlider
-            formState={formState}
-            setFormState={setFormState}
-          />
+          <Slide direction="right" in={open} mountOnEnter unmountOnExit>
+            <CreateMarkerSlider
+              formState={formState}
+              setFormState={setFormState}
+            />
+          </Slide>
           {position && <Marker position={position} />}
         </>
       )}

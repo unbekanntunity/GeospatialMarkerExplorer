@@ -110,20 +110,33 @@ const CreateMarkerSlider = forwardRef<HTMLDivElement, ICreateMarkerSliderProps>(
       });
     }, [formState, createMarker]);
 
-    const paperRef = useRef<HTMLDivElement>(null);
+    const sliderRef = useRef<HTMLDivElement | null>(null);
+
+    const setRefs = useCallback(
+      (node: HTMLDivElement | null) => {
+        sliderRef.current = node;
+
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [ref]
+    );
 
     useEffect(() => {
-      if (!paperRef.current) {
+      if (!sliderRef.current) {
         return;
       }
 
-      L.DomEvent.disableClickPropagation(paperRef.current);
-      L.DomEvent.disableScrollPropagation(paperRef.current);
+      L.DomEvent.disableClickPropagation(sliderRef.current);
+      L.DomEvent.disableScrollPropagation(sliderRef.current);
     }, []);
 
     return (
       <Box
-        ref={ref}
+        ref={setRefs}
         sx={{
           position: "absolute",
           top: 0,
@@ -133,7 +146,6 @@ const CreateMarkerSlider = forwardRef<HTMLDivElement, ICreateMarkerSliderProps>(
         }}
       >
         <Paper
-          ref={paperRef}
           sx={{
             border: "4px solid yellow",
             height: "100%",
