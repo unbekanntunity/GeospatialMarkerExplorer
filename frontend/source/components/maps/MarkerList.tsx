@@ -117,7 +117,7 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
                 fontWeight: 600
               }}
             >
-              {t(`Markers`)}
+              {t("listMarkersSlider.title")}
             </Typography>
             <IconButton color="primary" onClick={onClose}>
               <ClearOutlinedIcon />
@@ -182,9 +182,7 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
               }}
             >
               <Typography variant="body2">
-                {t(
-                  "Seems like there are no markers. Go and create one by clicking on the map"
-                )}
+                {t("listMarkersSlider.empty")}
               </Typography>
             </Box>
           )}
