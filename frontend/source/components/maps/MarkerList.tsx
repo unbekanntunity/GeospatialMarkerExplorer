@@ -1,14 +1,17 @@
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   IconButton,
+  InputAdornment,
   List,
   Paper,
+  TextField,
   Typography,
   useTheme
 } from "@mui/material";
 import L from "leaflet";
-import { forwardRef, useCallback, useEffect, useRef } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useMarkers } from "../../models/MarkerModel";
@@ -23,6 +26,8 @@ interface IMarkerListProps {
 const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
   (props, ref) => {
     const { position } = props;
+
+    const [name, setName] = useState<string>();
 
     const { data: markers } = useMarkers();
 
@@ -60,6 +65,13 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
         slider: "markerListSlider"
       });
     }, [dispatch]);
+
+    const onChangeName = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
+      },
+      []
+    );
 
     return (
       <Box
@@ -106,7 +118,23 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
               <ClearOutlinedIcon />
             </IconButton>
           </Box>
-          {markers && markers.length !== 0 && (
+          <>
+            <TextField
+              value={name}
+              onChange={onChangeName}
+              variant="filled"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }
+              }}
+            />
+          </>
+          {markers !== undefined && markers.length !== 0 && (
             <List
               sx={{
                 overflowY: "auto",

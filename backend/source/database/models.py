@@ -35,12 +35,7 @@ class Marker(Base):
     longitude: Mapped[float] = mapped_column(
         nullable=False,
     )
-
-    tags: Mapped[list[str]] = mapped_column(
-        ARRAY(String),
-        default=list,
-    )
-
+    
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),

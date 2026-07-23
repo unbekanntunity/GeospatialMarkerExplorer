@@ -7,7 +7,6 @@ class CreateMarkerRequest(BaseModel):
     description: str | None = None
     latitude: float
     longitude: float
-    tags: list[str] = []
 
 
 class UpdateMarkerRequest(BaseModel):
@@ -15,7 +14,6 @@ class UpdateMarkerRequest(BaseModel):
     description: str | None = None
     latitude: float | None = None
     longitude: float | None = None
-    tags: list[str] | None = None
 
 
 class MarkerResponse(BaseModel):
@@ -24,7 +22,6 @@ class MarkerResponse(BaseModel):
     description: str | None
     latitude: float
     longitude: float
-    tags: list[str]
     created_at: datetime
     updated_at: datetime
 

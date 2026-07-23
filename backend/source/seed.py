@@ -24,42 +24,36 @@ async def seed_database():
                 description="Example marker",
                 latitude=52.5200,
                 longitude=13.4050,
-                tags=["city", "germany"],
             ),
             Marker(
                 name="Paris",
                 description="Another example marker",
                 latitude=48.8566,
                 longitude=2.3522,
-                tags=["city", "france"],
             ),
             Marker(
                 name="Berlin we",
                 description="Another example marker",
                 latitude=57.5200,
                 longitude=13.4050,
-                tags=["city", "france"],
             ),
             Marker(
                 name="Abc",
                 description="Another example markerasdasdawdawd",
                 latitude=48.8566,
                 longitude=42.3522,
-                tags=[],
             ),
             Marker(
                 name="Nowhere",
                 description="Another example markerasdasdawdawd",
                 latitude=48.8566,
                 longitude=100.3522,
-                tags=[],
             ),
             Marker(
                 name="Pew pew",
                 description="Another example markerasdasdawdawd",
                 latitude=9.8566,
                 longitude=100.3522,
-                tags=[],
             ),
         ]
         session.add_all(markers)

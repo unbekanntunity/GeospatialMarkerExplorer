@@ -24,10 +24,6 @@ export type CreateMarkerRequest = {
      * Longitude
      */
     longitude: number;
-    /**
-     * Tags
-     */
-    tags?: Array<string>;
 };
 
 /**
@@ -65,10 +61,6 @@ export type MarkerResponse = {
      */
     longitude: number;
     /**
-     * Tags
-     */
-    tags: Array<string>;
-    /**
      * Created At
      */
     created_at: string;
@@ -98,10 +90,6 @@ export type UpdateMarkerRequest = {
      * Longitude
      */
     longitude?: number | null;
-    /**
-     * Tags
-     */
-    tags?: Array<string> | null;
 };
 
 /**
