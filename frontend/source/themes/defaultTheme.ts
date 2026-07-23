@@ -60,6 +60,9 @@ export const defaultTheme = createTheme({
     },
     secondary: {
       main: "#ffed00"
+    },
+    error: {
+      main: "#f53a10"
     }
   }
 });
