@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses } from './types.gen';
+import type { CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetErrors, GetMarkersMarkersGetResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -21,7 +21,7 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 /**
  * Get Markers
  */
-export const getMarkersMarkersGet = <ThrowOnError extends boolean = false>(options?: Options<GetMarkersMarkersGetData, ThrowOnError>): RequestResult<GetMarkersMarkersGetResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetMarkersMarkersGetResponses, unknown, ThrowOnError>({ url: '/markers/', ...options });
+export const getMarkersMarkersGet = <ThrowOnError extends boolean = false>(options?: Options<GetMarkersMarkersGetData, ThrowOnError>): RequestResult<GetMarkersMarkersGetResponses, GetMarkersMarkersGetErrors, ThrowOnError> => (options?.client ?? client).get<GetMarkersMarkersGetResponses, GetMarkersMarkersGetErrors, ThrowOnError>({ url: '/markers/', ...options });
 
 /**
  * Create Marker

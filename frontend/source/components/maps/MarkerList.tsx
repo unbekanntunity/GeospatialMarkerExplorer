@@ -2,6 +2,7 @@ import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
+  CircularProgress,
   IconButton,
   InputAdornment,
   List,
@@ -14,6 +15,7 @@ import L from "leaflet";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import useDebounce from "../../hooks/useDebounce";
 import { useMarkers } from "../../models/MarkerModel";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction, SliderPosition } from "../sliders/SliderAction";
@@ -27,9 +29,13 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
   (props, ref) => {
     const { position } = props;
 
-    const [name, setName] = useState<string>();
+    const [searchMarkerName, setSearchMarkerName] = useState<string>("");
 
-    const { data: markers } = useMarkers();
+    const debouncedSearchMarkerName = useDebounce(searchMarkerName, 300);
+
+    const { data: markers, isFetching } = useMarkers({
+      name: debouncedSearchMarkerName || undefined
+    });
 
     const { dispatch } = useSlider();
     const { t } = useTranslation();
@@ -68,7 +74,7 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
 
     const onChangeName = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
+        setSearchMarkerName(e.target.value);
       },
       []
     );
@@ -83,8 +89,7 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
           left: position === "left" ? 0 : "unset",
           right: position === "right" ? 0 : "unset",
           width: "25vw",
-          zIndex: 1000,
-          overflow: "hidden"
+          zIndex: 1000
         }}
       >
         <Paper
@@ -118,11 +123,17 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
               <ClearOutlinedIcon />
             </IconButton>
           </Box>
-          <>
+          <Box>
             <TextField
-              value={name}
+              fullWidth
+              value={searchMarkerName}
               onChange={onChangeName}
-              variant="filled"
+              variant="outlined"
+              sx={{
+                "& .MuiFilledInput-root": {
+                  backgroundColor: theme.palette.primary.light
+                }
+              }}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -133,20 +144,32 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
                 }
               }}
             />
-          </>
-          {markers !== undefined && markers.length !== 0 && (
+          </Box>
+          {!isFetching && markers !== undefined && markers.length > 0 && (
             <List
               sx={{
                 overflowY: "auto",
                 flex: 1
               }}
             >
-              {markers?.map((marker) => (
+              {markers.map((marker) => (
                 <MarkerAccordion key={marker.id} marker={marker} />
               ))}
             </List>
           )}
-          {(markers === undefined || markers?.length === 0) && (
+          {isFetching && (
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          )}
+          {!isFetching && (!markers || markers.length === 0) && (
             <Box
               sx={{
                 flex: 1,

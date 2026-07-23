@@ -113,9 +113,23 @@ export type ValidationError = {
 export type GetMarkersMarkersGetData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string | null;
+    };
     url: '/markers/';
 };
+
+export type GetMarkersMarkersGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetMarkersMarkersGetError = GetMarkersMarkersGetErrors[keyof GetMarkersMarkersGetErrors];
 
 export type GetMarkersMarkersGetResponses = {
     /**

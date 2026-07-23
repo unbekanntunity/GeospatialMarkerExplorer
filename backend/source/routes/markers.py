@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException, Response
-from schemas.marker import CreateMarkerRequest, MarkerResponse, UpdateMarkerRequest
+from fastapi import APIRouter, Depends, HTTPException, Response
+from schemas.marker import CreateMarkerRequest, MarkerResponse, QueryMarkerRequest, UpdateMarkerRequest
 from services import markerService
 
 router = APIRouter()
@@ -20,9 +20,9 @@ async def create_marker(marker: CreateMarkerRequest):
         )
 
 @router.get("/", response_model=list[MarkerResponse])
-async def get_markers():
+async def get_markers(marker_query: QueryMarkerRequest = Depends()):
     try:
-        markers = await marker_service.get_all()
+        markers = await marker_service.get_all(marker_query)
         reponses = [MarkerResponse.model_validate(marker) for marker in markers]
         return reponses
     except ValueError as e:

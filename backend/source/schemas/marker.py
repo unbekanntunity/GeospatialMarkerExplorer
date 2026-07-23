@@ -16,6 +16,9 @@ class UpdateMarkerRequest(BaseModel):
     longitude: float | None = None
 
 
+class QueryMarkerRequest(BaseModel):
+    name: str | None = None
+
 class MarkerResponse(BaseModel):
     id: UUID
     name: str
