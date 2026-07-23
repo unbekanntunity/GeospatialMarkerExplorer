@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
-import { Marker, useMapEvents } from "react-leaflet";
+import { useTheme } from "@mui/material";
+import { DragEndEvent } from "leaflet";
+import { useCallback, useMemo, useState } from "react";
+import { CircleMarker, Marker, useMapEvents } from "react-leaflet";
 
 import { MarkerResponse } from "../../api/generated";
 import { useSlider } from "../sliders/hooks/useSliders";
@@ -14,6 +16,7 @@ interface IMarkerEditorProps {
 const MarkerEditor = (props: IMarkerEditorProps) => {
   const { marker } = props;
 
+  const theme = useTheme();
   const { state } = useSlider();
 
   const [formState, setFormState] = useState<IFormState>({
@@ -40,6 +43,17 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
     );
   }, [formState.latitude, formState.longitude]);
 
+  const onDragEnd = useCallback((e: DragEndEvent) => {
+    const markerObject = e.target;
+    const position = markerObject.getLatLng();
+
+    setFormState((prev) => ({
+      ...prev,
+      latitude: position.lat,
+      longitude: position.lng
+    }));
+  }, []);
+
   return (
     <>
       {state.editMarkerSlider && (
@@ -51,7 +65,26 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
             formState={formState}
             setFormState={setFormState}
           />
-          {position && <Marker position={position} />}
+          {position && (
+            <>
+              <CircleMarker
+                center={position}
+                radius={14}
+                pathOptions={{
+                  color: theme.palette.error.main,
+                  weight: 3,
+                  fillOpacity: 0.15
+                }}
+              />
+              <Marker
+                draggable
+                eventHandlers={{
+                  dragend: onDragEnd
+                }}
+                position={position}
+              />
+            </>
+          )}
         </>
       )}
     </>

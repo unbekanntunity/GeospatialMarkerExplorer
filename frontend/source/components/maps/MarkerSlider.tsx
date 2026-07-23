@@ -23,26 +23,34 @@ import { useTranslation } from "react-i18next";
 import { useMapEvents } from "react-leaflet";
 
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
-import { useSlider } from "../sliders/hooks/useSliders";
-import { SliderAction, SliderPosition } from "../sliders/SliderAction";
+import { SliderPosition } from "../sliders/SliderAction";
 import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 interface IMarkerSliderProps {
   title: string;
+  submitText: string;
   position: SliderPosition;
   formState: IFormState;
   setFormState: Dispatch<SetStateAction<IFormState>>;
   isSubmitting: boolean;
   onSubmit: () => void;
+  onClose: () => void;
 }
 
 const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
   (props, ref) => {
-    const { title, position, formState, setFormState, onSubmit, isSubmitting } =
-      props;
+    const {
+      title,
+      submitText,
+      position,
+      formState,
+      setFormState,
+      onSubmit,
+      isSubmitting,
+      onClose
+    } = props;
 
-    const { dispatch } = useSlider();
     const maps = useMapEvents({});
 
     const { t } = useTranslation();
@@ -137,13 +145,6 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
       L.DomEvent.disableClickPropagation(sliderRef.current);
       L.DomEvent.disableScrollPropagation(sliderRef.current);
     }, []);
-
-    const onClose = useCallback(() => {
-      dispatch({
-        type: SliderAction.HideSlider,
-        slider: "createMarkerSlider"
-      });
-    }, [dispatch]);
 
     return (
       <Box
@@ -240,7 +241,7 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
             disabled={!validFormState || isSubmitting}
             onClick={onSubmit}
           >
-            {t("Create marker")}
+            {submitText}
           </Button>
         </Paper>
       </Box>

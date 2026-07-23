@@ -1,5 +1,6 @@
+import { useTheme } from "@mui/material";
 import { useMemo, useState } from "react";
-import { Marker, useMapEvents } from "react-leaflet";
+import { CircleMarker, Marker, useMapEvents } from "react-leaflet";
 
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction } from "../sliders/SliderAction";
@@ -9,6 +10,7 @@ import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 const MarkerCreator = () => {
   const { state, dispatch } = useSlider();
+  const theme = useTheme();
 
   const [formState, setFormState] = useState<IFormState>({
     name: "",
@@ -52,7 +54,20 @@ const MarkerCreator = () => {
             formState={formState}
             setFormState={setFormState}
           />
-          {position && <Marker position={position} />}
+          {position && (
+            <>
+              <CircleMarker
+                center={position}
+                radius={14}
+                pathOptions={{
+                  color: theme.palette.error.main,
+                  weight: 3,
+                  fillOpacity: 0.15
+                }}
+              />
+              <Marker position={position} />
+            </>
+          )}
         </>
       )}
     </>

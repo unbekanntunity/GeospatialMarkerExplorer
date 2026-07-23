@@ -9,6 +9,7 @@ import {
 } from "../api/generated/sdk.gen";
 import {
   CreateMarkerRequest,
+  GetMarkersMarkersGetData,
   UpdateMarkerRequest
 } from "../api/generated/types.gen";
 
@@ -89,11 +90,13 @@ export function useDeleteMarker() {
   });
 }
 
-export function useMarkers() {
+type MarkerQuery = NonNullable<GetMarkersMarkersGetData["query"]>;
+
+export function useMarkers(query: MarkerQuery) {
   return useQuery({
-    queryKey: ["markers"],
+    queryKey: ["markers", query.name],
     queryFn: async () => {
-      const response = await getMarkersMarkersGet();
+      const response = await getMarkersMarkersGet({ query });
 
       if (response.error) {
         throw response.error;

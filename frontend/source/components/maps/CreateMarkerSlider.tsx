@@ -3,7 +3,8 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useCreateMarker } from "../../models/MarkerModel";
-import { SliderPosition } from "../sliders/SliderAction";
+import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import MarkerSlider from "./MarkerSlider";
 import { IFormState } from "./types/IFormState";
 
@@ -17,7 +18,9 @@ interface ICreateMarkerSliderProps {
 const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
   const { open, position, formState, setFormState } = props;
 
+  const { dispatch } = useSlider();
   const { t } = useTranslation();
+
   const createMarker = useCreateMarker();
 
   const onSubmit = useCallback(() => {
@@ -33,15 +36,29 @@ const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
     });
   }, [formState, createMarker]);
 
+  const onClose = useCallback(() => {
+    dispatch({
+      type: SliderAction.HideSlider,
+      slider: "createMarkerSlider"
+    });
+  }, [dispatch]);
+
   return (
-    <Slide direction="right" in={open} mountOnEnter unmountOnExit>
+    <Slide
+      direction={position === "right" ? "left" : "right"}
+      in={open}
+      mountOnEnter
+      unmountOnExit
+    >
       <MarkerSlider
         title={t("Create a new marker")}
+        submitText={t("Create marker")}
         position={position}
         formState={formState}
         setFormState={setFormState}
         onSubmit={onSubmit}
         isSubmitting={createMarker.isPending}
+        onClose={onClose}
       />
     </Slide>
   );

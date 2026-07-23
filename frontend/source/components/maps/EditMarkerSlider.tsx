@@ -3,7 +3,8 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useUpdateMarker } from "../../models/MarkerModel";
-import { SliderPosition } from "../sliders/SliderAction";
+import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import MarkerSlider from "./MarkerSlider";
 import { IFormState } from "./types/IFormState";
 
@@ -18,6 +19,7 @@ interface IEditMarkerSliderProps {
 const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
   const { open, position, id, formState, setFormState } = props;
 
+  const { dispatch } = useSlider();
   const { t } = useTranslation();
 
   const updateMarker = useUpdateMarker();
@@ -30,15 +32,24 @@ const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
     updateMarker.mutate({ id, marker: formState });
   }, [id, formState, updateMarker]);
 
+  const onClose = useCallback(() => {
+    dispatch({
+      type: SliderAction.HideSlider,
+      slider: "editMarkerSlider"
+    });
+  }, [dispatch]);
+
   return (
     <Slide direction="right" in={open} mountOnEnter unmountOnExit>
       <MarkerSlider
         title={t(`Edit a Marker: ${id}`)}
+        submitText={t("Update marker")}
         position={position}
         formState={formState}
         setFormState={setFormState}
         onSubmit={onSubmit}
         isSubmitting={updateMarker.isPending}
+        onClose={onClose}
       />
     </Slide>
   );
