@@ -2,6 +2,7 @@ import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import {
   Box,
   Button,
+  CircularProgress,
   IconButton,
   Paper,
   TextField,
@@ -23,20 +24,23 @@ import { useMapEvents } from "react-leaflet";
 
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
 import { useSlider } from "../sliders/hooks/useSliders";
-import { SliderAction } from "../sliders/SliderAction";
+import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 interface IMarkerSliderProps {
+  title: string;
+  position: SliderPosition;
   formState: IFormState;
   setFormState: Dispatch<SetStateAction<IFormState>>;
-  onSubmitting: boolean;
+  isSubmitting: boolean;
   onSubmit: () => void;
 }
 
 const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
   (props, ref) => {
-    const { formState, setFormState, onSubmit, onSubmitting } = props;
+    const { title, position, formState, setFormState, onSubmit, isSubmitting } =
+      props;
 
     const { dispatch } = useSlider();
     const maps = useMapEvents({});
@@ -148,6 +152,8 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
           position: "absolute",
           top: 0,
           bottom: 0,
+          left: position === "left" ? 0 : "unset",
+          right: position === "right" ? 0 : "unset",
           width: "25vw",
           zIndex: 1000
         }}
@@ -177,7 +183,7 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
                 fontWeight: 600
               }}
             >
-              {t(`Create a new marker`)}
+              {title}
             </Typography>
             <IconButton color="primary" onClick={onClose}>
               <ClearOutlinedIcon />
@@ -228,7 +234,10 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
             sx={{ mt: 8, alignSelf: "center" }}
             color="secondary"
             variant="contained"
-            disabled={!validFormState || onSubmitting}
+            startIcon={
+              isSubmitting ? <CircularProgress size="0.9em" /> : undefined
+            }
+            disabled={!validFormState || isSubmitting}
             onClick={onSubmit}
           >
             {t("Create marker")}

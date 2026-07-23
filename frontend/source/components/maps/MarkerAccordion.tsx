@@ -10,10 +10,16 @@ import {
   ListItemText,
   Typography
 } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { MarkerResponse } from "../../api/generated";
+import { useDeleteMarker } from "../../models/MarkerModel";
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
+import { useModals } from "../modals/hooks/useModals";
+import { ModalAction } from "../modals/ModalAction";
+import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderAction } from "../sliders/SliderAction";
 
 interface IMarkerAccordionProps {
   marker: MarkerResponse;
@@ -22,7 +28,57 @@ interface IMarkerAccordionProps {
 const MarkerAccordion = (props: IMarkerAccordionProps) => {
   const { marker } = props;
 
+  const { t } = useTranslation();
+  const { state } = useSlider();
+
   const [expanded, setIsExpanded] = useState(false);
+
+  const { dispatch: sliderDispatch } = useSlider();
+  const { dispatch: modalDispatch } = useModals();
+
+  const deleteMarker = useDeleteMarker();
+
+  const onEditMarker = useCallback(
+    (
+      e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+      marker: MarkerResponse
+    ) => {
+      e.stopPropagation();
+
+      return sliderDispatch({
+        type: SliderAction.ShowSlider,
+        slider: "editMarkerSlider",
+        payload: {
+          marker,
+          position: "left"
+        }
+      });
+    },
+    [sliderDispatch]
+  );
+
+  const onDeleteMarker = useCallback(
+    (
+      e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+      marker: MarkerResponse
+    ) => {
+      e.stopPropagation();
+
+      modalDispatch({
+        type: ModalAction.ShowModal,
+        modal: "confirmModal",
+        payload: {
+          title: t("Confirm deletion"),
+          confirmText: t("delete"),
+          message: t(
+            "Are you sure you want to delete this marker?\nThis action can not be undone!"
+          ),
+          onConfirm: () => deleteMarker.mutateAsync(marker.id)
+        }
+      });
+    },
+    [deleteMarker, modalDispatch, t]
+  );
 
   return (
     <Accordion
@@ -60,20 +116,54 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
             primary={marker.name}
             secondary={
               <>
-                <Typography variant="body2">{`lat: ${marker.latitude}`}</Typography>
-                <Typography variant="body2">{`long: ${marker.longitude}`}</Typography>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ display: "block" }}
+                >
+                  {`lat: ${marker.latitude}`}
+                </Typography>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ display: "block" }}
+                >
+                  {`long: ${marker.longitude}`}
+                </Typography>
+                <br />
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ display: "block" }}
+                >
+                  {`id: ${marker.id}`}
+                </Typography>
               </>
             }
           />
-          <IconButton>
+          <IconButton
+            color={
+              !!state.editMarkerSlider &&
+              state.editMarkerSlider.marker.id === marker.id
+                ? "secondary"
+                : "inherit"
+            }
+            component="span"
+            onClick={(e) => onEditMarker(e, marker)}
+          >
             <CreateOutlinedIcon />
           </IconButton>
-          <IconButton>
+          <IconButton
+            component="span"
+            onClick={(e) => onDeleteMarker(e, marker)}
+          >
             <DeleteOutlineOutlinedIcon />
           </IconButton>
         </ListItem>
       </AccordionSummary>
-      <AccordionDetails>{marker.description}</AccordionDetails>
+      <AccordionDetails>
+        <Typography>{marker.description}</Typography>
+      </AccordionDetails>
     </Accordion>
   );
 };

@@ -1,17 +1,23 @@
+import { Slide } from "@mui/material";
 import { Dispatch, SetStateAction, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useCreateMarker } from "../../models/MarkerModel";
+import { SliderPosition } from "../sliders/SliderAction";
 import MarkerSlider from "./MarkerSlider";
 import { IFormState } from "./types/IFormState";
 
 interface ICreateMarkerSliderProps {
+  open: boolean;
+  position: SliderPosition;
   formState: IFormState;
   setFormState: Dispatch<SetStateAction<IFormState>>;
 }
 
 const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
-  const { formState, setFormState } = props;
+  const { open, position, formState, setFormState } = props;
 
+  const { t } = useTranslation();
   const createMarker = useCreateMarker();
 
   const onSubmit = useCallback(() => {
@@ -28,12 +34,16 @@ const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
   }, [formState, createMarker]);
 
   return (
-    <MarkerSlider
-      formState={formState}
-      setFormState={setFormState}
-      onSubmit={onSubmit}
-      onSubmitting={createMarker.isPending}
-    />
+    <Slide direction="right" in={open} mountOnEnter unmountOnExit>
+      <MarkerSlider
+        title={t("Create a new marker")}
+        position={position}
+        formState={formState}
+        setFormState={setFormState}
+        onSubmit={onSubmit}
+        isSubmitting={createMarker.isPending}
+      />
+    </Slide>
   );
 };
 
