@@ -68,8 +68,8 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
         type: ModalAction.ShowModal,
         modal: "confirmModal",
         payload: {
-          title: t("Confirm deletion"),
-          confirmText: t("delete"),
+          title: t("confirmDeleteModal.title"),
+          confirmText: t("confirmDeleteModal.confirmText"),
           message: t(
             "Are you sure you want to delete this marker?\nThis action can not be undone!"
           ),

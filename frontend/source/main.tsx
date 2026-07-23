@@ -1,4 +1,5 @@
 import "./api/config";
+import "./i18n";
 import "leaflet/dist/leaflet.css";
 
 import { ThemeProvider } from "@mui/material/styles";

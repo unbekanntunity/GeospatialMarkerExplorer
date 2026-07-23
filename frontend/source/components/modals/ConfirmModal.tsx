@@ -59,7 +59,7 @@ const ConfirmModal = (props: IConfirmModalProps) => {
               variant="contained"
               onClick={onClose}
             >
-              {t("cancel")}
+              {t("general.confirm")}
             </Button>
             <Button
               sx={{ mx: 2 }}

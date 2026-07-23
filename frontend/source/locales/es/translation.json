@@ -1,0 +1,27 @@
+{
+  "appbar": {
+    "title": "Explorador de marcadores geoespaciales"
+  },
+  "confirmDeleteModal": {
+    "title": "Confirmar eliminación",
+    "confirmText": "borrar",
+    "cancelText": "cancelar"
+  },
+  "createMarkerSlider": {
+    "title": "Crear un nuevo marcador",
+    "submit": "Crear marcador"
+  },
+  "editMarkerSlider": {
+    "title": "Editar un marcador:",
+    "submit": "Actualizar marcador"
+  },
+  "general": {
+    "confirm": "Confirmar"
+  },
+  "markerSlider": {
+    "name": "Nombre:",
+    "latitude": "Latitud:",
+    "longitude": "Longitud:",
+    "description": "Descripción:"
+  }
+}

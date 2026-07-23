@@ -1,0 +1,27 @@
+{
+  "appbar": {
+    "title": "Geospatial Marker Explorer"
+  },
+  "confirmDeleteModal": {
+    "title": "Confirm deletion",
+    "confirmText": "delete",
+    "cancelText": "cancel"
+  },
+  "createMarkerSlider": {
+    "title": "Create a new marker",
+    "submit": "Create marker"
+  },
+  "editMarkerSlider": {
+    "title": "Edit a marker:",
+    "submit": "Update marker"
+  },
+  "general": {
+    "confirm": "Confirm"
+  },
+  "markerSlider": {
+    "name": "Name:",
+    "latitude": "Latitude:",
+    "longitude": "Longitude:",
+    "description": "Description:"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "appbar": {
+    "title": "Geospatial Marker Entdecker"
+  },
+  "confirmDeleteModal": {
+    "title": "Löschen bestätigen",
+    "confirmText": "löschen",
+    "cancelText": "abbrechen"
+  },
+  "createMarkerSlider": {
+    "title": "Erstelle einen neuen Marker",
+    "submit": "Marker erstellen"
+  },
+  "editMarkerSlider": {
+    "title": "Marker bearbeiten:",
+    "submit": "Marker aktualisieren"
+  },
+  "general": {
+    "confirm": "Bestätigen"
+  },
+  "markerSlider": {
+    "name": "Name:",
+    "latitude": "Breitengrad:",
+    "longitude": "Längengrad:",
+    "description": "Beschreibung:"
+  }
+}

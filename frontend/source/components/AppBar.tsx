@@ -61,7 +61,7 @@ const CustomAppBar = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {t("Geospatial Marker Explorer")}
+            {t("appbar.title")}
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton

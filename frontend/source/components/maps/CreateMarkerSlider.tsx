@@ -51,8 +51,8 @@ const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
       unmountOnExit
     >
       <MarkerSlider
-        title={t("Create a new marker")}
-        submitText={t("Create marker")}
+        title={t("createMarkerSlider.title")}
+        submitText={t("createMarkerSlider.submit")}
         position={position}
         formState={formState}
         setFormState={setFormState}

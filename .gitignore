@@ -89,3 +89,4 @@ logs/
 *.swp
 *.bak
 notes
+frontend/crowdin.local.yml

@@ -1,0 +1,9 @@
+project_id: "915189"
+
+api_token: "your_api_token"
+
+preserve_hierarchy: true
+
+files:
+  - source: "/source/locales/en/translation.json"
+    translation: "/source/locales/%two_letters_code%/translation.json"

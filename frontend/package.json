@@ -11,10 +11,11 @@
     "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-i18next": "^17.0.10",
+    "react-i18next": "^17.0.11",
     "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
+    "@crowdin/cli": "^4.15.0",
     "@hey-api/openapi-ts": "^0.99.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -32,13 +33,15 @@
     "vite": "^8.1.5"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "npm run download && vite",
+    "build": "npm run download && vite build",
     "preview": "vite preview",
     "generate-api": "openapi-ts",
     "format": "prettier --write .",
     "lint": "eslint source",
     "lint-fix": "eslint source --fix",
-    "check": "npm run lint && npm run format"
+    "check": "npm run lint && npm run format",
+    "download": "crowdin download --config crowdin.local.yml || echo Using local translations",
+    "upload": "crowdin upload sources --config crowdin.local.yml "
   }
 }

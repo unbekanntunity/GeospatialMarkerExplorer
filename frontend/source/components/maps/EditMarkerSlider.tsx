@@ -42,8 +42,8 @@ const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
   return (
     <Slide direction="right" in={open} mountOnEnter unmountOnExit>
       <MarkerSlider
-        title={t(`Edit a Marker: ${id}`)}
-        submitText={t("Update marker")}
+        title={`${t("editMarkerSlider.title")} ${id}`}
+        submitText={t("editMarkerSlider.submit")}
         position={position}
         formState={formState}
         setFormState={setFormState}
