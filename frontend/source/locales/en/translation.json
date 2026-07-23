@@ -18,7 +18,7 @@
   "general": {
     "confirm": "Confirm"
   },
-  "markerSlider": {
+  "marker": {
     "name": "Name:",
     "latitude": "Latitude:",
     "longitude": "Longitude:",

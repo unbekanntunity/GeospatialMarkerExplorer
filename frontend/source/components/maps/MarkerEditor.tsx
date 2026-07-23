@@ -54,41 +54,37 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
     }));
   }, []);
 
-  return (
+  return state.editMarkerSlider ? (
     <>
-      {state.editMarkerSlider && (
+      <EditMarkerSlider
+        open={!!state.editMarkerSlider}
+        position={state.editMarkerSlider.position}
+        id={marker.id}
+        formState={formState}
+        setFormState={setFormState}
+      />
+      {position && (
         <>
-          <EditMarkerSlider
-            open={!!state.editMarkerSlider}
-            position={state.editMarkerSlider.position}
-            id={marker.id}
-            formState={formState}
-            setFormState={setFormState}
+          <CircleMarker
+            center={position}
+            radius={14}
+            pathOptions={{
+              color: theme.palette.error.main,
+              weight: 3,
+              fillOpacity: 0.15
+            }}
           />
-          {position && (
-            <>
-              <CircleMarker
-                center={position}
-                radius={14}
-                pathOptions={{
-                  color: theme.palette.error.main,
-                  weight: 3,
-                  fillOpacity: 0.15
-                }}
-              />
-              <Marker
-                draggable
-                eventHandlers={{
-                  dragend: onDragEnd
-                }}
-                position={position}
-              />
-            </>
-          )}
+          <Marker
+            draggable
+            eventHandlers={{
+              dragend: onDragEnd
+            }}
+            position={position}
+          />
         </>
       )}
     </>
-  );
+  ) : null;
 };
 
 export default MarkerEditor;

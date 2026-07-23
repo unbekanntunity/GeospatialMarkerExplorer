@@ -44,34 +44,30 @@ const MarkerCreator = () => {
     );
   }, [formState.latitude, formState.longitude]);
 
-  return (
+  return state.createMarkerSlider ? (
     <>
-      {state.createMarkerSlider && (
+      <CreateMarkerSlider
+        open={!!state.createMarkerSlider}
+        position={state.createMarkerSlider.position}
+        formState={formState}
+        setFormState={setFormState}
+      />
+      {position && (
         <>
-          <CreateMarkerSlider
-            open={!!state.createMarkerSlider}
-            position={state.createMarkerSlider.position}
-            formState={formState}
-            setFormState={setFormState}
+          <CircleMarker
+            center={position}
+            radius={14}
+            pathOptions={{
+              color: theme.palette.error.main,
+              weight: 3,
+              fillOpacity: 0.15
+            }}
           />
-          {position && (
-            <>
-              <CircleMarker
-                center={position}
-                radius={14}
-                pathOptions={{
-                  color: theme.palette.error.main,
-                  weight: 3,
-                  fillOpacity: 0.15
-                }}
-              />
-              <Marker position={position} />
-            </>
-          )}
+          <Marker position={position} />
         </>
       )}
     </>
-  );
+  ) : null;
 };
 
 export default MarkerCreator;

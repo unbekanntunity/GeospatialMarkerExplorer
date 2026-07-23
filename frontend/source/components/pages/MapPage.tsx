@@ -1,49 +1,30 @@
 import { Slide } from "@mui/material";
-import { DragEndEvent } from "leaflet";
-import { useCallback } from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { useState } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
 
-import { MarkerResponse } from "../../api/generated";
 import { useMarkers } from "../../models/MarkerModel";
 import CustomAppBar from "../AppBar";
+import MapMarker from "../maps/MapMarker";
 import MarkerCreator from "../maps/MarkerCreator";
 import MarkerEditor from "../maps/MarkerEditor";
 import MarkerList from "../maps/MarkerList";
-import { convertToCoordinate } from "../maps/utils/CoordinationUtils";
 import { useSlider } from "../sliders/hooks/useSliders";
-import { SliderAction } from "../sliders/SliderAction";
 
 const MapPage = () => {
-  const { state, dispatch } = useSlider();
+  const [showMarkerDetailPoppers, setShowMarkerDetailPoppers] = useState(true);
+
+  const { state } = useSlider();
 
   const { data: markers } = useMarkers({});
 
-  const onDragEnd = useCallback(
-    (e: DragEndEvent, marker: MarkerResponse) => {
-      const markerObject = e.target;
-      const position = markerObject.getLatLng();
-
-      const updatedMarker: MarkerResponse = {
-        ...marker,
-        latitude: position.lat,
-        longitude: position.lng
-      };
-
-      dispatch({
-        type: SliderAction.ShowSlider,
-        slider: "editMarkerSlider",
-        payload: {
-          marker: updatedMarker,
-          position: "left"
-        }
-      });
-    },
-    [dispatch]
-  );
-
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      <CustomAppBar />
+      <CustomAppBar
+        showMarkerDetailPoppers={showMarkerDetailPoppers}
+        onToggleMarkerDetailPopopers={() =>
+          setShowMarkerDetailPoppers((prev) => !prev)
+        }
+      />
       <div style={{ flex: 1, position: "relative" }}>
         <MapContainer
           center={[52.52, 13.405]}
@@ -56,23 +37,12 @@ const MapPage = () => {
           />
           {markers
             ?.filter((m) => m.id !== state.editMarkerSlider?.marker.id)
-            .map((m) => {
-              const coordinates = convertToCoordinate(
-                m.latitude.toString(),
-                m.longitude.toString()
-              );
-
-              return coordinates ? (
-                <Marker
-                  key={m.id}
-                  draggable
-                  eventHandlers={{
-                    dragend: (e) => onDragEnd(e, m)
-                  }}
-                  position={coordinates}
-                />
-              ) : null;
-            })}
+            .map((m) => (
+              <MapMarker
+                showDetailPoppers={showMarkerDetailPoppers}
+                marker={m}
+              />
+            ))}
           <MarkerCreator />
           {state.editMarkerSlider && (
             <MarkerEditor marker={state.editMarkerSlider.marker} />

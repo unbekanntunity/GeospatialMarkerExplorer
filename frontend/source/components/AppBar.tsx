@@ -1,4 +1,5 @@
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
+import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import { IconButton } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
@@ -12,7 +13,14 @@ import LanguagePicker from "./language/LanguagePicker";
 import { useSlider } from "./sliders/hooks/useSliders";
 import { SliderAction } from "./sliders/SliderAction";
 
-const CustomAppBar = () => {
+interface ICustomAppBarProps {
+  showMarkerDetailPoppers: boolean;
+  onToggleMarkerDetailPopopers: () => void;
+}
+
+const CustomAppBar = (props: ICustomAppBarProps) => {
+  const { showMarkerDetailPoppers, onToggleMarkerDetailPopopers } = props;
+
   const { state, dispatch } = useSlider();
 
   const { t } = useTranslation();
@@ -66,7 +74,14 @@ const CustomAppBar = () => {
             {t("appbar.title")}
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-
+          <IconButton
+            size="large"
+            aria-label="add markers"
+            color={showMarkerDetailPoppers ? "secondary" : "inherit"}
+            onClick={onToggleMarkerDetailPopopers}
+          >
+            <InsertCommentOutlinedIcon />
+          </IconButton>
           <IconButton
             size="large"
             aria-label="add markers"
