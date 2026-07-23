@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
+import LanguagePicker from "./language/LanguagePicker";
 import { useSlider } from "./sliders/hooks/useSliders";
 import { SliderAction } from "./sliders/SliderAction";
 
@@ -60,10 +61,12 @@ const CustomAppBar = () => {
     <Box>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <LanguagePicker />
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, pl: 2 }}>
             {t("appbar.title")}
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+
           <IconButton
             size="large"
             aria-label="add markers"

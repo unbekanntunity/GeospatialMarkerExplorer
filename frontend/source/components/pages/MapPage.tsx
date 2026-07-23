@@ -3,15 +3,15 @@ import { DragEndEvent } from "leaflet";
 import { useCallback } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 
-import { MarkerResponse } from "../api/generated";
-import CustomAppBar from "../components/AppBar";
-import MarkerCreator from "../components/maps/MarkerCreator";
-import MarkerEditor from "../components/maps/MarkerEditor";
-import MarkerList from "../components/maps/MarkerList";
-import { convertToCoordinate } from "../components/maps/utils/CoordinationUtils";
-import { useSlider } from "../components/sliders/hooks/useSliders";
-import { SliderAction } from "../components/sliders/SliderAction";
-import { useMarkers } from "../models/MarkerModel";
+import { MarkerResponse } from "../../api/generated";
+import { useMarkers } from "../../models/MarkerModel";
+import CustomAppBar from "../AppBar";
+import MarkerCreator from "../maps/MarkerCreator";
+import MarkerEditor from "../maps/MarkerEditor";
+import MarkerList from "../maps/MarkerList";
+import { convertToCoordinate } from "../maps/utils/CoordinationUtils";
+import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderAction } from "../sliders/SliderAction";
 
 const MapPage = () => {
   const { state, dispatch } = useSlider();
@@ -74,7 +74,6 @@ const MapPage = () => {
               ) : null;
             })}
           <MarkerCreator />
-
           {state.editMarkerSlider && (
             <MarkerEditor marker={state.editMarkerSlider.marker} />
           )}

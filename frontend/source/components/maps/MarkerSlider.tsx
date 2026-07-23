@@ -200,32 +200,36 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
               p: 2
             }}
           >
-            <Typography variant="subtitle2">{t(`Name`)}</Typography>
+            <Typography variant="subtitle2">
+              {t("markerSlider.name")}
+            </Typography>
             <TextField
               id="name-textfield"
-              label={t("markerSlider.name")}
               value={formState.name}
               onChange={onChangeName}
             />
-            <Typography variant="subtitle2">{t(`Latitude`)}</Typography>
+            <Typography variant="subtitle2">
+              {t("markerSlider.latitude")}
+            </Typography>
             <TextField
               id="latitude-textarea"
-              label={t("markerSlider.latitude")}
               value={formState.latitude}
               onChange={onChangeLatitude}
             />
-            <Typography variant="subtitle2">{t(`Longitude:`)}</Typography>
+            <Typography variant="subtitle2">
+              {t("markerSlider.longitude")}
+            </Typography>
             <TextField
               id="longitude-textfield"
-              label={t("markerSlider.longitude")}
               value={formState.longitude}
               onChange={onChangeLongitude}
             />
 
-            <Typography variant="subtitle2">{t(`Description`)}</Typography>
+            <Typography variant="subtitle2">
+              {t("markerSlider.description")}
+            </Typography>
             <TextField
               id="description-textarea"
-              label={t("markerSlider.description")}
               multiline
               value={formState.description}
               onChange={onChangeDescription}
