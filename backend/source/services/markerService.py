@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from database.models import Marker
 from errors import MarkerNotFoundError
 from repositories import markerRepository
@@ -17,7 +19,7 @@ class MarkerService:
 
         return await marker_repository.create(marker)
         
-    async def get_marker(self, id: int):
+    async def get_marker(self, id: UUID):
         marker = await marker_repository.get_by_id(id)
 
         if marker is None:
@@ -28,7 +30,7 @@ class MarkerService:
     async def get_all(self):
         return await marker_repository.get_all()
     
-    async def update(self, id: int, marker: UpdateMarkerRequest):
+    async def update(self, id: UUID, marker: UpdateMarkerRequest):
         marker_to_update = Marker(
             name=marker.name,
             description=marker.description,
@@ -44,7 +46,7 @@ class MarkerService:
         
         return updated_marker
     
-    async def delete(self, id: int):
+    async def delete(self, id: UUID):
         deleted_marker = await marker_repository.delete(id)
 
         if not deleted_marker:

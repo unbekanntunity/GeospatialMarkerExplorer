@@ -1,6 +1,6 @@
-from http.client import HTTPException
+from uuid import UUID
 
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, HTTPException, Response
 from schemas.marker import CreateMarkerRequest, MarkerResponse, UpdateMarkerRequest
 from services import markerService
 
@@ -32,9 +32,9 @@ async def get_markers():
         )
 
 @router.get("/{id}", response_model=MarkerResponse)
-async def get_marker(id: str):
+async def get_marker(id: UUID):
     try:
-        marker = await marker_service.get_marker(int(id))
+        marker = await marker_service.get_marker(id)
         response = MarkerResponse.model_validate(marker)
         return response
     except ValueError as e:
@@ -44,9 +44,9 @@ async def get_marker(id: str):
         )
 
 @router.put("/{id}", response_model=MarkerResponse)
-async def update_marker(id: str, marker: UpdateMarkerRequest):
+async def update_marker(id: UUID, marker: UpdateMarkerRequest):
     try:
-        updated_marker = await marker_service.update(int(id), marker)
+        updated_marker = await marker_service.update(id, marker)
         response = MarkerResponse.model_validate(updated_marker)
         return response
     except ValueError as e:
@@ -56,9 +56,9 @@ async def update_marker(id: str, marker: UpdateMarkerRequest):
         )
 
 @router.delete("/{id}")
-async def delete_marker(id: str):
+async def delete_marker(id: UUID):
     try:
-        await marker_service.delete(int(id))
+        await marker_service.delete(id)
         return Response(status_code=204)
     except ValueError as e:
         raise HTTPException(

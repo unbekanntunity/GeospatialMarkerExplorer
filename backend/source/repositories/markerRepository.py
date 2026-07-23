@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from database.connection import SessionLocal
 from database.models import Marker
 from sqlalchemy import select
@@ -48,7 +50,7 @@ class MarkerRepository:
 
             return existing_marker
     
-    async def delete(self, id) -> bool:
+    async def delete(self, id: UUID) -> bool:
         statement = (
             select(Marker)
             .where(Marker.id == id)
