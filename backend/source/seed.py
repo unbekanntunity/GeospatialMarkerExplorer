@@ -1,9 +1,11 @@
 import asyncio
+import os
 
 from database.connection import engine, SessionLocal
 from database.models import Base, Category, Marker
 
 async def seed_database():
+
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
@@ -21,19 +23,21 @@ async def seed_database():
         if marker_exists or category_exists:
             return
 
+        base_url = os.getenv("BASE_URL")
+
         restaurant = Category(
             name="Restaurant",
             description="michelin restuarants",
-            icon_url="/static/category-icons/restaurant.webp"
+            icon_url=f"{base_url}/static/uploads/default/restaurant.png"
         )
         parking = Category(
             name="Parking",
             description="Good parking spots",
-            icon_url="/static/category-icons/parking.webp"
+            icon_url=f"{base_url}/static/uploads/default/parking.png"
         )
         museum = Category(
             name="Museum",
-            icon_url="/static/category-icons/museum.webp"
+            icon_url=f"{base_url}/static/uploads/default/museum.png"
         )
 
         session.add_all([restaurant, parking, museum])
