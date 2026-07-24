@@ -20,7 +20,7 @@ async def create_category(marker: CreateCategoryRequest):
         )
 
 @router.get("/", response_model=list[CategoryResponse])
-async def get_category(marker_query: QueryCategoryRequest = Depends()):
+async def get_categories(marker_query: QueryCategoryRequest = Depends()):
     try:
         markers = await category_service.get_all(marker_query)
         reponses = [CategoryResponse.model_validate(marker) for marker in markers]
