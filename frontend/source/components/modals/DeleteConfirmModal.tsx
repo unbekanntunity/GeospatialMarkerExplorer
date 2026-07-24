@@ -4,12 +4,13 @@ import { useTranslation } from "react-i18next";
 import Modal from "./Modal";
 
 interface IDeleteConfirmModalProps {
+  entityName: string;
   onConfirm: () => Promise<unknown>;
   onClose: () => void;
 }
 
 const DeleteConfirmModal = (props: IDeleteConfirmModalProps) => {
-  const { onConfirm, onClose } = props;
+  const { entityName, onConfirm, onClose } = props;
 
   const { t } = useTranslation();
 
@@ -26,9 +27,7 @@ const DeleteConfirmModal = (props: IDeleteConfirmModalProps) => {
           whiteSpace: "pre-line"
         }}
       >
-        {t(
-          "Are you sure you want to delete this marker?\nThis action can not be undone!"
-        )}
+        {t("confirmDeleteModal.message", { entityName })}
       </Typography>
     </Modal>
   );

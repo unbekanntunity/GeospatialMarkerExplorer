@@ -8,7 +8,8 @@
   },
   "confirmDeleteModal": {
     "title": "Confirm deletion",
-    "confirmText": "delete"
+    "confirmText": "delete",
+    "message": "Are you sure you want to delete: {{entityName}}?\nThis action can not be undone!"
   },
   "createCategoryModal": {
     "title": "Create a new category",
@@ -20,6 +21,9 @@
   "createMarkerSlider": {
     "title": "Create a new marker",
     "submit": "Create marker"
+  },
+  "deleteConfirmModal": {
+    "conten": "Are you sure you want to delete?\nThis action can not be undone!"
   },
   "editMarkerSlider": {
     "title": "Edit a marker:",

@@ -66,6 +66,7 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
         type: ModalAction.ShowModal,
         modal: "confirmDeleteModal",
         payload: {
+          entityName: marker.name,
           onConfirm: () => deleteMarker.mutateAsync(marker.id)
         }
       });

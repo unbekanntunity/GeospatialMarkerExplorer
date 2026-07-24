@@ -75,6 +75,7 @@ const CategoryListSlider = (props: ICategoryListSliderProps) => {
         type: ModalAction.ShowModal,
         modal: "confirmDeleteModal",
         payload: {
+          entityName: category.name,
           onConfirm: () => deleteCategory.mutateAsync(category.id)
         }
       });
@@ -94,6 +95,7 @@ const CategoryListSlider = (props: ICategoryListSliderProps) => {
           {categories ? (
             categories?.map((category) => (
               <ListItem
+                key={category.id}
                 secondaryAction={
                   <>
                     <IconButton

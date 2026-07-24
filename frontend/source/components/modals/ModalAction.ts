@@ -2,6 +2,7 @@ import { CategoryResponse } from "../../api/generated";
 
 export interface IModalState {
   confirmDeleteModal?: {
+    entityName: string;
     onConfirm: () => Promise<unknown>;
   };
   createCategoryModal?: {};
