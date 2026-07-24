@@ -1,11 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   BodyUploadFileImagesPost,
+  getFilesImagesGet,
   uploadFileImagesPost
 } from "../api/generated";
 
-export function useUploadImage() {
+export const useUploadImage = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (body: BodyUploadFileImagesPost) => {
       const response = await uploadFileImagesPost({ body });
@@ -15,6 +18,26 @@ export function useUploadImage() {
       }
 
       return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["images"]
+      });
     }
   });
-}
+};
+
+export const useImages = () => {
+  return useQuery({
+    queryKey: ["images"],
+    queryFn: async () => {
+      const response = await getFilesImagesGet();
+
+      if (response.error) {
+        throw response.error;
+      }
+
+      return response.data;
+    }
+  });
+};

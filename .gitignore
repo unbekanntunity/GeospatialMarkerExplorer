@@ -90,3 +90,4 @@ logs/
 *.bak
 notes
 frontend/crowdin.local.yml
+backend/static/uploads

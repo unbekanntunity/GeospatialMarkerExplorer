@@ -1,3 +1,4 @@
+import os
 import mimetypes
 from pathlib import Path
 from uuid import uuid4
@@ -5,12 +6,13 @@ from uuid import uuid4
 from fastapi import UploadFile
 
 from errors import FileTooLargeError, UnsupportedFileTypeError
+from schemas.imageFileResponse import ImageFile
 
 class UploadService:
     def __init__(self):
-        self.upload_base_path = "static/uploads"
-        self.upload_url = f"/{self.upload_base_path}"
-        self.upload_dir = Path(self.upload_base_path)
+        self.base_url = os.getenv("BASE_URL")
+        self.upload_custom_base_path = "static/uploads/custom"
+        self.upload_default_base_path = "static/uploads/default"
 
         self.allowed_types = {
             "image/png",
@@ -28,22 +30,17 @@ class UploadService:
         if size > self.max_file_size:
             raise FileTooLargeError()
 
-        self.upload_dir.mkdir(
-            parents=True,
-            exist_ok=True,
-        )
-
         extension = mimetypes.guess_extension(file.content_type)
 
         filename = f"{uuid4()}{extension}"
 
-        filepath = self.upload_dir / filename
+        filepath = Path(self.upload_custom_base_path) / filename
 
         content = await file.read()
         with filepath.open("wb") as buffer:
             buffer.write(content)
 
-        return f"{self.upload_url}/{filename}"
+        return ImageFile(url=f"{self.base_url}/{Path(self.upload_custom_base_path)}/{filename}", name=filename)
 
     async def remove_file(self, url: str):
         if url.startswith("default"):
@@ -54,10 +51,25 @@ class UploadService:
         if file_path.exists():
             file_path.unlink()
 
-    async def get_files(self):
+    async def get_files(self) -> list[ImageFile]:
         files = []
 
-        for file in self.upload_dir.rglob("*"):
+        files.extend(self.get_image_in_dir(Path(self.upload_default_base_path)))
+        files.extend(self.get_image_in_dir(Path(self.upload_custom_base_path)))
+   
+        return files
+
+    def get_file_size(self, file: UploadFile) -> int:
+        file.file.seek(0, 2)
+        size = file.file.tell()
+        file.file.seek(0)
+
+        return size
+
+    def get_image_in_dir(self, dir: Path) -> list[ImageFile]:
+        files = []
+
+        for file in dir.rglob("*"):
             if not file.is_file():
                 continue
 
@@ -66,15 +78,7 @@ class UploadService:
             if mime_type not in self.allowed_types:
                 continue
 
-            files.append(
-                f"{self.upload_url}/{file.relative_to(self.upload_dir)}"
-            )
+            iamgeFile = ImageFile(url=f"{self.base_url}/{Path(dir)}/{file.relative_to(dir)}", name=file.name)
+            files.append(iamgeFile)
 
         return files
-
-    def get_file_size(self, file: UploadFile):
-        file.file.seek(0, 2)
-        size = file.file.tell()
-        file.file.seek(0)
-
-        return size

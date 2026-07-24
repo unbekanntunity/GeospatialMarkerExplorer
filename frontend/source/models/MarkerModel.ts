@@ -13,7 +13,7 @@ import {
   UpdateMarkerRequest
 } from "../api/generated/types.gen";
 
-export function useCreateMarker() {
+export const useCreateMarker = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -35,9 +35,9 @@ export function useCreateMarker() {
       });
     }
   });
-}
+};
 
-export function useUpdateMarker() {
+export const useUpdateMarker = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -66,9 +66,9 @@ export function useUpdateMarker() {
       });
     }
   });
-}
+};
 
-export function useDeleteMarker() {
+export const useDeleteMarker = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -88,11 +88,11 @@ export function useDeleteMarker() {
       });
     }
   });
-}
+};
 
 type MarkerQuery = NonNullable<GetMarkersMarkersGetData["query"]>;
 
-export function useMarkers(query: MarkerQuery) {
+export const useMarkers = (query: MarkerQuery) => {
   return useQuery({
     queryKey: ["markers", query.name],
     queryFn: async () => {
@@ -105,9 +105,9 @@ export function useMarkers(query: MarkerQuery) {
       return response.data;
     }
   });
-}
+};
 
-export function useMarker(id: string) {
+export const useMarker = (id: string) => {
   return useQuery({
     queryKey: ["marker", id],
     queryFn: async () => {
@@ -120,4 +120,4 @@ export function useMarker(id: string) {
       return response.data;
     }
   });
-}
+};

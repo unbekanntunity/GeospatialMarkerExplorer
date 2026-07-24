@@ -17,6 +17,7 @@ const DeleteConfirmModal = (props: IDeleteConfirmModalProps) => {
     <Modal
       title={t("confirmDeleteModal.title")}
       confirmText={t("confirmDeleteModal.confirmText")}
+      confirmButtonColor="error"
       onConfirm={onConfirm}
       onClose={onClose}
     >

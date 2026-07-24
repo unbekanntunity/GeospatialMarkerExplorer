@@ -39,6 +39,7 @@ const MapPage = () => {
             ?.filter((m) => m.id !== state.editMarkerSlider?.marker.id)
             .map((m) => (
               <MapMarker
+                key={m.id}
                 showDetailPoppers={showMarkerDetailPoppers}
                 marker={m}
               />

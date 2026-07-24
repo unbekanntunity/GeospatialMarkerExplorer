@@ -14,13 +14,28 @@ import { useTranslation } from "react-i18next";
 interface IModalProps {
   title: string;
   confirmText: string;
+  confirmButtonColor?:
+    | "secondary"
+    | "inherit"
+    | "primary"
+    | "success"
+    | "error"
+    | "info"
+    | "warning";
   children: JSX.Element;
   onConfirm: () => Promise<unknown>;
   onClose: () => void;
 }
 
 const Modal = (props: IModalProps) => {
-  const { title, children, confirmText, onConfirm, onClose } = props;
+  const {
+    title,
+    children,
+    confirmText,
+    confirmButtonColor = "secondary",
+    onConfirm,
+    onClose
+  } = props;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -62,8 +77,8 @@ const Modal = (props: IModalProps) => {
             </Button>
             <Button
               sx={{ mx: 2 }}
-              color="error"
-              key="delete"
+              key="confirm"
+              color={confirmButtonColor}
               aria-label="delete-button"
               variant="contained"
               onClick={handleConfirm}

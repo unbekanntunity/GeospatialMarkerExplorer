@@ -8,10 +8,10 @@ router = APIRouter()
 category_service = categoryService.CategoryService();
 
 @router.post("/", response_model=CategoryResponse)
-async def create_category(marker: CreateCategoryRequest):
+async def create_category(category: CreateCategoryRequest):
     try:
-        created_marker = await category_service.create(marker)
-        response = CategoryResponse.model_validate(created_marker)
+        created_category = await category_service.create(category)
+        response = CategoryResponse.model_validate(created_category)
         return response
     except ValueError as e:
         raise HTTPException(
@@ -20,9 +20,9 @@ async def create_category(marker: CreateCategoryRequest):
         )
 
 @router.get("/", response_model=list[CategoryResponse])
-async def get_categories(marker_query: QueryCategoryRequest = Depends()):
+async def get_categories(category_query: QueryCategoryRequest = Depends()):
     try:
-        markers = await category_service.get_all(marker_query)
+        markers = await category_service.get_all(category_query)
         reponses = [CategoryResponse.model_validate(marker) for marker in markers]
         return reponses
     except ValueError as e:
@@ -32,10 +32,10 @@ async def get_categories(marker_query: QueryCategoryRequest = Depends()):
         )
 
 @router.put("/{id}", response_model=CategoryResponse)
-async def update_category(id: UUID, marker: UpdateCategoryRequest):
+async def update_category(id: UUID, category: UpdateCategoryRequest):
     try:
-        updated_marker = await category_service.update(id, marker)
-        response = CategoryResponse.model_validate(updated_marker)
+        updated_category = await category_service.update(id, category)
+        response = CategoryResponse.model_validate(updated_category)
         return response
     except ValueError as e:
         raise HTTPException(

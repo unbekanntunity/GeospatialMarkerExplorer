@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateCategoryCategoriesPostData, CreateCategoryCategoriesPostErrors, CreateCategoryCategoriesPostResponses, CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, DeleteCategoryCategoriesIdDeleteData, DeleteCategoryCategoriesIdDeleteErrors, DeleteCategoryCategoriesIdDeleteResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, GetCategoryCategoriesGetData, GetCategoryCategoriesGetErrors, GetCategoryCategoriesGetResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetErrors, GetMarkersMarkersGetResponses, UpdateCategoryCategoriesIdPutData, UpdateCategoryCategoriesIdPutErrors, UpdateCategoryCategoriesIdPutResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses, UploadFileImagesPostData, UploadFileImagesPostErrors, UploadFileImagesPostResponses } from './types.gen';
+import type { CreateCategoryCategoriesPostData, CreateCategoryCategoriesPostErrors, CreateCategoryCategoriesPostResponses, CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, DeleteCategoryCategoriesIdDeleteData, DeleteCategoryCategoriesIdDeleteErrors, DeleteCategoryCategoriesIdDeleteResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, GetCategoriesCategoriesGetData, GetCategoriesCategoriesGetErrors, GetCategoriesCategoriesGetResponses, GetFilesImagesGetData, GetFilesImagesGetResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetErrors, GetMarkersMarkersGetResponses, UpdateCategoryCategoriesIdPutData, UpdateCategoryCategoriesIdPutErrors, UpdateCategoryCategoriesIdPutResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses, UploadFileImagesPostData, UploadFileImagesPostErrors, UploadFileImagesPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -58,9 +58,9 @@ export const updateMarkerMarkersIdPut = <ThrowOnError extends boolean = false>(o
 });
 
 /**
- * Get Category
+ * Get Categories
  */
-export const getCategoryCategoriesGet = <ThrowOnError extends boolean = false>(options?: Options<GetCategoryCategoriesGetData, ThrowOnError>): RequestResult<GetCategoryCategoriesGetResponses, GetCategoryCategoriesGetErrors, ThrowOnError> => (options?.client ?? client).get<GetCategoryCategoriesGetResponses, GetCategoryCategoriesGetErrors, ThrowOnError>({ url: '/categories/', ...options });
+export const getCategoriesCategoriesGet = <ThrowOnError extends boolean = false>(options?: Options<GetCategoriesCategoriesGetData, ThrowOnError>): RequestResult<GetCategoriesCategoriesGetResponses, GetCategoriesCategoriesGetErrors, ThrowOnError> => (options?.client ?? client).get<GetCategoriesCategoriesGetResponses, GetCategoriesCategoriesGetErrors, ThrowOnError>({ url: '/categories/', ...options });
 
 /**
  * Create Category
@@ -90,6 +90,11 @@ export const updateCategoryCategoriesIdPut = <ThrowOnError extends boolean = fal
         ...options.headers
     }
 });
+
+/**
+ * Get Files
+ */
+export const getFilesImagesGet = <ThrowOnError extends boolean = false>(options?: Options<GetFilesImagesGetData, ThrowOnError>): RequestResult<GetFilesImagesGetResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetFilesImagesGetResponses, unknown, ThrowOnError>({ url: '/images/', ...options });
 
 /**
  * Upload File

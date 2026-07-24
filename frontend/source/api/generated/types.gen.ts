@@ -98,6 +98,10 @@ export type ImageFileResponse = {
      * Url
      */
     url: string;
+    /**
+     * Name
+     */
+    name: string;
 };
 
 /**
@@ -346,7 +350,7 @@ export type UpdateMarkerMarkersIdPutResponses = {
 
 export type UpdateMarkerMarkersIdPutResponse = UpdateMarkerMarkersIdPutResponses[keyof UpdateMarkerMarkersIdPutResponses];
 
-export type GetCategoryCategoriesGetData = {
+export type GetCategoriesCategoriesGetData = {
     body?: never;
     path?: never;
     query?: {
@@ -358,25 +362,25 @@ export type GetCategoryCategoriesGetData = {
     url: '/categories/';
 };
 
-export type GetCategoryCategoriesGetErrors = {
+export type GetCategoriesCategoriesGetErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type GetCategoryCategoriesGetError = GetCategoryCategoriesGetErrors[keyof GetCategoryCategoriesGetErrors];
+export type GetCategoriesCategoriesGetError = GetCategoriesCategoriesGetErrors[keyof GetCategoriesCategoriesGetErrors];
 
-export type GetCategoryCategoriesGetResponses = {
+export type GetCategoriesCategoriesGetResponses = {
     /**
-     * Response Get Category Categories  Get
+     * Response Get Categories Categories  Get
      *
      * Successful Response
      */
     200: Array<CategoryResponse>;
 };
 
-export type GetCategoryCategoriesGetResponse = GetCategoryCategoriesGetResponses[keyof GetCategoryCategoriesGetResponses];
+export type GetCategoriesCategoriesGetResponse = GetCategoriesCategoriesGetResponses[keyof GetCategoriesCategoriesGetResponses];
 
 export type CreateCategoryCategoriesPostData = {
     body: CreateCategoryRequest;
@@ -460,6 +464,24 @@ export type UpdateCategoryCategoriesIdPutResponses = {
 };
 
 export type UpdateCategoryCategoriesIdPutResponse = UpdateCategoryCategoriesIdPutResponses[keyof UpdateCategoryCategoriesIdPutResponses];
+
+export type GetFilesImagesGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/images/';
+};
+
+export type GetFilesImagesGetResponses = {
+    /**
+     * Response Get Files Images  Get
+     *
+     * Successful Response
+     */
+    200: Array<ImageFileResponse>;
+};
+
+export type GetFilesImagesGetResponse = GetFilesImagesGetResponses[keyof GetFilesImagesGetResponses];
 
 export type UploadFileImagesPostData = {
     body: BodyUploadFileImagesPost;

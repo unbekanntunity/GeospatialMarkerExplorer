@@ -8,18 +8,18 @@ from schemas.category import CreateCategoryRequest, QueryCategoryRequest, Update
 
 class CategoryRepository:
     async def create(self, category: CreateCategoryRequest) -> Category:
-        new_Category = Category(
+        new_category = Category(
             name=category.name,
             description=category.description,
             icon_url=category.icon_url
         )
 
         async with SessionLocal() as session:
-            session.add(new_Category)
+            session.add(new_category)
             await session.commit()
-            await session.refresh(category)
+            await session.refresh(new_category)
 
-            return category
+            return new_category
 
     async def get_by_id(self, id) -> Category:
         statement = select(Category).where(Category.id == id)

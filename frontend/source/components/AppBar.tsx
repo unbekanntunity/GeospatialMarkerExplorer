@@ -20,6 +20,8 @@ import { useTranslation } from "react-i18next";
 
 import { TOOLTIP_DELAY } from "../constants";
 import LanguagePicker from "./language/LanguagePicker";
+import { useModals } from "./modals/hooks/useModals";
+import { ModalAction } from "./modals/ModalAction";
 import { useSlider } from "./sliders/hooks/useSliders";
 import { SliderAction } from "./sliders/SliderAction";
 
@@ -33,7 +35,8 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
 
   const [selectedType, setSelectedType] = useState("markers");
 
-  const { state, dispatch } = useSlider();
+  const { state: sliderState, dispatch: sliderDispatch } = useSlider();
+  const { state: modalState, dispatch: modalDispatch } = useModals();
 
   const { t } = useTranslation();
   const theme = useTheme();
@@ -41,12 +44,12 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
   const onToggleCreateMarkerSlider = useCallback(
     (isOpen: boolean) => {
       if (isOpen) {
-        dispatch({
+        sliderDispatch({
           type: SliderAction.HideSlider,
           slider: "createMarkerSlider"
         });
       } else {
-        dispatch({
+        sliderDispatch({
           type: SliderAction.ShowSlider,
           slider: "createMarkerSlider",
           payload: {
@@ -55,18 +58,18 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
         });
       }
     },
-    [dispatch]
+    [sliderDispatch]
   );
 
   const onToggleMarkerListSlider = useCallback(
     (isOpen: boolean) => {
       if (isOpen) {
-        dispatch({
+        sliderDispatch({
           type: SliderAction.HideSlider,
           slider: "markerListSlider"
         });
       } else {
-        dispatch({
+        sliderDispatch({
           type: SliderAction.ShowSlider,
           slider: "markerListSlider",
           payload: {
@@ -75,8 +78,16 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
         });
       }
     },
-    [dispatch]
+    [sliderDispatch]
   );
+
+  const onOpenCreateCategoryModal = useCallback(() => {
+    modalDispatch({
+      type: ModalAction.ShowModal,
+      modal: "createCategoryModal",
+      payload: {}
+    });
+  }, [modalDispatch]);
 
   const onChangeType = useCallback((event: SelectChangeEvent) => {
     setSelectedType(event.target.value);
@@ -147,9 +158,13 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                   <IconButton
                     size="large"
                     aria-label="create markers"
-                    color={!!state.createMarkerSlider ? "secondary" : "inherit"}
+                    color={
+                      !!sliderState.createMarkerSlider ? "secondary" : "inherit"
+                    }
                     onClick={() =>
-                      onToggleCreateMarkerSlider(!!state.createMarkerSlider)
+                      onToggleCreateMarkerSlider(
+                        !!sliderState.createMarkerSlider
+                      )
                     }
                   >
                     <AddLocationAltOutlinedIcon />
@@ -162,9 +177,11 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                   <IconButton
                     size="large"
                     aria-label="list markers"
-                    color={!!state.markerListSlider ? "secondary" : "inherit"}
+                    color={
+                      !!sliderState.markerListSlider ? "secondary" : "inherit"
+                    }
                     onClick={() =>
-                      onToggleMarkerListSlider(!!state.markerListSlider)
+                      onToggleMarkerListSlider(!!sliderState.markerListSlider)
                     }
                   >
                     <LocationOnOutlinedIcon />
@@ -178,7 +195,14 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                   enterDelay={TOOLTIP_DELAY}
                   title={"tooltip.createCategories"}
                 >
-                  <IconButton size="large" aria-label="create categories">
+                  <IconButton
+                    color={
+                      !!modalState.createCategoryModal ? "secondary" : "inherit"
+                    }
+                    size="large"
+                    aria-label="create categories"
+                    onClick={onOpenCreateCategoryModal}
+                  >
                     <AddOutlinedIcon />
                   </IconButton>
                 </Tooltip>

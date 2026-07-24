@@ -2,6 +2,7 @@ export interface IModalState {
   confirmDeleteModal?: {
     onConfirm: () => Promise<unknown>;
   };
+  createCategoryModal?: {};
 }
 
 export enum ModalAction {

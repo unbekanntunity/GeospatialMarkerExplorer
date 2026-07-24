@@ -8,11 +8,11 @@ import {
 } from "../api/generated/sdk.gen";
 import {
   CreateCategoryRequest,
-  GetCategoryCategoriesGetData,
+  GetCategoriesCategoriesGetData,
   UpdateCategoryRequest
 } from "../api/generated/types.gen";
 
-export function useCreateCategory() {
+export const useCreateCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -34,9 +34,9 @@ export function useCreateCategory() {
       });
     }
   });
-}
+};
 
-export function useUpdateCategory() {
+export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -69,9 +69,9 @@ export function useUpdateCategory() {
       });
     }
   });
-}
+};
 
-export function useDeleteCategory() {
+export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -95,11 +95,11 @@ export function useDeleteCategory() {
       });
     }
   });
-}
+};
 
-type CategoryQuery = NonNullable<GetCategoryCategoriesGetData["query"]>;
+type CategoryQuery = NonNullable<GetCategoriesCategoriesGetData["query"]>;
 
-export function useMarkers(query: CategoryQuery) {
+export const useMarkers = (query: CategoryQuery) => {
   return useQuery({
     queryKey: ["categories", query.name],
     queryFn: async () => {
@@ -112,4 +112,4 @@ export function useMarkers(query: CategoryQuery) {
       return response.data;
     }
   });
-}
+};

@@ -1,5 +1,5 @@
 export interface IFormState {
-  name: string | null;
+  name: string;
   description: string | null;
-  icon_url: string | null;
+  icon_url: string;
 }

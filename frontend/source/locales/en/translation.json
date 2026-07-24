@@ -8,7 +8,10 @@
   },
   "createCategoryModal": {
     "title": "Create a new category",
-    "name": "Name"
+    "name": "Name",
+    "description": "Description",
+    "uploadImage": "Upload",
+    "noImageSelected": "No icon has been selected"
   },
   "createMarkerSlider": {
     "title": "Create a new marker",
@@ -19,7 +22,8 @@
     "submit": "Update marker"
   },
   "general": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "listMarkersSlider": {
     "title": "Markers",
