@@ -27,7 +27,9 @@
   },
   "general": {
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "create": "Create",
+    "update": "Update"
   },
   "listMarkersSlider": {
     "title": "Markers",

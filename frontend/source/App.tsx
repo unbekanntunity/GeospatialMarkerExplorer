@@ -1,6 +1,7 @@
 import "./App.css";
 
-import CreateCategoryModal from "./components/modals/CreateCategoryModal/CreateCategoryModal";
+import CreateCategoryModal from "./components/modals/CategoryModal/CreateCategoryModal";
+import EditCategoryModal from "./components/modals/CategoryModal/EditCategoryModal";
 import DeleteConfirmModal from "./components/modals/DeleteConfirmModal";
 import { useModal } from "./components/modals/hooks/useModal";
 import { ModalAction } from "./components/modals/ModalAction";
@@ -30,6 +31,17 @@ const App = () => {
             dispatch({
               type: ModalAction.HideModal,
               modal: "createCategoryModal"
+            })
+          }
+        />
+      )}
+      {state.editCategoryModal && (
+        <EditCategoryModal
+          {...state.editCategoryModal}
+          onClose={() =>
+            dispatch({
+              type: ModalAction.HideModal,
+              modal: "editCategoryModal"
             })
           }
         />

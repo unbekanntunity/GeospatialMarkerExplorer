@@ -1,8 +1,13 @@
+import { CategoryResponse } from "../../api/generated";
+
 export interface IModalState {
   confirmDeleteModal?: {
     onConfirm: () => Promise<unknown>;
   };
   createCategoryModal?: {};
+  editCategoryModal?: {
+    category: CategoryResponse;
+  };
 }
 
 export enum ModalAction {

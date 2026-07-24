@@ -11,28 +11,31 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useCreateCategory } from "../../../models/CategoryModel";
+import { CategoryResponse } from "../../../api/generated";
 import { useImages, useUploadImage } from "../../../models/UploadModel";
 import Modal from "../Modal";
 import { IFormState } from "./types/IFormState";
 
-interface ICreateCategoryModalProps {
+interface ICategoryModalProps {
+  category?: CategoryResponse;
+  title: string;
+  submitText: string;
+  onConfirm: (formState: IFormState) => Promise<void>;
   onClose: () => void;
 }
 
-const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
-  const { onClose } = props;
+const CategoryModal = (props: ICategoryModalProps) => {
+  const { category, title, submitText, onConfirm, onClose } = props;
 
   const { t } = useTranslation();
 
   const { data: images, isFetching: isFetchingImages } = useImages();
   const uploadImage = useUploadImage();
-  const createCategory = useCreateCategory();
 
   const [formState, setFormState] = useState<IFormState>({
-    name: "",
-    description: "",
-    icon_url: "none"
+    name: category?.name ?? "",
+    description: category?.description ?? "",
+    icon_url: category?.icon_url ?? "none"
   });
 
   const onChangeName = useCallback(
@@ -83,18 +86,11 @@ const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
     []
   );
 
-  const onConfirm = useCallback(async () => {
-    await createCategory.mutateAsync({
-      ...formState,
-      icon_url: formState.icon_url !== "none" ? formState.icon_url : null
-    });
-  }, [formState, createCategory]);
-
   return (
     <Modal
-      title={t("createCategoryModal.title")}
-      confirmText={t("general.confirm")}
-      onConfirm={onConfirm}
+      title={title}
+      confirmText={submitText}
+      onConfirm={() => onConfirm(formState)}
       onClose={onClose}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -178,4 +174,4 @@ const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
   );
 };
 
-export default CreateCategoryModal;
+export default CategoryModal;

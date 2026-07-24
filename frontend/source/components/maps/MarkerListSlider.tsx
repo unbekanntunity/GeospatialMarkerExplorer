@@ -105,7 +105,7 @@ const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
                 alignItems: "center"
               }}
             >
-              <CircularProgress />
+              <CircularProgress color="secondary" />
             </Box>
           )}
           {!isFetching && (!markers || markers.length === 0) && (
