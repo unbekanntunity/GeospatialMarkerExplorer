@@ -6,22 +6,21 @@ import {
   DialogContent,
   DialogTitle,
   Toolbar,
-  Typography,
   useTheme
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { JSX, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-interface IConfirmModalProps {
+interface IModalProps {
   title: string;
   confirmText: string;
-  message: string;
+  children: JSX.Element;
   onConfirm: () => Promise<unknown>;
   onClose: () => void;
 }
 
-const ConfirmModal = (props: IConfirmModalProps) => {
-  const { title, confirmText, message, onConfirm, onClose } = props;
+const Modal = (props: IModalProps) => {
+  const { title, children, confirmText, onConfirm, onClose } = props;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -59,7 +58,7 @@ const ConfirmModal = (props: IConfirmModalProps) => {
               variant="contained"
               onClick={onClose}
             >
-              {t("general.confirm")}
+              {t("general.cancel")}
             </Button>
             <Button
               sx={{ mx: 2 }}
@@ -78,17 +77,9 @@ const ConfirmModal = (props: IConfirmModalProps) => {
           </div>
         </Box>
       </Toolbar>
-      <DialogContent>
-        <Typography
-          sx={{
-            whiteSpace: "pre-line"
-          }}
-        >
-          {message}
-        </Typography>
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
     </Dialog>
   );
 };
 
-export default ConfirmModal;
+export default Modal;

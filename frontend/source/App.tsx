@@ -1,6 +1,6 @@
 import "./App.css";
 
-import ConfirmModal from "./components/modals/ConfirmModal";
+import DeleteConfirmModal from "./components/modals/DeleteConfirmModal";
 import { useModals } from "./components/modals/hooks/useModals";
 import { ModalAction } from "./components/modals/ModalAction";
 import MapPage from "./components/pages/MapPage";
@@ -11,13 +11,13 @@ const App = () => {
   return (
     <>
       <MapPage />
-      {state.confirmModal && (
-        <ConfirmModal
-          {...state.confirmModal}
+      {state.confirmDeleteModal && (
+        <DeleteConfirmModal
+          {...state.confirmDeleteModal}
           onClose={() =>
             dispatch({
               type: ModalAction.HideModal,
-              modal: "confirmModal"
+              modal: "confirmDeleteModal"
             })
           }
         />

@@ -4,8 +4,11 @@
   },
   "confirmDeleteModal": {
     "title": "Confirm deletion",
-    "confirmText": "delete",
-    "cancelText": "cancel"
+    "confirmText": "delete"
+  },
+  "createCategoryModal": {
+    "title": "Create a new category",
+    "name": "Name"
   },
   "createMarkerSlider": {
     "title": "Create a new marker",
@@ -16,7 +19,7 @@
     "submit": "Update marker"
   },
   "general": {
-    "confirm": "Confirm"
+    "cancel": "Cancel"
   },
   "listMarkersSlider": {
     "title": "Markers",
@@ -31,6 +34,12 @@
   "tooltip": {
     "toggleMarkersDetailPoppers": "Show tooltips",
     "createMarker": "Create markers",
-    "listMarker": "List markers"
+    "listMarker": "List markers",
+    "createCategories": "Create category",
+    "listCategories": "List category"
+  },
+  "type": {
+    "markers": "Markers",
+    "categories": "Categories"
   }
 }

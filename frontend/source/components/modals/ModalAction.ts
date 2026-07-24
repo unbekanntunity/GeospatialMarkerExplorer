@@ -1,8 +1,5 @@
 export interface IModalState {
-  confirmModal?: {
-    title: string;
-    confirmText: string;
-    message: string;
+  confirmDeleteModal?: {
     onConfirm: () => Promise<unknown>;
   };
 }

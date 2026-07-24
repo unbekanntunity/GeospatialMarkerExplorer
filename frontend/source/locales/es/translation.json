@@ -32,5 +32,9 @@
     "toggleMarkersDetailPoppers": "Mostrar tooltips",
     "createMarker": "Crear marcadores",
     "listMarker": "Listar marcadores"
+  },
+  "type": {
+    "markers": "Marcadores",
+    "categories": "Categorías"
   }
 }
