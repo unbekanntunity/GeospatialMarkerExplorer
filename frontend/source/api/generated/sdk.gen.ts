@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetErrors, GetMarkersMarkersGetResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses } from './types.gen';
+import type { CreateCategoryCategoriesPostData, CreateCategoryCategoriesPostErrors, CreateCategoryCategoriesPostResponses, CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, DeleteCategoryCategoriesIdDeleteData, DeleteCategoryCategoriesIdDeleteErrors, DeleteCategoryCategoriesIdDeleteResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, GetCategoryCategoriesGetData, GetCategoryCategoriesGetErrors, GetCategoryCategoriesGetResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetErrors, GetMarkersMarkersGetResponses, UpdateCategoryCategoriesIdPutData, UpdateCategoryCategoriesIdPutErrors, UpdateCategoryCategoriesIdPutResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -50,6 +50,40 @@ export const getMarkerMarkersIdGet = <ThrowOnError extends boolean = false>(opti
  */
 export const updateMarkerMarkersIdPut = <ThrowOnError extends boolean = false>(options: Options<UpdateMarkerMarkersIdPutData, ThrowOnError>): RequestResult<UpdateMarkerMarkersIdPutResponses, UpdateMarkerMarkersIdPutErrors, ThrowOnError> => (options.client ?? client).put<UpdateMarkerMarkersIdPutResponses, UpdateMarkerMarkersIdPutErrors, ThrowOnError>({
     url: '/markers/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get Category
+ */
+export const getCategoryCategoriesGet = <ThrowOnError extends boolean = false>(options?: Options<GetCategoryCategoriesGetData, ThrowOnError>): RequestResult<GetCategoryCategoriesGetResponses, GetCategoryCategoriesGetErrors, ThrowOnError> => (options?.client ?? client).get<GetCategoryCategoriesGetResponses, GetCategoryCategoriesGetErrors, ThrowOnError>({ url: '/categories/', ...options });
+
+/**
+ * Create Category
+ */
+export const createCategoryCategoriesPost = <ThrowOnError extends boolean = false>(options: Options<CreateCategoryCategoriesPostData, ThrowOnError>): RequestResult<CreateCategoryCategoriesPostResponses, CreateCategoryCategoriesPostErrors, ThrowOnError> => (options.client ?? client).post<CreateCategoryCategoriesPostResponses, CreateCategoryCategoriesPostErrors, ThrowOnError>({
+    url: '/categories/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete Category
+ */
+export const deleteCategoryCategoriesIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteCategoryCategoriesIdDeleteData, ThrowOnError>): RequestResult<DeleteCategoryCategoriesIdDeleteResponses, DeleteCategoryCategoriesIdDeleteErrors, ThrowOnError> => (options.client ?? client).delete<DeleteCategoryCategoriesIdDeleteResponses, DeleteCategoryCategoriesIdDeleteErrors, ThrowOnError>({ url: '/categories/{id}', ...options });
+
+/**
+ * Update Category
+ */
+export const updateCategoryCategoriesIdPut = <ThrowOnError extends boolean = false>(options: Options<UpdateCategoryCategoriesIdPutData, ThrowOnError>): RequestResult<UpdateCategoryCategoriesIdPutResponses, UpdateCategoryCategoriesIdPutErrors, ThrowOnError> => (options.client ?? client).put<UpdateCategoryCategoriesIdPutResponses, UpdateCategoryCategoriesIdPutErrors, ThrowOnError>({
+    url: '/categories/{id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',

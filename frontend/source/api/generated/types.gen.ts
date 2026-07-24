@@ -5,6 +5,46 @@ export type ClientOptions = {
 };
 
 /**
+ * CategoryResponse
+ */
+export type CategoryResponse = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Icon Url
+     */
+    icon_url: string | null;
+};
+
+/**
+ * CreateCategoryRequest
+ */
+export type CreateCategoryRequest = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Icon Url
+     */
+    icon_url?: string | null;
+};
+
+/**
  * CreateMarkerRequest
  */
 export type CreateMarkerRequest = {
@@ -24,6 +64,10 @@ export type CreateMarkerRequest = {
      * Longitude
      */
     longitude: number;
+    /**
+     * Catgeroyid
+     */
+    catgeroyId?: string | null;
 };
 
 /**
@@ -60,6 +104,7 @@ export type MarkerResponse = {
      * Longitude
      */
     longitude: number;
+    category: CategoryResponse | null;
     /**
      * Created At
      */
@@ -68,6 +113,24 @@ export type MarkerResponse = {
      * Updated At
      */
     updated_at: string;
+};
+
+/**
+ * UpdateCategoryRequest
+ */
+export type UpdateCategoryRequest = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Icon Url
+     */
+    icon_url?: string | null;
 };
 
 /**
@@ -90,6 +153,10 @@ export type UpdateMarkerRequest = {
      * Longitude
      */
     longitude?: number | null;
+    /**
+     * Catgeroyid
+     */
+    catgeroyId?: string | null;
 };
 
 /**
@@ -118,6 +185,10 @@ export type GetMarkersMarkersGetData = {
          * Name
          */
         name?: string | null;
+        /**
+         * Catgeroyid
+         */
+        catgeroyId?: string | null;
     };
     url: '/markers/';
 };
@@ -254,3 +325,118 @@ export type UpdateMarkerMarkersIdPutResponses = {
 };
 
 export type UpdateMarkerMarkersIdPutResponse = UpdateMarkerMarkersIdPutResponses[keyof UpdateMarkerMarkersIdPutResponses];
+
+export type GetCategoryCategoriesGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string | null;
+    };
+    url: '/categories/';
+};
+
+export type GetCategoryCategoriesGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetCategoryCategoriesGetError = GetCategoryCategoriesGetErrors[keyof GetCategoryCategoriesGetErrors];
+
+export type GetCategoryCategoriesGetResponses = {
+    /**
+     * Response Get Category Categories  Get
+     *
+     * Successful Response
+     */
+    200: Array<CategoryResponse>;
+};
+
+export type GetCategoryCategoriesGetResponse = GetCategoryCategoriesGetResponses[keyof GetCategoryCategoriesGetResponses];
+
+export type CreateCategoryCategoriesPostData = {
+    body: CreateCategoryRequest;
+    path?: never;
+    query?: never;
+    url: '/categories/';
+};
+
+export type CreateCategoryCategoriesPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateCategoryCategoriesPostError = CreateCategoryCategoriesPostErrors[keyof CreateCategoryCategoriesPostErrors];
+
+export type CreateCategoryCategoriesPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: CategoryResponse;
+};
+
+export type CreateCategoryCategoriesPostResponse = CreateCategoryCategoriesPostResponses[keyof CreateCategoryCategoriesPostResponses];
+
+export type DeleteCategoryCategoriesIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/categories/{id}';
+};
+
+export type DeleteCategoryCategoriesIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteCategoryCategoriesIdDeleteError = DeleteCategoryCategoriesIdDeleteErrors[keyof DeleteCategoryCategoriesIdDeleteErrors];
+
+export type DeleteCategoryCategoriesIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type UpdateCategoryCategoriesIdPutData = {
+    body: UpdateCategoryRequest;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/categories/{id}';
+};
+
+export type UpdateCategoryCategoriesIdPutErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UpdateCategoryCategoriesIdPutError = UpdateCategoryCategoriesIdPutErrors[keyof UpdateCategoryCategoriesIdPutErrors];
+
+export type UpdateCategoryCategoriesIdPutResponses = {
+    /**
+     * Successful Response
+     */
+    200: CategoryResponse;
+};
+
+export type UpdateCategoryCategoriesIdPutResponse = UpdateCategoryCategoriesIdPutResponses[keyof UpdateCategoryCategoriesIdPutResponses];
