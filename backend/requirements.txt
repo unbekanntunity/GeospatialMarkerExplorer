@@ -36,6 +36,8 @@ pydantic-core==2.41.4
     # via pydantic
 python-dotenv==1.2.2
     # via uvicorn
+python-multipart==0.0.32
+    # via geospatial-marker-explorer-api (pyproject.toml)
 pyyaml==6.0.3
     # via uvicorn
 sqlalchemy==2.0.46

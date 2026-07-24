@@ -5,6 +5,16 @@ export type ClientOptions = {
 };
 
 /**
+ * Body_upload_file_images__post
+ */
+export type BodyUploadFileImagesPost = {
+    /**
+     * File
+     */
+    file: Blob | File;
+};
+
+/**
  * CategoryResponse
  */
 export type CategoryResponse = {
@@ -78,6 +88,16 @@ export type HttpValidationError = {
      * Detail
      */
     detail?: Array<ValidationError>;
+};
+
+/**
+ * ImageFileResponse
+ */
+export type ImageFileResponse = {
+    /**
+     * Url
+     */
+    url: string;
 };
 
 /**
@@ -440,3 +460,28 @@ export type UpdateCategoryCategoriesIdPutResponses = {
 };
 
 export type UpdateCategoryCategoriesIdPutResponse = UpdateCategoryCategoriesIdPutResponses[keyof UpdateCategoryCategoriesIdPutResponses];
+
+export type UploadFileImagesPostData = {
+    body: BodyUploadFileImagesPost;
+    path?: never;
+    query?: never;
+    url: '/images/';
+};
+
+export type UploadFileImagesPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UploadFileImagesPostError = UploadFileImagesPostErrors[keyof UploadFileImagesPostErrors];
+
+export type UploadFileImagesPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: ImageFileResponse;
+};
+
+export type UploadFileImagesPostResponse = UploadFileImagesPostResponses[keyof UploadFileImagesPostResponses];

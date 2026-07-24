@@ -15,6 +15,7 @@ dependencies = [
   "fastapi==0.119.0",          # web framework
   "pydantic==2.12.3",          # data validation & serialization
   "uvicorn[standard]==0.34.0", # ASGI server
+  "python-multipart==0.0.32",  # File upload support
 ]
 
 [tool.setuptools.packages.find]

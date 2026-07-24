@@ -1,13 +1,13 @@
 from uuid import UUID
 
 from database.connection import SessionLocal
-from database.models import Category, Marker
-from sqlalchemy import select
+from database.models import Category
+from sqlalchemy import exists, select
 
 from schemas.category import CreateCategoryRequest, QueryCategoryRequest, UpdateCategoryRequest
 
 class CategoryRepository:
-    async def create(self, category: CreateCategoryRequest) -> Marker:
+    async def create(self, category: CreateCategoryRequest) -> Category:
         new_Category = Category(
             name=category.name,
             description=category.description,
@@ -20,8 +20,16 @@ class CategoryRepository:
             await session.refresh(category)
 
             return category
+
+    async def get_by_id(self, id) -> Category:
+        statement = select(Category).where(Category.id == id)
+
+        async with SessionLocal() as session:
+            category = await session.execute(statement)
+
+        return category.scalar_one_or_none()
     
-    async def get_all(self, query: QueryCategoryRequest) -> list[Marker]:
+    async def get_all(self, query: QueryCategoryRequest) -> list[Category]:
         statement = select(Category)
 
         filters = []
@@ -36,7 +44,7 @@ class CategoryRepository:
             return result.scalars().all()
     
     
-    async def update(self, id, marker: UpdateCategoryRequest) -> Marker | None:
+    async def update(self, id, marker: UpdateCategoryRequest) -> Category | None:
         statement = (
             select(Category)
             .where(Category.id == id)
@@ -74,3 +82,22 @@ class CategoryRepository:
             await session.commit()
 
         return True
+
+    async def is_icon_used(
+        self,
+        icon_url: str,
+        exclude_id: UUID | None = None,
+    ) -> bool:
+        async with SessionLocal() as session:
+            statement = select(
+                exists().where(Category.icon_url == icon_url)
+            )
+
+            if exclude_id:
+                statement = statement.where(
+                    Category.id != exclude_id
+                )
+
+            result = await session.execute(statement)
+
+            return result.scalar()
