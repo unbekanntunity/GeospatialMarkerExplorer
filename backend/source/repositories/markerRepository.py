@@ -13,7 +13,6 @@ class MarkerRepository:
             description=marker.description,
             latitude=marker.latitude,
             longitude=marker.longitude,
-            tags=marker.tags,
         )
                 
         async with SessionLocal() as session:

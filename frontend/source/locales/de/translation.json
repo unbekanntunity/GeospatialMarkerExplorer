@@ -18,10 +18,19 @@
   "general": {
     "confirm": "Bestätigen"
   },
+  "listMarkersSlider": {
+    "title": "Marker",
+    "empty": "Es sieht so aus, als gäbe es keine Marker. Gehe und erstelle eine durch Klicken auf die Karte"
+  },
   "marker": {
     "name": "Name:",
     "latitude": "Breitengrad:",
     "longitude": "Längengrad:",
     "description": "Beschreibung:"
+  },
+  "tooltip": {
+    "toggleMarkersDetailPoppers": "Tooltips anzeigen",
+    "createMarker": "Marker erstellen",
+    "listMarker": "Listenmarker"
   }
 }

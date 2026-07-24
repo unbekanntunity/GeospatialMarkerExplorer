@@ -1,57 +1,80 @@
 import asyncio
 
 from database.connection import engine, SessionLocal
-from database.models import Base, Marker
-
+from database.models import Base, Category, Marker
 
 async def seed_database():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
     async with SessionLocal() as session:
-        result = await session.execute(
+        marker_table_result = await session.execute(
             Marker.__table__.select().limit(1)
         )
+        category_table_result = await session.execute(
+            Category.__table__.select().limit(1)
+        )
 
-        marker_exists = result.first()
+        marker_exists = marker_table_result.first()
+        category_exists = category_table_result.first()
 
-        if marker_exists:
+        if marker_exists or category_exists:
             return
+
+        restaurant = Category(
+            name="Restaurant",
+            description="michelin restuarants",
+            icon_url="/static/category-icons/restaurant.webp"
+        )
+        parking = Category(
+            name="Parking",
+            description="Good parking spots",
+            icon_url="/static/category-icons/parking.webp"
+        )
+        museum = Category(
+            name="Museum",
+            icon_url="/static/category-icons/museum.webp"
+        )
+
+        session.add_all([restaurant, parking, museum])
 
         markers = [
             Marker(
-                name="Berlin",
+                name="Berlin parking",
                 description="Example marker",
                 latitude=52.5200,
                 longitude=13.4050,
+                category = parking
             ),
             Marker(
-                name="Paris",
+                name="Paris museum",
                 description="Another example marker",
                 latitude=48.8566,
                 longitude=2.3522,
+                category = museum
             ),
             Marker(
-                name="Berlin we",
+                name="Restaurant al fonso",
                 description="Another example marker",
                 latitude=57.5200,
                 longitude=13.4050,
+                category = restaurant
             ),
             Marker(
-                name="Abc",
-                description="Another example markerasdasdawdawd",
+                name="Restaurant",
                 latitude=48.8566,
                 longitude=42.3522,
+                category = restaurant
             ),
             Marker(
-                name="Nowhere",
-                description="Another example markerasdasdawdawd",
+                name="Museum",
+                description="Extremly long description. Extremly long description. Extremly long description. Extremly long description",
                 latitude=48.8566,
                 longitude=100.3522,
+                category = museum
             ),
             Marker(
-                name="Pew pew",
-                description="Another example markerasdasdawdawd",
+                name="No Category",
                 latitude=9.8566,
                 longitude=100.3522,
             ),

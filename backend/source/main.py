@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from routes import markers
+from routes import categories, markers
 
 
 app = FastAPI(
@@ -11,4 +11,10 @@ app.include_router(
     markers.router,
     prefix="/markers",
     tags=["markers"]
+)
+
+app.include_router(
+    categories.router,
+    prefix="/categories",
+    tags=["categories"]
 )

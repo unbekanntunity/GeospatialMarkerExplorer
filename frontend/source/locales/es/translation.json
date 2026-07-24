@@ -18,10 +18,19 @@
   "general": {
     "confirm": "Confirmar"
   },
+  "listMarkersSlider": {
+    "title": "Marcadores",
+    "empty": "Parece que no hay marcadores. Ve y crea uno haciendo clic en el mapa"
+  },
   "marker": {
     "name": "Nombre:",
     "latitude": "Latitud:",
     "longitude": "Longitud:",
     "description": "Descripción:"
+  },
+  "tooltip": {
+    "toggleMarkersDetailPoppers": "Mostrar tooltips",
+    "createMarker": "Crear marcadores",
+    "listMarker": "Listar marcadores"
   }
 }

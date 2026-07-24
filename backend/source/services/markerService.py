@@ -1,6 +1,5 @@
 from uuid import UUID
 
-from database.models import Marker
 from errors import MarkerNotFoundError
 from repositories import markerRepository
 from schemas.marker import CreateMarkerRequest, QueryMarkerRequest, UpdateMarkerRequest
