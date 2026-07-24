@@ -38,7 +38,7 @@
   "tooltip": {
     "toggleMarkersDetailPoppers": "Show tooltips",
     "createMarker": "Create markers",
-    "listMarker": "List markers",
+    "listMarkers": "List markers",
     "createCategories": "Create category",
     "listCategories": "List category"
   },

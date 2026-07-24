@@ -140,7 +140,7 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
               <>
                 <Tooltip
                   enterDelay={TOOLTIP_DELAY}
-                  title={"tooltip.toggleMarkersDetailPoppers"}
+                  title={t("tooltip.toggleMarkersDetailPoppers")}
                 >
                   <IconButton
                     size="large"
@@ -153,7 +153,7 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 </Tooltip>
                 <Tooltip
                   enterDelay={TOOLTIP_DELAY}
-                  title={"tooltip.createMarker"}
+                  title={t("tooltip.createMarker")}
                 >
                   <IconButton
                     size="large"
@@ -172,7 +172,7 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 </Tooltip>
                 <Tooltip
                   enterDelay={TOOLTIP_DELAY}
-                  title={"tooltip.listMarkers"}
+                  title={t("tooltip.listMarkers")}
                 >
                   <IconButton
                     size="large"
@@ -193,7 +193,7 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
               <>
                 <Tooltip
                   enterDelay={TOOLTIP_DELAY}
-                  title={"tooltip.createCategories"}
+                  title={t("tooltip.createCategories")}
                 >
                   <IconButton
                     color={
@@ -208,7 +208,7 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 </Tooltip>
                 <Tooltip
                   enterDelay={TOOLTIP_DELAY}
-                  title={"tooltip.listCategories"}
+                  title={t("tooltip.listCategories")}
                 >
                   <IconButton size="large" aria-label="list categories">
                     <ReorderOutlinedIcon />

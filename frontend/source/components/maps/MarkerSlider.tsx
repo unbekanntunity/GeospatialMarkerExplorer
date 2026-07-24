@@ -1,33 +1,28 @@
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import {
   Box,
   Button,
   CircularProgress,
-  IconButton,
-  Paper,
   TextField,
-  Typography,
-  useTheme
+  Typography
 } from "@mui/material";
-import L from "leaflet";
 import {
   Dispatch,
   forwardRef,
   SetStateAction,
   useCallback,
-  useEffect,
-  useMemo,
-  useRef
+  useMemo
 } from "react";
 import { useTranslation } from "react-i18next";
 import { useMapEvents } from "react-leaflet";
 
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
 import { SliderPosition } from "../sliders/SliderAction";
+import Slider from "./Slider";
 import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 interface IMarkerSliderProps {
+  open: boolean;
   title: string;
   submitText: string;
   position: SliderPosition;
@@ -41,6 +36,7 @@ interface IMarkerSliderProps {
 const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
   (props, ref) => {
     const {
+      open,
       title,
       submitText,
       position,
@@ -54,7 +50,6 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
     const maps = useMapEvents({});
 
     const { t } = useTranslation();
-    const theme = useTheme();
 
     const validFormState = useMemo(() => {
       return !isNullOrWhiteSpace(formState.name);
@@ -122,74 +117,15 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
       [setFormState]
     );
 
-    const sliderRef = useRef<HTMLDivElement | null>(null);
-
-    const setRefs = useCallback(
-      (node: HTMLDivElement | null) => {
-        sliderRef.current = node;
-
-        if (typeof ref === "function") {
-          ref(node);
-        } else if (ref) {
-          ref.current = node;
-        }
-      },
-      [ref]
-    );
-
-    useEffect(() => {
-      if (!sliderRef.current) {
-        return;
-      }
-
-      L.DomEvent.disableClickPropagation(sliderRef.current);
-      L.DomEvent.disableScrollPropagation(sliderRef.current);
-    }, []);
-
     return (
-      <Box
-        ref={setRefs}
-        sx={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: position === "left" ? 0 : "unset",
-          right: position === "right" ? 0 : "unset",
-          width: "25vw",
-          zIndex: 1000
-        }}
+      <Slider
+        title={title}
+        open={open}
+        ref={ref}
+        position={position}
+        onClose={onClose}
       >
-        <Paper
-          sx={{
-            border: `4px solid ${theme.palette.secondary.main}`,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            boxSizing: "border-box"
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              color: theme.palette.primary.main,
-              backgroundColor: theme.palette.secondary.main,
-              p: 2
-            }}
-          >
-            <Typography
-              sx={{
-                textTransform: "uppercase",
-                fontWeight: 600
-              }}
-            >
-              {title}
-            </Typography>
-            <IconButton color="primary" onClick={onClose}>
-              <ClearOutlinedIcon />
-            </IconButton>
-          </Box>
+        <>
           <Box
             sx={{
               display: "grid",
@@ -231,8 +167,8 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
           >
             {submitText}
           </Button>
-        </Paper>
-      </Box>
+        </>
+      </Slider>
     );
   }
 );

@@ -4,8 +4,14 @@
   },
   "confirmDeleteModal": {
     "title": "Confirmar eliminación",
-    "confirmText": "borrar",
-    "cancelText": "cancelar"
+    "confirmText": "borrar"
+  },
+  "createCategoryModal": {
+    "title": "Crear una nueva categoría",
+    "name": "Nombre",
+    "description": "Descripción",
+    "uploadImage": "Subir",
+    "noImageSelected": "Ningún icono ha sido seleccionado"
   },
   "createMarkerSlider": {
     "title": "Crear un nuevo marcador",
@@ -16,6 +22,7 @@
     "submit": "Actualizar marcador"
   },
   "general": {
+    "cancel": "Cancelar",
     "confirm": "Confirmar"
   },
   "listMarkersSlider": {
@@ -31,7 +38,9 @@
   "tooltip": {
     "toggleMarkersDetailPoppers": "Mostrar tooltips",
     "createMarker": "Crear marcadores",
-    "listMarker": "Listar marcadores"
+    "listMarker": "Listar marcadores",
+    "createCategories": "Crear categoría",
+    "listCategories": "Lista de categoría"
   },
   "type": {
     "markers": "Marcadores",

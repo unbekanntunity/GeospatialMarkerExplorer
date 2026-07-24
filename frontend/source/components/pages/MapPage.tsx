@@ -1,4 +1,3 @@
-import { Slide } from "@mui/material";
 import { useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 
@@ -7,7 +6,7 @@ import CustomAppBar from "../AppBar";
 import MapMarker from "../maps/MapMarker";
 import MarkerCreator from "../maps/MarkerCreator";
 import MarkerEditor from "../maps/MarkerEditor";
-import MarkerList from "../maps/MarkerList";
+import MarkerListSlider from "../maps/MarkerListSlider";
 import { useSlider } from "../sliders/hooks/useSliders";
 
 const MapPage = () => {
@@ -49,16 +48,10 @@ const MapPage = () => {
             <MarkerEditor marker={state.editMarkerSlider.marker} />
           )}
           {state.markerListSlider && (
-            <Slide
-              direction={
-                state.markerListSlider.position === "right" ? "left" : "right"
-              }
-              in={!!state.markerListSlider}
-              mountOnEnter
-              unmountOnExit
-            >
-              <MarkerList position={state.markerListSlider.position} />
-            </Slide>
+            <MarkerListSlider
+              open={!!state.markerListSlider}
+              position={state.markerListSlider.position}
+            />
           )}
         </MapContainer>
       </div>

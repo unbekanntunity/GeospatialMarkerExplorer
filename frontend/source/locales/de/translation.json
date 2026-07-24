@@ -4,8 +4,14 @@
   },
   "confirmDeleteModal": {
     "title": "Löschen bestätigen",
-    "confirmText": "löschen",
-    "cancelText": "abbrechen"
+    "confirmText": "löschen"
+  },
+  "createCategoryModal": {
+    "title": "Neue Kategorie erstellen",
+    "name": "Name",
+    "description": "Beschreibung",
+    "uploadImage": "Hochladen",
+    "noImageSelected": "Kein Symbol ausgewählt"
   },
   "createMarkerSlider": {
     "title": "Erstelle einen neuen Marker",
@@ -16,6 +22,7 @@
     "submit": "Marker aktualisieren"
   },
   "general": {
+    "cancel": "Abbrechen",
     "confirm": "Bestätigen"
   },
   "listMarkersSlider": {
@@ -31,7 +38,9 @@
   "tooltip": {
     "toggleMarkersDetailPoppers": "Tooltips anzeigen",
     "createMarker": "Marker erstellen",
-    "listMarker": "Listenmarker"
+    "listMarker": "Listenmarker",
+    "createCategories": "Kategorie erstellen",
+    "listCategories": "Kategorie auflisten"
   },
   "type": {
     "markers": "Marker",

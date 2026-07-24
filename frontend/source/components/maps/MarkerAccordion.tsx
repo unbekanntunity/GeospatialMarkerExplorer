@@ -11,7 +11,6 @@ import {
   Typography
 } from "@mui/material";
 import { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 import { MarkerResponse } from "../../api/generated";
 import { useDeleteMarker } from "../../models/MarkerModel";
@@ -28,7 +27,6 @@ interface IMarkerAccordionProps {
 const MarkerAccordion = (props: IMarkerAccordionProps) => {
   const { marker } = props;
 
-  const { t } = useTranslation();
   const { state } = useSlider();
 
   const [expanded, setIsExpanded] = useState(false);

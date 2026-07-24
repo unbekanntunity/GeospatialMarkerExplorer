@@ -1,18 +1,14 @@
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   CircularProgress,
-  IconButton,
   InputAdornment,
   List,
-  Paper,
   TextField,
   Typography,
   useTheme
 } from "@mui/material";
-import L from "leaflet";
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useDebounce from "../../hooks/useDebounce";
@@ -20,14 +16,16 @@ import { useMarkers } from "../../models/MarkerModel";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import MarkerAccordion from "./MarkerAccordion";
+import Slider from "./Slider";
 
 interface IMarkerListProps {
+  open: boolean;
   position: SliderPosition;
 }
 
-const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
+const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
   (props, ref) => {
-    const { position } = props;
+    const { open, position } = props;
 
     const [searchMarkerName, setSearchMarkerName] = useState<string>("");
 
@@ -40,30 +38,6 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
     const { dispatch } = useSlider();
     const { t } = useTranslation();
     const theme = useTheme();
-
-    const sliderRef = useRef<HTMLDivElement | null>(null);
-
-    const setRefs = useCallback(
-      (node: HTMLDivElement | null) => {
-        sliderRef.current = node;
-
-        if (typeof ref === "function") {
-          ref(node);
-        } else if (ref) {
-          ref.current = node;
-        }
-      },
-      [ref]
-    );
-
-    useEffect(() => {
-      if (!sliderRef.current) {
-        return;
-      }
-
-      L.DomEvent.disableClickPropagation(sliderRef.current);
-      L.DomEvent.disableScrollPropagation(sliderRef.current);
-    }, []);
 
     const onClose = useCallback(() => {
       dispatch({
@@ -80,49 +54,14 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
     );
 
     return (
-      <Box
-        ref={setRefs}
-        sx={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: position === "left" ? 0 : "unset",
-          right: position === "right" ? 0 : "unset",
-          width: "25vw",
-          zIndex: 1000
-        }}
+      <Slider
+        open={open}
+        ref={ref}
+        position={position}
+        title={t("listMarkersSlider.title")}
+        onClose={onClose}
       >
-        <Paper
-          sx={{
-            border: "4px solid yellow",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            boxSizing: "border-box"
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              color: theme.palette.primary.main,
-              backgroundColor: theme.palette.secondary.main,
-              p: 2
-            }}
-          >
-            <Typography
-              sx={{
-                textTransform: "uppercase",
-                fontWeight: 600
-              }}
-            >
-              {t("listMarkersSlider.title")}
-            </Typography>
-            <IconButton color="primary" onClick={onClose}>
-              <ClearOutlinedIcon />
-            </IconButton>
-          </Box>
+        <>
           <Box>
             <TextField
               fullWidth
@@ -186,10 +125,10 @@ const MarkerList = forwardRef<HTMLDivElement, IMarkerListProps>(
               </Typography>
             </Box>
           )}
-        </Paper>
-      </Box>
+        </>
+      </Slider>
     );
   }
 );
 
-export default MarkerList;
+export default MarkerListSlider;

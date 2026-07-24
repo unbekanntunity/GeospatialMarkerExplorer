@@ -1,4 +1,3 @@
-import { Slide } from "@mui/material";
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -40,18 +39,17 @@ const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
   }, [dispatch]);
 
   return (
-    <Slide direction="right" in={open} mountOnEnter unmountOnExit>
-      <MarkerSlider
-        title={`${t("editMarkerSlider.title")} ${id}`}
-        submitText={t("editMarkerSlider.submit")}
-        position={position}
-        formState={formState}
-        setFormState={setFormState}
-        onSubmit={onSubmit}
-        isSubmitting={updateMarker.isPending}
-        onClose={onClose}
-      />
-    </Slide>
+    <MarkerSlider
+      open={open}
+      title={`${t("editMarkerSlider.title")} ${id}`}
+      submitText={t("editMarkerSlider.submit")}
+      position={position}
+      formState={formState}
+      setFormState={setFormState}
+      onSubmit={onSubmit}
+      isSubmitting={updateMarker.isPending}
+      onClose={onClose}
+    />
   );
 };
 
