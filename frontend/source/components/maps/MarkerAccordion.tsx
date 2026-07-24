@@ -15,7 +15,7 @@ import { useCallback, useState } from "react";
 import { MarkerResponse } from "../../api/generated";
 import { useDeleteMarker } from "../../models/MarkerModel";
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
-import { useModals } from "../modals/hooks/useModals";
+import { useModal } from "../modals/hooks/useModal";
 import { ModalAction } from "../modals/ModalAction";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction } from "../sliders/SliderAction";
@@ -32,7 +32,7 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
   const [expanded, setIsExpanded] = useState(false);
 
   const { dispatch: sliderDispatch } = useSlider();
-  const { dispatch: modalDispatch } = useModals();
+  const { dispatch: modalDispatch } = useModal();
 
   const deleteMarker = useDeleteMarker();
 

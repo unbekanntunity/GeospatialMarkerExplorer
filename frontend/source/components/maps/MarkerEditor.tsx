@@ -4,20 +4,21 @@ import { useCallback, useMemo, useState } from "react";
 import { CircleMarker, Marker, useMapEvents } from "react-leaflet";
 
 import { MarkerResponse } from "../../api/generated";
-import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderPosition } from "../sliders/SliderAction";
 import EditMarkerSlider from "./EditMarkerSlider";
 import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 interface IMarkerEditorProps {
   marker: MarkerResponse;
+  open: boolean;
+  sliderPosition: SliderPosition;
 }
 
 const MarkerEditor = (props: IMarkerEditorProps) => {
-  const { marker } = props;
+  const { marker, open, sliderPosition } = props;
 
   const theme = useTheme();
-  const { state } = useSlider();
 
   const [formState, setFormState] = useState<IFormState>({
     name: marker.name,
@@ -54,11 +55,11 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
     }));
   }, []);
 
-  return state.editMarkerSlider ? (
+  return (
     <>
       <EditMarkerSlider
-        open={!!state.editMarkerSlider}
-        position={state.editMarkerSlider.position}
+        open={open}
+        position={sliderPosition}
         id={marker.id}
         formState={formState}
         setFormState={setFormState}
@@ -84,7 +85,7 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
         </>
       )}
     </>
-  ) : null;
+  );
 };
 
 export default MarkerEditor;

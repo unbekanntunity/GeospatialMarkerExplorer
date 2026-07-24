@@ -13,6 +13,9 @@ export interface ISliderState {
   markerListSlider?: {
     position: SliderPosition;
   };
+  categoryListSlider?: {
+    position: SliderPosition;
+  };
 }
 
 export enum SliderAction {

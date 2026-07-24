@@ -3,6 +3,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 
 import { useMarkers } from "../../models/MarkerModel";
 import CustomAppBar from "../AppBar";
+import CategoryListSlider from "../categories/CategoryListSlider";
 import MapMarker from "../maps/MapMarker";
 import MarkerCreator from "../maps/MarkerCreator";
 import MarkerEditor from "../maps/MarkerEditor";
@@ -44,8 +45,18 @@ const MapPage = () => {
               />
             ))}
           <MarkerCreator />
+          {state.categoryListSlider && (
+            <CategoryListSlider
+              open={!!state.categoryListSlider}
+              position={state.categoryListSlider.position}
+            />
+          )}
           {state.editMarkerSlider && (
-            <MarkerEditor marker={state.editMarkerSlider.marker} />
+            <MarkerEditor
+              open={!!state.editMarkerSlider}
+              sliderPosition={state.editMarkerSlider.position}
+              marker={state.editMarkerSlider.marker}
+            />
           )}
           {state.markerListSlider && (
             <MarkerListSlider

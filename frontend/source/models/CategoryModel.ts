@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createCategoryCategoriesPost,
   deleteCategoryCategoriesIdDelete,
-  getMarkersMarkersGet,
+  getCategoriesCategoriesGet,
   updateCategoryCategoriesIdPut
 } from "../api/generated/sdk.gen";
 import {
@@ -99,11 +99,11 @@ export const useDeleteCategory = () => {
 
 type CategoryQuery = NonNullable<GetCategoriesCategoriesGetData["query"]>;
 
-export const useMarkers = (query: CategoryQuery) => {
+export const useCategories = (query: CategoryQuery) => {
   return useQuery({
     queryKey: ["categories", query.name],
     queryFn: async () => {
-      const response = await getMarkersMarkersGet({ query });
+      const response = await getCategoriesCategoriesGet({ query });
 
       if (response.error) {
         throw response.error;

@@ -2,12 +2,12 @@ import "./App.css";
 
 import CreateCategoryModal from "./components/modals/CreateCategoryModal/CreateCategoryModal";
 import DeleteConfirmModal from "./components/modals/DeleteConfirmModal";
-import { useModals } from "./components/modals/hooks/useModals";
+import { useModal } from "./components/modals/hooks/useModal";
 import { ModalAction } from "./components/modals/ModalAction";
 import MapPage from "./components/pages/MapPage";
 
 const App = () => {
-  const { state, dispatch } = useModals();
+  const { state, dispatch } = useModal();
 
   return (
     <>

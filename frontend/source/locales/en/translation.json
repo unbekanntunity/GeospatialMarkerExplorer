@@ -2,6 +2,10 @@
   "appbar": {
     "title": "Geospatial Marker Explorer"
   },
+  "categoryListSlider": {
+    "title": "Categories",
+    "empty": "Seems like there are no categories.\nGo and create some!"
+  },
   "confirmDeleteModal": {
     "title": "Confirm deletion",
     "confirmText": "delete"
@@ -27,7 +31,7 @@
   },
   "listMarkersSlider": {
     "title": "Markers",
-    "empty": "Seems like there are no markers. Go and create one by clicking on the map"
+    "empty": "Seems like there are no markers.\nGo and create one by clicking on the map"
   },
   "marker": {
     "name": "Name:",

@@ -20,7 +20,7 @@ import { useTranslation } from "react-i18next";
 
 import { TOOLTIP_DELAY } from "../constants";
 import LanguagePicker from "./language/LanguagePicker";
-import { useModals } from "./modals/hooks/useModals";
+import { useModal } from "./modals/hooks/useModal";
 import { ModalAction } from "./modals/ModalAction";
 import { useSlider } from "./sliders/hooks/useSliders";
 import { SliderAction } from "./sliders/SliderAction";
@@ -36,7 +36,7 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
   const [selectedType, setSelectedType] = useState("markers");
 
   const { state: sliderState, dispatch: sliderDispatch } = useSlider();
-  const { state: modalState, dispatch: modalDispatch } = useModals();
+  const { state: modalState, dispatch: modalDispatch } = useModal();
 
   const { t } = useTranslation();
   const theme = useTheme();
@@ -88,6 +88,26 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
       payload: {}
     });
   }, [modalDispatch]);
+
+  const onToggleCategoryListSlider = useCallback(
+    (isOpen: boolean) => {
+      if (isOpen) {
+        sliderDispatch({
+          type: SliderAction.HideSlider,
+          slider: "categoryListSlider"
+        });
+      } else {
+        sliderDispatch({
+          type: SliderAction.ShowSlider,
+          slider: "categoryListSlider",
+          payload: {
+            position: "right"
+          }
+        });
+      }
+    },
+    [sliderDispatch]
+  );
 
   const onChangeType = useCallback((event: SelectChangeEvent) => {
     setSelectedType(event.target.value);
@@ -209,6 +229,9 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 <Tooltip
                   enterDelay={TOOLTIP_DELAY}
                   title={t("tooltip.listCategories")}
+                  onClick={() =>
+                    onToggleCategoryListSlider(!!sliderState.categoryListSlider)
+                  }
                 >
                   <IconButton size="large" aria-label="list categories">
                     <ReorderOutlinedIcon />

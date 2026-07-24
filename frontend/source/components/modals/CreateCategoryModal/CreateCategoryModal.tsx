@@ -56,27 +56,38 @@ const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
   );
 
   const onUploadFile = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
 
       if (!file) {
         return;
       }
 
-      uploadImage.mutate({ file });
+      const uploadedImage = await uploadImage.mutateAsync({ file });
+
+      setFormState((prev) => ({
+        ...prev,
+        icon_url: uploadedImage.name
+      }));
     },
     [uploadImage]
   );
 
-  const onChangeFile = useCallback((event: SelectChangeEvent) => {
-    setFormState((prev) => ({
-      ...prev,
-      icon_url: event.target.value
-    }));
-  }, []);
+  const onChangeFile = useCallback(
+    (event: SelectChangeEvent<string | null>) => {
+      setFormState((prev) => ({
+        ...prev,
+        icon_url: event.target.value
+      }));
+    },
+    []
+  );
 
   const onConfirm = useCallback(async () => {
-    await createCategory.mutateAsync({ ...formState });
+    await createCategory.mutateAsync({
+      ...formState,
+      icon_url: formState.icon_url !== "none" ? formState.icon_url : null
+    });
   }, [formState, createCategory]);
 
   return (
@@ -150,7 +161,7 @@ const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
               width: "100%"
             }}
           >
-            {formState.icon_url !== "none" ? (
+            {formState.icon_url !== "none" && formState.icon_url !== null ? (
               <img
                 style={{
                   maxWidth: "100%",
