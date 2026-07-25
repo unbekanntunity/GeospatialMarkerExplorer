@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from errors import CategoryNotFoundError
+from errors.categoryNotFoundError import CategoryNotFoundError
 from repositories import categoryRepository
 from schemas.category import CreateCategoryRequest, QueryCategoryRequest, UpdateCategoryRequest
 

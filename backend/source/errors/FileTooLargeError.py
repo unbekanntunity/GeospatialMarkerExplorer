@@ -1,4 +1,4 @@
 class FileTooLargeError(Exception):
 
     def __init__(self):
-        super().__init__("Unsupported file type")
+        super().__init__("File too large.")

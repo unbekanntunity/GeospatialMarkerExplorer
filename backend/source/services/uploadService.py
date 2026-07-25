@@ -5,7 +5,8 @@ from uuid import uuid4
 
 from fastapi import UploadFile
 
-from errors import FileTooLargeError, UnsupportedFileTypeError
+from errors.fileTooLargeError import FileTooLargeError
+from errors.unsupportedFileTypeError import UnsupportedFileTypeError
 from schemas.imageFileResponse import ImageFile
 
 class UploadService:
