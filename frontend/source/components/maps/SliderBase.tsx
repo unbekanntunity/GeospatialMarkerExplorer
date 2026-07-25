@@ -36,7 +36,6 @@ const SliderBase = forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
       return;
     }
 
-    L.DomEvent.disableClickPropagation(sliderRef.current);
     L.DomEvent.disableScrollPropagation(sliderRef.current);
   }, []);
 

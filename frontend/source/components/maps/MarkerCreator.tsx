@@ -5,22 +5,22 @@ import { CircleMarker, Marker, useMapEvents } from "react-leaflet";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction } from "../sliders/SliderAction";
 import CreateMarkerSlider from "./CreateMarkerSlider";
-import { IFormState } from "./types/IFormState";
+import { defaultFormState, IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 const MarkerCreator = () => {
   const { state, dispatch } = useSlider();
   const theme = useTheme();
 
-  const [formState, setFormState] = useState<IFormState>({
-    name: "",
-    description: "",
-    latitude: 0,
-    longitude: 0
-  });
+  const [formState, setFormState] = useState<IFormState>(defaultFormState);
 
   useMapEvents({
     click(e) {
+      const target = e.originalEvent.target as HTMLElement;
+      if (!target.className.includes("leaflet-container")) {
+        return;
+      }
+
       setFormState((prev) => ({
         ...prev,
         latitude: e.latlng.lat,

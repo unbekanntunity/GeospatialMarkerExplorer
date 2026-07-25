@@ -24,11 +24,17 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
     name: marker.name,
     description: marker.description,
     latitude: marker.latitude,
-    longitude: marker.longitude
+    longitude: marker.longitude,
+    category: marker.category
   });
 
   useMapEvents({
     click(e) {
+      const target = e.originalEvent.target as HTMLElement;
+      if (!target.className.includes("leaflet-container")) {
+        return;
+      }
+
       setFormState((prev) => ({
         ...prev,
         latitude: e.latlng.lat,
