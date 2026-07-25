@@ -8,11 +8,10 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
-import { forwardRef, useCallback, useState } from "react";
+import { Dispatch, forwardRef, SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import useDebounce from "../../hooks/useDebounce";
-import { useMarkers } from "../../models/MarkerModel";
+import { MarkerResponse } from "../../api/generated";
 import CategoryDropdown from "../categories/CategoryDropdown";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction, SliderPosition } from "../sliders/SliderAction";
@@ -22,23 +21,26 @@ import Slider from "./Slider";
 interface IMarkerListProps {
   open: boolean;
   position: SliderPosition;
+  markers?: MarkerResponse[];
+  searchName: string;
+  setSearchName: Dispatch<SetStateAction<string>>;
+  categoryIds: string[];
+  setCategoryIds: Dispatch<SetStateAction<string[]>>;
+  isFetching: boolean;
 }
 
 const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
   (props, ref) => {
-    const { open, position } = props;
-
-    const [searchMarkerName, setSearchMarkerName] = useState("");
-    const [filterByCategoryIds, setFilterByCategoryIds] = useState<string[]>(
-      []
-    );
-
-    const debouncedSearchMarkerName = useDebounce(searchMarkerName, 300);
-
-    const { data: markers, isFetching } = useMarkers({
-      name: debouncedSearchMarkerName || undefined,
-      category_ids: filterByCategoryIds
-    });
+    const {
+      markers,
+      isFetching,
+      searchName,
+      setSearchName,
+      categoryIds,
+      setCategoryIds,
+      open,
+      position
+    } = props;
 
     const { dispatch } = useSlider();
     const { t } = useTranslation();
@@ -53,9 +55,9 @@ const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
 
     const onChangeName = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchMarkerName(e.target.value);
+        setSearchName(e.target.value);
       },
-      []
+      [setSearchName]
     );
 
     return (
@@ -70,7 +72,7 @@ const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <TextField
               fullWidth
-              value={searchMarkerName}
+              value={searchName}
               onChange={onChangeName}
               variant="outlined"
               sx={{
@@ -89,8 +91,8 @@ const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
               }}
             />
             <CategoryDropdown
-              categoryIds={filterByCategoryIds}
-              setCategoryIds={setFilterByCategoryIds}
+              categoryIds={categoryIds}
+              setCategoryIds={setCategoryIds}
             />
           </Box>
           {!isFetching && markers !== undefined && markers.length > 0 && (

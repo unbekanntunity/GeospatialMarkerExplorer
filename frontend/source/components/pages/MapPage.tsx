@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 
+import useDebounce from "../../hooks/useDebounce";
 import { useMarkers } from "../../models/MarkerModel";
 import CustomAppBar from "../AppBar";
 import CategoryListSlider from "../categories/CategoryListSlider";
@@ -13,9 +14,17 @@ import { useSlider } from "../sliders/hooks/useSliders";
 const MapPage = () => {
   const [showMarkerDetailPoppers, setShowMarkerDetailPoppers] = useState(true);
 
+  const [searchMarkerName, setSearchMarkerName] = useState("");
+  const [filterByCategoryIds, setFilterByCategoryIds] = useState<string[]>([]);
+
+  const debouncedSearchMarkerName = useDebounce(searchMarkerName, 300);
+
   const { state } = useSlider();
 
-  const { data: markers } = useMarkers({});
+  const { data: markers, isFetching } = useMarkers({
+    name: debouncedSearchMarkerName,
+    category_ids: filterByCategoryIds
+  });
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
@@ -60,6 +69,11 @@ const MapPage = () => {
           )}
           {state.markerListSlider && (
             <MarkerListSlider
+              isFetching={isFetching}
+              searchName={searchMarkerName}
+              setSearchName={setSearchMarkerName}
+              categoryIds={filterByCategoryIds}
+              setCategoryIds={setFilterByCategoryIds}
               open={!!state.markerListSlider}
               position={state.markerListSlider.position}
             />
