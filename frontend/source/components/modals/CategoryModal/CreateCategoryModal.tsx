@@ -18,18 +18,20 @@ const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
 
   const createCategory = useCreateCategory();
 
-  const onConfirm = useCallback(async () => {
-    await createCategory.mutateAsync({
-      ...formState,
-      icon_url: formState.iconUrl !== "none" ? formState.iconUrl : null
-    });
-  }, [formState, createCategory]);
-
   const onClose = useCallback(() => {
     setFormState(defaultFormState);
 
     parentOnClose();
   }, [parentOnClose]);
+
+  const onConfirm = useCallback(async () => {
+    await createCategory.mutateAsync({
+      ...formState,
+      icon_url: formState.iconUrl !== "none" ? formState.iconUrl : null
+    });
+
+    onClose();
+  }, [formState, createCategory, onClose]);
 
   return (
     <CategoryModal
