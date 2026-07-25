@@ -22,19 +22,6 @@ const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
 
   const createMarker = useCreateMarker();
 
-  const onSubmit = useCallback(() => {
-    if (formState.name === null) {
-      return;
-    }
-
-    createMarker.mutate({
-      name: formState.name,
-      description: formState.description?.trim(),
-      latitude: formState.latitude,
-      longitude: formState.longitude
-    });
-  }, [formState, createMarker]);
-
   const onClose = useCallback(() => {
     setFormState(defaultFormState);
 
@@ -43,6 +30,21 @@ const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
       slider: "createMarkerSlider"
     });
   }, [setFormState, dispatch]);
+
+  const onSubmit = useCallback(async () => {
+    if (formState.name === null) {
+      return;
+    }
+
+    await createMarker.mutateAsync({
+      name: formState.name,
+      description: formState.description?.trim(),
+      latitude: formState.latitude,
+      longitude: formState.longitude
+    });
+
+    onClose();
+  }, [formState, createMarker, onClose]);
 
   return (
     <MarkerSlider
