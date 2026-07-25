@@ -5,7 +5,7 @@ import { useCreateMarker } from "../../models/MarkerModel";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import MarkerSlider from "./MarkerSlider";
-import { IFormState } from "./types/IFormState";
+import { defaultFormState, IFormState } from "./types/IFormState";
 
 interface ICreateMarkerSliderProps {
   open: boolean;
@@ -36,11 +36,13 @@ const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
   }, [formState, createMarker]);
 
   const onClose = useCallback(() => {
+    setFormState(defaultFormState);
+
     dispatch({
       type: SliderAction.HideSlider,
       slider: "createMarkerSlider"
     });
-  }, [dispatch]);
+  }, [setFormState, dispatch]);
 
   return (
     <MarkerSlider

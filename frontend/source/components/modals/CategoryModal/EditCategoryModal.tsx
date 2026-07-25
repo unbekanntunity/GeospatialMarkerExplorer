@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { CategoryResponse } from "../../../api/generated";
@@ -14,23 +14,27 @@ interface IEditCategoryModalProps {
 const EditCategoryModal = (props: IEditCategoryModalProps) => {
   const { category, onClose } = props;
 
+  const [formState, setFormState] = useState<IFormState>({
+    name: category.name,
+    description: category.description,
+    icon_url: category.icon_url
+  });
+
   const { t } = useTranslation();
 
   const updateCategory = useUpdateCategory();
 
-  const onConfirm = useCallback(
-    async (formState: IFormState) => {
-      await updateCategory.mutateAsync({
-        id: category.id,
-        category: formState
-      });
-    },
-    [category, updateCategory]
-  );
+  const onConfirm = useCallback(async () => {
+    await updateCategory.mutateAsync({
+      id: category.id,
+      category: formState
+    });
+  }, [formState, category, updateCategory]);
 
   return (
     <CategoryModal
-      category={category}
+      formState={formState}
+      setFormState={setFormState}
       title={t("createCategoryModal.title")}
       submitText={t("general.create")}
       onConfirm={onConfirm}

@@ -2,6 +2,9 @@ import {
   Box,
   Button,
   CircularProgress,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   TextField,
   Typography
 } from "@mui/material";
@@ -15,6 +18,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { useMapEvents } from "react-leaflet";
 
+import { NONE_SELECTED } from "../../constants";
+import { useCategories } from "../../models/CategoryModel";
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
 import { SliderPosition } from "../sliders/SliderAction";
 import Slider from "./Slider";
@@ -48,6 +53,9 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
     } = props;
 
     const maps = useMapEvents({});
+
+    const { data: categories, isFetching: isFetchingCategories } =
+      useCategories({});
 
     const { t } = useTranslation();
 
@@ -117,6 +125,19 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
       [setFormState]
     );
 
+    const onChangeCategory = useCallback(
+      (event: SelectChangeEvent<string | null>) => {
+        const categoryId = event.target.value;
+        const category = categories?.find((c) => c.id === categoryId);
+
+        setFormState((prev) => ({
+          ...prev,
+          category: category ?? null
+        }));
+      },
+      [categories, setFormState]
+    );
+
     return (
       <Slider
         title={title}
@@ -127,6 +148,7 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
       >
         <>
           <Box
+            className="marker-slider"
             sx={{
               display: "grid",
               alignItems: "center",
@@ -145,7 +167,6 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
               value={formState.longitude}
               onChange={onChangeLongitude}
             />
-
             <Typography variant="subtitle2">
               {t("marker.description")}
             </Typography>
@@ -154,6 +175,29 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
               value={formState.description}
               onChange={onChangeDescription}
             />
+            <Typography variant="subtitle2">{t("marker.category")}</Typography>
+            <Select
+              MenuProps={{
+                container: document.body
+              }}
+              value={formState.category?.id ?? NONE_SELECTED}
+              onChange={onChangeCategory}
+            >
+              <MenuItem key={NONE_SELECTED} value={NONE_SELECTED}>
+                {t("marker.noCategorySelected")}
+              </MenuItem>
+              {isFetchingCategories && (
+                <MenuItem disabled sx={{ justifySelf: "center" }}>
+                  <CircularProgress color="secondary" size="0.9em" />{" "}
+                </MenuItem>
+              )}
+              {!isFetchingCategories &&
+                categories?.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+            </Select>
           </Box>
           <Button
             sx={{ mt: 8, alignSelf: "center" }}

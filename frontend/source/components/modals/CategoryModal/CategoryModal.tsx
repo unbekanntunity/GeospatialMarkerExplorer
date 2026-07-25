@@ -8,35 +8,31 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import { CategoryResponse } from "../../../api/generated";
+import { NONE_SELECTED } from "../../../constants";
 import { useImages, useUploadImage } from "../../../models/UploadModel";
 import Modal from "../Modal";
 import { IFormState } from "./types/IFormState";
 
 interface ICategoryModalProps {
-  category?: CategoryResponse;
+  formState: IFormState;
+  setFormState: Dispatch<SetStateAction<IFormState>>;
   title: string;
   submitText: string;
-  onConfirm: (formState: IFormState) => Promise<void>;
+  onConfirm: () => Promise<void>;
   onClose: () => void;
 }
 
 const CategoryModal = (props: ICategoryModalProps) => {
-  const { category, title, submitText, onConfirm, onClose } = props;
+  const { formState, setFormState, title, submitText, onConfirm, onClose } =
+    props;
 
   const { t } = useTranslation();
 
   const { data: images, isFetching: isFetchingImages } = useImages();
   const uploadImage = useUploadImage();
-
-  const [formState, setFormState] = useState<IFormState>({
-    name: category?.name ?? "",
-    description: category?.description ?? "",
-    icon_url: category?.icon_url ?? "none"
-  });
 
   const onChangeName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +41,7 @@ const CategoryModal = (props: ICategoryModalProps) => {
         name: event.target.value
       }));
     },
-    []
+    [setFormState]
   );
 
   const onChangeDescription = useCallback(
@@ -55,7 +51,7 @@ const CategoryModal = (props: ICategoryModalProps) => {
         description: event.target.value
       }));
     },
-    []
+    [setFormState]
   );
 
   const onUploadFile = useCallback(
@@ -73,24 +69,25 @@ const CategoryModal = (props: ICategoryModalProps) => {
         icon_url: uploadedImage.name
       }));
     },
-    [uploadImage]
+    [uploadImage, setFormState]
   );
 
   const onChangeFile = useCallback(
     (event: SelectChangeEvent<string | null>) => {
       setFormState((prev) => ({
         ...prev,
-        icon_url: event.target.value
+        icon_url:
+          event.target.value !== NONE_SELECTED ? event.target.value : null
       }));
     },
-    []
+    [setFormState]
   );
 
   return (
     <Modal
       title={title}
       confirmText={submitText}
-      onConfirm={() => onConfirm(formState)}
+      onConfirm={onConfirm}
       onClose={onClose}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -116,7 +113,7 @@ const CategoryModal = (props: ICategoryModalProps) => {
             }}
           >
             <Select value={formState.icon_url} onChange={onChangeFile}>
-              <MenuItem key="none" value="none">
+              <MenuItem key={NONE_SELECTED} value={NONE_SELECTED}>
                 {t("createCategoryModal.noImageSelected")}
               </MenuItem>
               {isFetchingImages && (
@@ -157,7 +154,8 @@ const CategoryModal = (props: ICategoryModalProps) => {
               width: "100%"
             }}
           >
-            {formState.icon_url !== "none" && formState.icon_url !== null ? (
+            {formState.icon_url !== NONE_SELECTED &&
+            formState.icon_url !== null ? (
               <img
                 style={{
                   maxWidth: "100%",

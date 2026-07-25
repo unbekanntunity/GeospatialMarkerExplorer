@@ -1,33 +1,40 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useCreateCategory } from "../../../models/CategoryModel";
 import CategoryModal from "./CategoryModal";
-import { IFormState } from "./types/IFormState";
+import { defaultFormState, IFormState } from "./types/IFormState";
 
 interface ICreateCategoryModalProps {
   onClose: () => void;
 }
 
 const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
-  const { onClose } = props;
+  const { onClose: parentOnClose } = props;
+
+  const [formState, setFormState] = useState<IFormState>(defaultFormState);
 
   const { t } = useTranslation();
 
   const createCategory = useCreateCategory();
 
-  const onConfirm = useCallback(
-    async (formState: IFormState) => {
-      await createCategory.mutateAsync({
-        ...formState,
-        icon_url: formState.icon_url !== "none" ? formState.icon_url : null
-      });
-    },
-    [createCategory]
-  );
+  const onConfirm = useCallback(async () => {
+    await createCategory.mutateAsync({
+      ...formState,
+      icon_url: formState.icon_url !== "none" ? formState.icon_url : null
+    });
+  }, [formState, createCategory]);
+
+  const onClose = useCallback(() => {
+    setFormState(defaultFormState);
+
+    parentOnClose();
+  }, [parentOnClose]);
 
   return (
     <CategoryModal
+      formState={formState}
+      setFormState={setFormState}
       title={t("createCategoryModal.title")}
       submitText={t("general.create")}
       onConfirm={onConfirm}

@@ -16,7 +16,7 @@
     "name": "Name",
     "description": "Description",
     "uploadImage": "Upload",
-    "noImageSelected": "No icon has been selected"
+    "noImageSelected": "None"
   },
   "createMarkerSlider": {
     "title": "Create a new marker",
@@ -43,7 +43,9 @@
     "name": "Name:",
     "latitude": "Latitude:",
     "longitude": "Longitude:",
-    "description": "Description:"
+    "description": "Description:",
+    "noCategorySelected": "None",
+    "category": "Category:"
   },
   "tooltip": {
     "toggleMarkersDetailPoppers": "Show tooltips",
