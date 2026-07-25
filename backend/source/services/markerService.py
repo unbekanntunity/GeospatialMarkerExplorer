@@ -1,13 +1,21 @@
 from uuid import UUID
 
+from errors.categoryNotFoundError import CategoryNotFoundError
 from errors.markerNotFoundError import MarkerNotFoundError
-from repositories import markerRepository
+from repositories import categoryRepository, markerRepository
 from schemas.marker import CreateMarkerRequest, QueryMarkerRequest, UpdateMarkerRequest
+from services import categoryService
 
 marker_repository = markerRepository.MarkerRepository()
+category_repository = categoryRepository.CategoryRepository()
 
 class MarkerService:
     async def create(self, request: CreateMarkerRequest):
+        if(request.category_id is not None):
+            category = await category_repository.get_by_id(request.category_id)
+            if(category is None):
+                raise CategoryNotFoundError(request.category_id)
+                    
         return await marker_repository.create(request)
         
     async def get_marker(self, id: UUID):
@@ -23,6 +31,11 @@ class MarkerService:
     
     async def update(self, id: UUID, request: UpdateMarkerRequest):
         updated_marker = await marker_repository.update(id, request)
+
+        if(request.category_id is not None):
+            category = await category_repository.get_by_id(request.category_id)
+            if(category is None):
+                raise CategoryNotFoundError(request.category_id)
 
         if updated_marker is None:
             raise MarkerNotFoundError(id)

@@ -2,6 +2,7 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Query, Response
+from errors.categoryNotFoundError import CategoryNotFoundError
 from errors.markerNotFoundError import MarkerNotFoundError
 from schemas.marker import CreateMarkerRequest, MarkerResponse, QueryMarkerRequest, UpdateMarkerRequest
 from services import markerService
@@ -11,10 +12,15 @@ marker_service = markerService.MarkerService()
 
 @router.post("/", response_model=MarkerResponse)
 async def create_marker(marker: CreateMarkerRequest):
-    created_marker = await marker_service.create(marker)
-    response = MarkerResponse.model_validate(created_marker)
-    return response
-   
+    try:
+        created_marker = await marker_service.create(marker)
+        response = MarkerResponse.model_validate(created_marker)
+        return response
+    except CategoryNotFoundError as e:
+        raise HTTPException(
+            status_code=400,
+            detail=str(e)
+        )
 
 @router.get("/", response_model=list[MarkerResponse])
 async def get_markers(
@@ -48,6 +54,11 @@ async def update_marker(id: UUID, marker: UpdateMarkerRequest):
     except MarkerNotFoundError as e:
         raise HTTPException(
             status_code=404,
+            detail=str(e)
+        )
+    except CategoryNotFoundError as e:
+        raise HTTPException(
+            status_code=400,
             detail=str(e)
         )
 

@@ -67,7 +67,8 @@
     "description": "Description:",
     "category": "Category:",
     "error": {
-      "404": "The marker with the id: {{markerId}} couldn`t be found!"
+      "404": "The marker with the id: {{markerId}} couldn`t be found!",
+      "400": "Invalid category!"
     }
   },
   "tooltip": {
