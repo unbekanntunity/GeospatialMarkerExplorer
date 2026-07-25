@@ -31,7 +31,7 @@ class MarkerRepository:
             queried_marker = await session.execute(statement)
 
         return queried_marker.scalar_one_or_none()
-    
+
     async def get_all(self, query: QueryMarkerRequest) -> list[Marker]:
         statement = select(Marker).options(
             selectinload(Marker.category)

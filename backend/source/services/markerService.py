@@ -30,12 +30,12 @@ class MarkerService:
         return await marker_repository.get_all(query)
     
     async def update(self, id: UUID, request: UpdateMarkerRequest):
-        updated_marker = await marker_repository.update(id, request)
-
-        if(request.category_id is not None):
+        if request.category_id is not None:
             category = await category_repository.get_by_id(request.category_id)
-            if(category is None):
+            if category is None:
                 raise CategoryNotFoundError(request.category_id)
+
+        updated_marker = await marker_repository.update(id, request)
 
         if updated_marker is None:
             raise MarkerNotFoundError(id)

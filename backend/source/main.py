@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from routes import categories, images, markers
+from routes import categories, images, markers, sections
 
 
 app = FastAPI(
@@ -30,4 +30,10 @@ app.include_router(
     images.router,
     prefix="/images",
     tags=["images"]
+)
+
+app.include_router(
+    sections.router,
+    prefix="/sections",
+    tags=["sections"]
 )

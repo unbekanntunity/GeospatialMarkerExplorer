@@ -2,10 +2,9 @@ import asyncio
 import os
 
 from database.connection import engine, SessionLocal
-from database.models import Base, Category, Marker
+from database.models import Base, Category, Marker, Section
 
 async def seed_database():
-
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
@@ -42,21 +41,25 @@ async def seed_database():
 
         session.add_all([restaurant, parking, museum])
 
+        marker_a = Marker(
+                        name="Berlin parking",
+                        description="Example marker",
+                        latitude=52.5200,
+                        longitude=13.4050,
+                        category = parking
+                    )
+
+        marker_b = Marker(
+                        name="Paris museum",
+                        description="Another example marker",
+                        latitude=48.8566,
+                        longitude=2.3522,
+                        category = museum
+                    )
+
         markers = [
-            Marker(
-                name="Berlin parking",
-                description="Example marker",
-                latitude=52.5200,
-                longitude=13.4050,
-                category = parking
-            ),
-            Marker(
-                name="Paris museum",
-                description="Another example marker",
-                latitude=48.8566,
-                longitude=2.3522,
-                category = museum
-            ),
+            marker_a,
+            marker_b,
             Marker(
                 name="Restaurant al fonso",
                 description="Another example marker",
@@ -84,6 +87,11 @@ async def seed_database():
             ),
         ]
         session.add_all(markers)
+
+        section = [
+            Section(name="Line A", description="A new line has been born", markers=[marker_a, marker_b])
+        ]
+        session.add_all(section)
         await session.commit()
 
 

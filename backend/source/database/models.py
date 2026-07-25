@@ -45,6 +45,11 @@ class Marker(Base):
     category: Mapped["Category | None"] = relationship(
         back_populates="markers"
     )
+
+    sections: Mapped[list["Section"]] = relationship(
+        secondary="section_markers",
+        back_populates="markers",
+    )
     
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
@@ -84,6 +89,55 @@ class Category(Base):
         back_populates="category"
     )
     
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        server_default=func.now(),
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
+class SectionMarker(Base):
+    __tablename__ = "section_markers"
+
+    section_id: Mapped[UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("sections.id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+
+    marker_id: Mapped[UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("markers.id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+
+class Section(Base):
+    __tablename__ = "sections"
+
+    id: Mapped[UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid4,
+    )
+
+    name: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+
+    description: Mapped[str | None] = mapped_column(
+        nullable=True,
+    )
+
+    markers: Mapped[list["Marker"]] = relationship(
+        secondary="section_markers",
+        back_populates="sections",
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),
