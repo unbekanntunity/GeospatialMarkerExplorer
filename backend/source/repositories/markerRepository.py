@@ -14,14 +14,15 @@ class MarkerRepository:
             description=marker.description,
             latitude=marker.latitude,
             longitude=marker.longitude,
+            category_id=marker.category_id
         )
                 
         async with SessionLocal() as session:
             session.add(new_marker)
             await session.commit()
-            await session.refresh(marker)
+            await session.refresh(new_marker)
 
-            return marker
+            return new_marker
     
     async def get_by_id(self, id) -> Marker:
         statement = select(Marker).where(Marker.id == id)

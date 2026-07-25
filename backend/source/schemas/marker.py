@@ -9,18 +9,18 @@ class CreateMarkerRequest(BaseModel):
     description: str | None = None
     latitude: float
     longitude: float
-    catgeroyId: UUID | None = None
+    catgeroy_id: UUID | None = None
 
 class UpdateMarkerRequest(BaseModel):
     name: str | None = None
     description: str | None = None
     latitude: float | None = None
     longitude: float | None = None
-    catgeroyId: UUID | None = None
+    catgeroy_id: UUID | None = None
 
 class QueryMarkerRequest(BaseModel):
     name: str | None = None
-    catgeroyId: UUID | None = None
+    catgeroy_id: UUID | None = None
 
 class MarkerResponse(BaseModel):
     id: UUID
