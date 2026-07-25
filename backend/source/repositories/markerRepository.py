@@ -20,7 +20,7 @@ class MarkerRepository:
         async with SessionLocal() as session:
             session.add(new_marker)
             await session.commit()
-            await session.refresh(new_marker)
+            await session.refresh(new_marker, attribute_names=["category"]), 
 
             return new_marker
     
@@ -39,10 +39,13 @@ class MarkerRepository:
 
         filters = []
 
-        if query.name is not None:
+        if query.name:
             filters.append(
                 Marker.name.ilike(f"%{query.name}%")
             )
+            
+        if query.category_ids:
+            filters.append(Marker.category_id.in_(query.category_ids))
 
         if filters:
             statement = statement.where(*filters)

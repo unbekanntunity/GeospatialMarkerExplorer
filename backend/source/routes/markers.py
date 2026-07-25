@@ -1,6 +1,7 @@
+from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from schemas.marker import CreateMarkerRequest, MarkerResponse, QueryMarkerRequest, UpdateMarkerRequest
 from services import markerService
 
@@ -20,9 +21,12 @@ async def create_marker(marker: CreateMarkerRequest):
         )
 
 @router.get("/", response_model=list[MarkerResponse])
-async def get_markers(marker_query: QueryMarkerRequest = Depends()):
+async def get_markers(
+    name: str | None = None,
+    category_ids: Annotated[list[UUID] | None, Query()] = None
+    ):
     try:
-        markers = await marker_service.get_all(marker_query)
+        markers = await marker_service.get_all(QueryMarkerRequest(name=name, category_ids=category_ids))
         reponses = [MarkerResponse.model_validate(marker) for marker in markers]
         return reponses
     except ValueError as e:

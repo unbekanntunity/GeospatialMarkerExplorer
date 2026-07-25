@@ -1,5 +1,7 @@
 from datetime import datetime
+from typing import Annotated
 from uuid import UUID, uuid4
+from fastapi import Query
 from pydantic import BaseModel, ConfigDict
 
 from schemas.category import CategoryResponse
@@ -9,18 +11,18 @@ class CreateMarkerRequest(BaseModel):
     description: str | None = None
     latitude: float
     longitude: float
-    catgeroy_id: UUID | None = None
+    category_id: UUID | None = None
 
 class UpdateMarkerRequest(BaseModel):
     name: str | None = None
     description: str | None = None
     latitude: float | None = None
     longitude: float | None = None
-    catgeroy_id: UUID | None = None
+    category_id: UUID | None = None
 
 class QueryMarkerRequest(BaseModel):
     name: str | None = None
-    catgeroy_id: UUID | None = None
+    category_ids: Annotated[list[UUID] | None, Query()] = None
 
 class MarkerResponse(BaseModel):
     id: UUID
