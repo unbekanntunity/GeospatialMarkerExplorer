@@ -2,20 +2,28 @@
   "appbar": {
     "title": "Explorador de marcadores geoespaciales"
   },
+  "categoryListSlider": {
+    "title": "Categorías",
+    "empty": "Parece que no hay categorías.\n¡Ve y crea algunas!"
+  },
   "confirmDeleteModal": {
     "title": "Confirmar eliminación",
-    "confirmText": "borrar"
+    "confirmText": "borrar",
+    "message": "¿Está seguro que desea eliminar: {{entityName}}?\n¡Esta acción no se puede deshacer!"
   },
   "createCategoryModal": {
     "title": "Crear una nueva categoría",
     "name": "Nombre",
     "description": "Descripción",
     "uploadImage": "Subir",
-    "noImageSelected": "Ningún icono ha sido seleccionado"
+    "noImageSelected": "Ninguna"
   },
   "createMarkerSlider": {
     "title": "Crear un nuevo marcador",
     "submit": "Crear marcador"
+  },
+  "deleteConfirmModal": {
+    "conten": "¿Está seguro que desea eliminar?\n¡Esta acción no se puede deshacer!"
   },
   "editMarkerSlider": {
     "title": "Editar un marcador:",
@@ -23,22 +31,26 @@
   },
   "general": {
     "cancel": "Cancelar",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "create": "Crear",
+    "update": "Actualizar"
   },
   "listMarkersSlider": {
     "title": "Marcadores",
-    "empty": "Parece que no hay marcadores. Ve y crea uno haciendo clic en el mapa"
+    "empty": "Parece que no hay marcadores.\nVe y crea uno haciendo clic en el mapa"
   },
   "marker": {
     "name": "Nombre:",
     "latitude": "Latitud:",
     "longitude": "Longitud:",
-    "description": "Descripción:"
+    "description": "Descripción:",
+    "noCategorySelected": "Ninguna",
+    "category": "Categoría:"
   },
   "tooltip": {
     "toggleMarkersDetailPoppers": "Mostrar tooltips",
     "createMarker": "Crear marcadores",
-    "listMarker": "Listar marcadores",
+    "listMarkers": "Listar marcadores",
     "createCategories": "Crear categoría",
     "listCategories": "Lista de categoría"
   },

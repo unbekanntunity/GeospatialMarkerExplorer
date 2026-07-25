@@ -75,9 +75,9 @@ export type CreateMarkerRequest = {
      */
     longitude: number;
     /**
-     * Catgeroyid
+     * Catgeroy Id
      */
-    catgeroyId?: string | null;
+    catgeroy_id?: string | null;
 };
 
 /**
@@ -178,9 +178,9 @@ export type UpdateMarkerRequest = {
      */
     longitude?: number | null;
     /**
-     * Catgeroyid
+     * Catgeroy Id
      */
-    catgeroyId?: string | null;
+    catgeroy_id?: string | null;
 };
 
 /**
@@ -210,9 +210,9 @@ export type GetMarkersMarkersGetData = {
          */
         name?: string | null;
         /**
-         * Catgeroyid
+         * Catgeroy Id
          */
-        catgeroyId?: string | null;
+        catgeroy_id?: string | null;
     };
     url: '/markers/';
 };

@@ -2,9 +2,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   TextField,
   Typography
 } from "@mui/material";
@@ -18,9 +15,9 @@ import {
 import { useTranslation } from "react-i18next";
 import { useMapEvents } from "react-leaflet";
 
-import { NONE_SELECTED } from "../../constants";
-import { useCategories } from "../../models/CategoryModel";
+import { CategoryResponse } from "../../api/generated";
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
+import CategorySelect from "../categories/CategorySelect";
 import { SliderPosition } from "../sliders/SliderAction";
 import Slider from "./Slider";
 import { IFormState } from "./types/IFormState";
@@ -53,9 +50,6 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
     } = props;
 
     const maps = useMapEvents({});
-
-    const { data: categories, isFetching: isFetchingCategories } =
-      useCategories({});
 
     const { t } = useTranslation();
 
@@ -126,16 +120,13 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
     );
 
     const onChangeCategory = useCallback(
-      (event: SelectChangeEvent<string | null>) => {
-        const categoryId = event.target.value;
-        const category = categories?.find((c) => c.id === categoryId);
-
+      (newCategory: CategoryResponse | null) => {
         setFormState((prev) => ({
           ...prev,
-          category: category ?? null
+          category: newCategory
         }));
       },
-      [categories, setFormState]
+      [setFormState]
     );
 
     return (
@@ -176,28 +167,10 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
               onChange={onChangeDescription}
             />
             <Typography variant="subtitle2">{t("marker.category")}</Typography>
-            <Select
-              MenuProps={{
-                container: document.body
-              }}
-              value={formState.category?.id ?? NONE_SELECTED}
-              onChange={onChangeCategory}
-            >
-              <MenuItem key={NONE_SELECTED} value={NONE_SELECTED}>
-                {t("marker.noCategorySelected")}
-              </MenuItem>
-              {isFetchingCategories && (
-                <MenuItem disabled sx={{ justifySelf: "center" }}>
-                  <CircularProgress color="secondary" size="0.9em" />{" "}
-                </MenuItem>
-              )}
-              {!isFetchingCategories &&
-                categories?.map((category) => (
-                  <MenuItem key={category.id} value={category.id}>
-                    {category.name}
-                  </MenuItem>
-                ))}
-            </Select>
+            <CategorySelect
+              category={formState.category}
+              setCategory={onChangeCategory}
+            />
           </Box>
           <Button
             sx={{ mt: 8, alignSelf: "center" }}

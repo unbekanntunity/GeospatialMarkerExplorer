@@ -2,20 +2,28 @@
   "appbar": {
     "title": "Geospatial Marker Entdecker"
   },
+  "categoryListSlider": {
+    "title": "Kategorien",
+    "empty": "Es sieht so aus, als gäbe es keine Kategorien.\nGeh und erstelle einige!"
+  },
   "confirmDeleteModal": {
     "title": "Löschen bestätigen",
-    "confirmText": "löschen"
+    "confirmText": "löschen",
+    "message": "Sind Sie sicher, dass Sie diese Aktion löschen wollen: {{entityName}}?\nDiese Aktion kann nicht rückgängig gemacht werden!"
   },
   "createCategoryModal": {
     "title": "Neue Kategorie erstellen",
     "name": "Name",
     "description": "Beschreibung",
     "uploadImage": "Hochladen",
-    "noImageSelected": "Kein Symbol ausgewählt"
+    "noImageSelected": "Keine"
   },
   "createMarkerSlider": {
     "title": "Erstelle einen neuen Marker",
     "submit": "Marker erstellen"
+  },
+  "deleteConfirmModal": {
+    "conten": "Sind Sie sicher, dass Sie löschen möchten?\nDiese Aktion kann nicht rückgängig gemacht werden!"
   },
   "editMarkerSlider": {
     "title": "Marker bearbeiten:",
@@ -23,22 +31,26 @@
   },
   "general": {
     "cancel": "Abbrechen",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+    "create": "Anlegen",
+    "update": "Aktualisieren"
   },
   "listMarkersSlider": {
     "title": "Marker",
-    "empty": "Es sieht so aus, als gäbe es keine Marker. Gehe und erstelle eine durch Klicken auf die Karte"
+    "empty": "Es sieht so aus, als gäbe es keine Marker.\nGeh und erstelle eine durch Klicken auf die Karte"
   },
   "marker": {
     "name": "Name:",
     "latitude": "Breitengrad:",
     "longitude": "Längengrad:",
-    "description": "Beschreibung:"
+    "description": "Beschreibung:",
+    "noCategorySelected": "Keine",
+    "category": "Kategorie:"
   },
   "tooltip": {
     "toggleMarkersDetailPoppers": "Tooltips anzeigen",
     "createMarker": "Marker erstellen",
-    "listMarker": "Listenmarker",
+    "listMarkers": "Listenmarker",
     "createCategories": "Kategorie erstellen",
     "listCategories": "Kategorie auflisten"
   },
