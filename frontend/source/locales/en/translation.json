@@ -33,7 +33,8 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "create": "Create",
-    "update": "Update"
+    "update": "Update",
+    "categories": "Categories"
   },
   "listMarkersSlider": {
     "title": "Markers",

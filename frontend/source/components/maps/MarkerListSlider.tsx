@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 
 import useDebounce from "../../hooks/useDebounce";
 import { useMarkers } from "../../models/MarkerModel";
+import CategoryDropdown from "../categories/CategoryDropdown";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import MarkerAccordion from "./MarkerAccordion";
@@ -27,12 +28,16 @@ const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
   (props, ref) => {
     const { open, position } = props;
 
-    const [searchMarkerName, setSearchMarkerName] = useState<string>("");
+    const [searchMarkerName, setSearchMarkerName] = useState("");
+    const [filterByCategoryIds, setFilterByCategoryIds] = useState<string[]>(
+      []
+    );
 
     const debouncedSearchMarkerName = useDebounce(searchMarkerName, 300);
 
     const { data: markers, isFetching } = useMarkers({
-      name: debouncedSearchMarkerName || undefined
+      name: debouncedSearchMarkerName || undefined,
+      category_ids: filterByCategoryIds
     });
 
     const { dispatch } = useSlider();
@@ -62,7 +67,7 @@ const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
         onClose={onClose}
       >
         <>
-          <Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <TextField
               fullWidth
               value={searchMarkerName}
@@ -82,6 +87,10 @@ const MarkerListSlider = forwardRef<HTMLDivElement, IMarkerListProps>(
                   )
                 }
               }}
+            />
+            <CategoryDropdown
+              categoryIds={filterByCategoryIds}
+              setCategoryIds={setFilterByCategoryIds}
             />
           </Box>
           {!isFetching && markers !== undefined && markers.length > 0 && (

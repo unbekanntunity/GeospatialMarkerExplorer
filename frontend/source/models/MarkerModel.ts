@@ -94,9 +94,13 @@ type MarkerQuery = NonNullable<GetMarkersMarkersGetData["query"]>;
 
 export const useMarkers = (query: MarkerQuery) => {
   return useQuery({
-    queryKey: ["markers", query.name],
+    queryKey: ["markers", query.name, query.category_ids],
     queryFn: async () => {
-      const response = await getMarkersMarkersGet({ query });
+      const response = await getMarkersMarkersGet({
+        query
+      });
+
+      console.log("r", response.error, response.data);
 
       if (response.error) {
         throw response.error;
