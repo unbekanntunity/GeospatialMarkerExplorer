@@ -5,12 +5,14 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   IconButton,
   ListItem,
   ListItemText,
   Typography
 } from "@mui/material";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { MarkerResponse } from "../../api/generated";
 import { useDeleteMarker } from "../../models/MarkerModel";
@@ -28,6 +30,7 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
   const { marker } = props;
 
   const { state } = useSlider();
+  const { t } = useTranslation();
 
   const [expanded, setIsExpanded] = useState(false);
 
@@ -156,7 +159,17 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
         </ListItem>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>{marker.description}</Typography>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "auto auto"
+          }}
+        >
+          <Typography>{t("marker.category")}</Typography>
+          <Typography>{marker.category?.name ?? "-"}</Typography>
+          <Typography>{t("marker.description")}</Typography>
+          <Typography>{marker.description}</Typography>
+        </Box>
       </AccordionDetails>
     </Accordion>
   );
