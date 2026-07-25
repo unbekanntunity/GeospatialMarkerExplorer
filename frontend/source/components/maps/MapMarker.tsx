@@ -53,10 +53,22 @@ const MapMarker = (props: IMapMarkerProps) => {
     [dispatch]
   );
 
+  const onClickMarker = useCallback(() => {
+    dispatch({
+      type: SliderAction.ShowSlider,
+      slider: "editMarkerSlider",
+      payload: {
+        marker,
+        position: "left"
+      }
+    });
+  }, [marker, dispatch]);
+
   return coordinates ? (
     <Marker
       draggable
       eventHandlers={{
+        click: onClickMarker,
         dragend: (e) => onDragEnd(e, marker)
       }}
       position={coordinates}
@@ -74,12 +86,14 @@ const MapMarker = (props: IMapMarkerProps) => {
                 gridTemplateColumns: "auto auto"
               }}
             >
+              <Typography>{t("marker.category")}</Typography>
+              <Typography>{marker.category?.name ?? "-"}</Typography>
               <Typography>{t("marker.latitude")}</Typography>
               <Typography>{marker.latitude}</Typography>
               <Typography>{t("marker.longitude")}</Typography>
               <Typography>{marker.longitude}</Typography>
               <Typography>{t("marker.description")}</Typography>
-              <Typography>{marker.description}</Typography>
+              <Typography>{marker.description ?? "-"}</Typography>
             </Box>
           </Box>
         </Tooltip>
