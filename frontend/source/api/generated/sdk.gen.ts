@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateCategoryCategoriesPostData, CreateCategoryCategoriesPostErrors, CreateCategoryCategoriesPostResponses, CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, DeleteCategoryCategoriesIdDeleteData, DeleteCategoryCategoriesIdDeleteErrors, DeleteCategoryCategoriesIdDeleteResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, GetCategoriesCategoriesGetData, GetCategoriesCategoriesGetErrors, GetCategoriesCategoriesGetResponses, GetFilesImagesGetData, GetFilesImagesGetResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetErrors, GetMarkersMarkersGetResponses, UpdateCategoryCategoriesIdPutData, UpdateCategoryCategoriesIdPutErrors, UpdateCategoryCategoriesIdPutResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses, UploadFileImagesPostData, UploadFileImagesPostErrors, UploadFileImagesPostResponses } from './types.gen';
+import type { CreateCategoryCategoriesPostData, CreateCategoryCategoriesPostErrors, CreateCategoryCategoriesPostResponses, CreateMarkerMarkersPostData, CreateMarkerMarkersPostErrors, CreateMarkerMarkersPostResponses, CreateSectionSectionsPostData, CreateSectionSectionsPostErrors, CreateSectionSectionsPostResponses, DeleteCategoryCategoriesIdDeleteData, DeleteCategoryCategoriesIdDeleteErrors, DeleteCategoryCategoriesIdDeleteResponses, DeleteMarkerMarkersIdDeleteData, DeleteMarkerMarkersIdDeleteErrors, DeleteMarkerMarkersIdDeleteResponses, DeleteSectionSectionsIdDeleteData, DeleteSectionSectionsIdDeleteErrors, DeleteSectionSectionsIdDeleteResponses, GetCategoriesCategoriesGetData, GetCategoriesCategoriesGetErrors, GetCategoriesCategoriesGetResponses, GetFilesImagesGetData, GetFilesImagesGetResponses, GetMarkerMarkersIdGetData, GetMarkerMarkersIdGetErrors, GetMarkerMarkersIdGetResponses, GetMarkersMarkersGetData, GetMarkersMarkersGetErrors, GetMarkersMarkersGetResponses, GetSectionSectionsIdGetData, GetSectionSectionsIdGetErrors, GetSectionSectionsIdGetResponses, GetSectionsSectionsGetData, GetSectionsSectionsGetResponses, UpdateCategoryCategoriesIdPutData, UpdateCategoryCategoriesIdPutErrors, UpdateCategoryCategoriesIdPutResponses, UpdateMarkerMarkersIdPutData, UpdateMarkerMarkersIdPutErrors, UpdateMarkerMarkersIdPutResponses, UpdateSectionSectionsIdPutData, UpdateSectionSectionsIdPutErrors, UpdateSectionSectionsIdPutResponses, UploadFileImagesPostData, UploadFileImagesPostErrors, UploadFileImagesPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -105,6 +105,45 @@ export const uploadFileImagesPost = <ThrowOnError extends boolean = false>(optio
     ...options,
     headers: {
         'Content-Type': null,
+        ...options.headers
+    }
+});
+
+/**
+ * Get Sections
+ */
+export const getSectionsSectionsGet = <ThrowOnError extends boolean = false>(options?: Options<GetSectionsSectionsGetData, ThrowOnError>): RequestResult<GetSectionsSectionsGetResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetSectionsSectionsGetResponses, unknown, ThrowOnError>({ url: '/sections/', ...options });
+
+/**
+ * Create Section
+ */
+export const createSectionSectionsPost = <ThrowOnError extends boolean = false>(options: Options<CreateSectionSectionsPostData, ThrowOnError>): RequestResult<CreateSectionSectionsPostResponses, CreateSectionSectionsPostErrors, ThrowOnError> => (options.client ?? client).post<CreateSectionSectionsPostResponses, CreateSectionSectionsPostErrors, ThrowOnError>({
+    url: '/sections/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete Section
+ */
+export const deleteSectionSectionsIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteSectionSectionsIdDeleteData, ThrowOnError>): RequestResult<DeleteSectionSectionsIdDeleteResponses, DeleteSectionSectionsIdDeleteErrors, ThrowOnError> => (options.client ?? client).delete<DeleteSectionSectionsIdDeleteResponses, DeleteSectionSectionsIdDeleteErrors, ThrowOnError>({ url: '/sections/{id}', ...options });
+
+/**
+ * Get Section
+ */
+export const getSectionSectionsIdGet = <ThrowOnError extends boolean = false>(options: Options<GetSectionSectionsIdGetData, ThrowOnError>): RequestResult<GetSectionSectionsIdGetResponses, GetSectionSectionsIdGetErrors, ThrowOnError> => (options.client ?? client).get<GetSectionSectionsIdGetResponses, GetSectionSectionsIdGetErrors, ThrowOnError>({ url: '/sections/{id}', ...options });
+
+/**
+ * Update Section
+ */
+export const updateSectionSectionsIdPut = <ThrowOnError extends boolean = false>(options: Options<UpdateSectionSectionsIdPutData, ThrowOnError>): RequestResult<UpdateSectionSectionsIdPutResponses, UpdateSectionSectionsIdPutErrors, ThrowOnError> => (options.client ?? client).put<UpdateSectionSectionsIdPutResponses, UpdateSectionSectionsIdPutErrors, ThrowOnError>({
+    url: '/sections/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
         ...options.headers
     }
 });

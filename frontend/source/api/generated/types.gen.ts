@@ -81,6 +81,24 @@ export type CreateMarkerRequest = {
 };
 
 /**
+ * CreateSectionRequest
+ */
+export type CreateSectionRequest = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Marker Ids
+     */
+    marker_ids: Array<string>;
+};
+
+/**
  * HTTPValidationError
  */
 export type HttpValidationError = {
@@ -140,6 +158,36 @@ export type MarkerResponse = {
 };
 
 /**
+ * SectionResponse
+ */
+export type SectionResponse = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Markers
+     */
+    markers: Array<MarkerResponse>;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
  * UpdateCategoryRequest
  */
 export type UpdateCategoryRequest = {
@@ -181,6 +229,24 @@ export type UpdateMarkerRequest = {
      * Category Id
      */
     category_id?: string | null;
+};
+
+/**
+ * UpdateSectionRequest
+ */
+export type UpdateSectionRequest = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Marker Ids
+     */
+    marker_ids?: Array<string> | null;
 };
 
 /**
@@ -507,3 +573,134 @@ export type UploadFileImagesPostResponses = {
 };
 
 export type UploadFileImagesPostResponse = UploadFileImagesPostResponses[keyof UploadFileImagesPostResponses];
+
+export type GetSectionsSectionsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/sections/';
+};
+
+export type GetSectionsSectionsGetResponses = {
+    /**
+     * Response Get Sections Sections  Get
+     *
+     * Successful Response
+     */
+    200: Array<SectionResponse>;
+};
+
+export type GetSectionsSectionsGetResponse = GetSectionsSectionsGetResponses[keyof GetSectionsSectionsGetResponses];
+
+export type CreateSectionSectionsPostData = {
+    body: CreateSectionRequest;
+    path?: never;
+    query?: never;
+    url: '/sections/';
+};
+
+export type CreateSectionSectionsPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateSectionSectionsPostError = CreateSectionSectionsPostErrors[keyof CreateSectionSectionsPostErrors];
+
+export type CreateSectionSectionsPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: SectionResponse;
+};
+
+export type CreateSectionSectionsPostResponse = CreateSectionSectionsPostResponses[keyof CreateSectionSectionsPostResponses];
+
+export type DeleteSectionSectionsIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/sections/{id}';
+};
+
+export type DeleteSectionSectionsIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteSectionSectionsIdDeleteError = DeleteSectionSectionsIdDeleteErrors[keyof DeleteSectionSectionsIdDeleteErrors];
+
+export type DeleteSectionSectionsIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type GetSectionSectionsIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/sections/{id}';
+};
+
+export type GetSectionSectionsIdGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetSectionSectionsIdGetError = GetSectionSectionsIdGetErrors[keyof GetSectionSectionsIdGetErrors];
+
+export type GetSectionSectionsIdGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: SectionResponse;
+};
+
+export type GetSectionSectionsIdGetResponse = GetSectionSectionsIdGetResponses[keyof GetSectionSectionsIdGetResponses];
+
+export type UpdateSectionSectionsIdPutData = {
+    body: UpdateSectionRequest;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/sections/{id}';
+};
+
+export type UpdateSectionSectionsIdPutErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UpdateSectionSectionsIdPutError = UpdateSectionSectionsIdPutErrors[keyof UpdateSectionSectionsIdPutErrors];
+
+export type UpdateSectionSectionsIdPutResponses = {
+    /**
+     * Successful Response
+     */
+    200: SectionResponse;
+};
+
+export type UpdateSectionSectionsIdPutResponse = UpdateSectionSectionsIdPutResponses[keyof UpdateSectionSectionsIdPutResponses];
