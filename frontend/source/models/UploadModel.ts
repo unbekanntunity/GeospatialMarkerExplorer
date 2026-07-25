@@ -14,7 +14,10 @@ export const useUploadImage = () => {
       const response = await uploadFileImagesPost({ body });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;

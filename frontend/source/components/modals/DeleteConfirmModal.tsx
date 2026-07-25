@@ -22,13 +22,15 @@ const DeleteConfirmModal = (props: IDeleteConfirmModalProps) => {
       onConfirm={onConfirm}
       onClose={onClose}
     >
-      <Typography
-        sx={{
-          whiteSpace: "pre-line"
-        }}
-      >
-        {t("confirmDeleteModal.message", { entityName })}
-      </Typography>
+      <>
+        <Typography
+          sx={{
+            whiteSpace: "pre-line"
+          }}
+        >
+          {t("confirmDeleteModal.message", { entityName })}
+        </Typography>
+      </>
     </Modal>
   );
 };

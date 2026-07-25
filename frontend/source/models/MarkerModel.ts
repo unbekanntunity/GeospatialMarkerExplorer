@@ -23,7 +23,10 @@ export const useCreateMarker = () => {
       });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;
@@ -54,7 +57,10 @@ export const useUpdateMarker = () => {
       });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;
@@ -76,7 +82,10 @@ export const useDeleteMarker = () => {
       const response = await deleteMarkerMarkersIdDelete({ path: { id } });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;
@@ -100,10 +109,11 @@ export const useMarkers = (query: MarkerQuery) => {
         query
       });
 
-      console.log("r", response.error, response.data);
-
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;
@@ -118,7 +128,10 @@ export const useMarker = (id: string) => {
       const response = await getMarkerMarkersIdGet({ path: { id } });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;

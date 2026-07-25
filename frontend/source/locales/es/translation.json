@@ -2,6 +2,13 @@
   "appbar": {
     "title": "Explorador de marcadores geoespaciales"
   },
+  "category": {
+    "title": "Crear una nueva categoría",
+    "name": "Nombre",
+    "description": "Descripción",
+    "uploadImage": "Subir",
+    "noneSelected": "Ninguna"
+  },
   "categoryListSlider": {
     "title": "Categorías",
     "empty": "Parece que no hay categorías.\n¡Ve y crea algunas!"
@@ -9,14 +16,13 @@
   "confirmDeleteModal": {
     "title": "Confirmar eliminación",
     "confirmText": "borrar",
-    "message": "¿Está seguro que desea eliminar: {{entityName}}?\n¡Esta acción no se puede deshacer!"
+    "message": "¿Está seguro que desea eliminar: {{entityName}}?\n¡Esta acción no se puede deshacer!",
+    "error": {
+      "404": "¡No se pudo encontrar la entidad!"
+    }
   },
   "createCategoryModal": {
-    "title": "Crear una nueva categoría",
-    "name": "Nombre",
-    "description": "Descripción",
-    "uploadImage": "Subir",
-    "noImageSelected": "Ninguna"
+    "title": "Crear una nueva categoría"
   },
   "createMarkerSlider": {
     "title": "Crear un nuevo marcador",
@@ -25,15 +31,30 @@
   "deleteConfirmModal": {
     "conten": "¿Está seguro que desea eliminar?\n¡Esta acción no se puede deshacer!"
   },
+  "editCategoryModal": {
+    "title": "Editar una categoría: {{categoryName}}",
+    "error": {
+      "404": "La categoría con la id: {{categoryId}} no pudo ser encontrada!"
+    }
+  },
   "editMarkerSlider": {
-    "title": "Editar un marcador:",
+    "title": "Editar un marcador: {{markerName}}",
     "submit": "Actualizar marcador"
   },
   "general": {
     "cancel": "Cancelar",
     "confirm": "Confirmar",
     "create": "Crear",
-    "update": "Actualizar"
+    "update": "Actualizar",
+    "categories": "Categorías",
+    "or": "o"
+  },
+  "image": {
+    "noneSelected": "Ninguna",
+    "error": {
+      "413": "¡El archivo es demasiado grande!",
+      "415": "Sólo se permiten son: archivos .png, .jpg y .webp"
+    }
   },
   "listMarkersSlider": {
     "title": "Marcadores",
@@ -44,8 +65,10 @@
     "latitude": "Latitud:",
     "longitude": "Longitud:",
     "description": "Descripción:",
-    "noCategorySelected": "Ninguna",
-    "category": "Categoría:"
+    "category": "Categoría:",
+    "error": {
+      "404": "El marcador con la id: {{markerId}} no pudo ser encontrado!"
+    }
   },
   "tooltip": {
     "toggleMarkersDetailPoppers": "Mostrar tooltips",

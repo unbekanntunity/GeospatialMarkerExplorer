@@ -2,6 +2,13 @@
   "appbar": {
     "title": "Geospatial Marker Entdecker"
   },
+  "category": {
+    "title": "Neue Kategorie erstellen",
+    "name": "Name",
+    "description": "Beschreibung",
+    "uploadImage": "Hochladen",
+    "noneSelected": "Keine"
+  },
   "categoryListSlider": {
     "title": "Kategorien",
     "empty": "Es sieht so aus, als gäbe es keine Kategorien.\nGeh und erstelle einige!"
@@ -9,14 +16,13 @@
   "confirmDeleteModal": {
     "title": "Löschen bestätigen",
     "confirmText": "löschen",
-    "message": "Sind Sie sicher, dass Sie diese Aktion löschen wollen: {{entityName}}?\nDiese Aktion kann nicht rückgängig gemacht werden!"
+    "message": "Sind Sie sicher, dass Sie diese Aktion löschen wollen: {{entityName}}?\nDiese Aktion kann nicht rückgängig gemacht werden!",
+    "error": {
+      "404": "Die Entität konnte nicht gefunden werden!"
+    }
   },
   "createCategoryModal": {
-    "title": "Neue Kategorie erstellen",
-    "name": "Name",
-    "description": "Beschreibung",
-    "uploadImage": "Hochladen",
-    "noImageSelected": "Keine"
+    "title": "Neue Kategorie erstellen"
   },
   "createMarkerSlider": {
     "title": "Erstelle einen neuen Marker",
@@ -25,15 +31,30 @@
   "deleteConfirmModal": {
     "conten": "Sind Sie sicher, dass Sie löschen möchten?\nDiese Aktion kann nicht rückgängig gemacht werden!"
   },
+  "editCategoryModal": {
+    "title": "Kategorie bearbeiten: {{categoryName}}",
+    "error": {
+      "404": "Die Kategorie mit der Id: {{categoryId}} konnte nicht gefunden werden!"
+    }
+  },
   "editMarkerSlider": {
-    "title": "Marker bearbeiten:",
+    "title": "Marker bearbeiten: {{markerName}}",
     "submit": "Marker aktualisieren"
   },
   "general": {
     "cancel": "Abbrechen",
     "confirm": "Bestätigen",
     "create": "Anlegen",
-    "update": "Aktualisieren"
+    "update": "Aktualisieren",
+    "categories": "Kategorien",
+    "or": "oder"
+  },
+  "image": {
+    "noneSelected": "Keine",
+    "error": {
+      "413": "Die Datei ist zu groß!",
+      "415": "Nur erlaubt: .png, .jpg und .webp Dateien"
+    }
   },
   "listMarkersSlider": {
     "title": "Marker",
@@ -44,8 +65,10 @@
     "latitude": "Breitengrad:",
     "longitude": "Längengrad:",
     "description": "Beschreibung:",
-    "noCategorySelected": "Keine",
-    "category": "Kategorie:"
+    "category": "Kategorie:",
+    "error": {
+      "404": "Der Marker mit der Id: {{markerId}} konnte nicht gefunden werden!"
+    }
   },
   "tooltip": {
     "toggleMarkersDetailPoppers": "Tooltips anzeigen",

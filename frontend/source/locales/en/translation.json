@@ -2,6 +2,13 @@
   "appbar": {
     "title": "Geospatial Marker Explorer"
   },
+  "category": {
+    "title": "Create a new category",
+    "name": "Name",
+    "description": "Description",
+    "uploadImage": "Upload",
+    "noneSelected": "None"
+  },
   "categoryListSlider": {
     "title": "Categories",
     "empty": "Seems like there are no categories.\nGo and create some!"
@@ -9,14 +16,13 @@
   "confirmDeleteModal": {
     "title": "Confirm deletion",
     "confirmText": "delete",
-    "message": "Are you sure you want to delete: {{entityName}}?\nThis action can not be undone!"
+    "message": "Are you sure you want to delete: {{entityName}}?\nThis action can not be undone!",
+    "error": {
+      "404": "The entity couldnt be found!"
+    }
   },
   "createCategoryModal": {
-    "title": "Create a new category",
-    "name": "Name",
-    "description": "Description",
-    "uploadImage": "Upload",
-    "noImageSelected": "None"
+    "title": "Create a new category"
   },
   "createMarkerSlider": {
     "title": "Create a new marker",
@@ -25,8 +31,14 @@
   "deleteConfirmModal": {
     "conten": "Are you sure you want to delete?\nThis action can not be undone!"
   },
+  "editCategoryModal": {
+    "title": "Edit a category: {{categoryName}}",
+    "error": {
+      "404": "The category with the id: {{categoryId}} couldn`t be found!"
+    }
+  },
   "editMarkerSlider": {
-    "title": "Edit a marker:",
+    "title": "Edit a marker: {{markerName}}",
     "submit": "Update marker"
   },
   "general": {
@@ -34,7 +46,15 @@
     "confirm": "Confirm",
     "create": "Create",
     "update": "Update",
-    "categories": "Categories"
+    "categories": "Categories",
+    "or": "or"
+  },
+  "image": {
+    "noneSelected": "None",
+    "error": {
+      "413": "The file is too large!",
+      "415": "Only allowed are: .png, .jpg and .webp files"
+    }
   },
   "listMarkersSlider": {
     "title": "Markers",
@@ -45,8 +65,10 @@
     "latitude": "Latitude:",
     "longitude": "Longitude:",
     "description": "Description:",
-    "noCategorySelected": "None",
-    "category": "Category:"
+    "category": "Category:",
+    "error": {
+      "404": "The marker with the id: {{markerId}} couldn`t be found!"
+    }
   },
   "tooltip": {
     "toggleMarkersDetailPoppers": "Show tooltips",

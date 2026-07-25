@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -24,6 +25,7 @@ import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 interface IMarkerSliderProps {
+  errorMessage?: string;
   open: boolean;
   title: string;
   submitText: string;
@@ -38,6 +40,7 @@ interface IMarkerSliderProps {
 const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
   (props, ref) => {
     const {
+      errorMessage,
       open,
       title,
       submitText,
@@ -184,6 +187,16 @@ const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(
           >
             {submitText}
           </Button>
+          <Box sx={{ flex: 1 }} />
+          {errorMessage && (
+            <Alert sx={{ m: 4 }} severity="error">
+              <Typography
+                sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+              >
+                {errorMessage}
+              </Typography>
+            </Alert>
+          )}
         </>
       </Slider>
     );

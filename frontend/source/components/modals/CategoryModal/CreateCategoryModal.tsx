@@ -21,7 +21,7 @@ const CreateCategoryModal = (props: ICreateCategoryModalProps) => {
   const onConfirm = useCallback(async () => {
     await createCategory.mutateAsync({
       ...formState,
-      icon_url: formState.icon_url !== "none" ? formState.icon_url : null
+      icon_url: formState.iconUrl !== "none" ? formState.iconUrl : null
     });
   }, [formState, createCategory]);
 

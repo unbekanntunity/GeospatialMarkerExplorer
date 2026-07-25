@@ -43,7 +43,7 @@ const CategorySelect = (props: ICategorySelect) => {
       onChange={onChangeCategory}
     >
       <MenuItem key={NONE_SELECTED} value={NONE_SELECTED}>
-        {t("marker.noCategorySelected")}
+        {t("category.noneSelected")}
       </MenuItem>
       {isFetchingCategories && (
         <MenuItem disabled sx={{ justifySelf: "center" }}>

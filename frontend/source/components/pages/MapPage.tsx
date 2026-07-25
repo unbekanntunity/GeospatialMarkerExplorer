@@ -69,6 +69,7 @@ const MapPage = () => {
           )}
           {state.markerListSlider && (
             <MarkerListSlider
+              markers={markers}
               isFetching={isFetching}
               searchName={searchMarkerName}
               setSearchName={setSearchMarkerName}

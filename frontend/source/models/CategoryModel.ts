@@ -22,7 +22,10 @@ export const useCreateCategory = () => {
       });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          status: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;
@@ -53,7 +56,10 @@ export const useUpdateCategory = () => {
       });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;
@@ -79,7 +85,10 @@ export const useDeleteCategory = () => {
       const response = await deleteCategoryCategoriesIdDelete({ path: { id } });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;
@@ -106,7 +115,10 @@ export const useCategories = (query: CategoryQuery) => {
       const response = await getCategoriesCategoriesGet({ query });
 
       if (response.error) {
-        throw response.error;
+        throw {
+          name: response.response?.status,
+          detail: response.error.detail ?? response.error
+        };
       }
 
       return response.data;

@@ -40,8 +40,13 @@ const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
 
   return (
     <MarkerSlider
+      errorMessage={
+        updateMarker.error
+          ? t(`marker.error.${updateMarker.error?.name}`, { markerId: id })
+          : undefined
+      }
       open={open}
-      title={`${t("editMarkerSlider.title")} ${id}`}
+      title={t("editMarkerSlider.title", { markerName: formState.name })}
       submitText={t("editMarkerSlider.submit")}
       position={position}
       formState={formState}

@@ -17,7 +17,7 @@ const EditCategoryModal = (props: IEditCategoryModalProps) => {
   const [formState, setFormState] = useState<IFormState>({
     name: category.name,
     description: category.description,
-    icon_url: category.icon_url
+    iconUrl: category.icon_url
   });
 
   const { t } = useTranslation();
@@ -33,9 +33,16 @@ const EditCategoryModal = (props: IEditCategoryModalProps) => {
 
   return (
     <CategoryModal
+      errorMessage={
+        updateCategory.error
+          ? t(`category.error.${updateCategory.error?.name}`, {
+              categoryId: category.id
+            })
+          : undefined
+      }
       formState={formState}
       setFormState={setFormState}
-      title={t("createCategoryModal.title")}
+      title={t("editCategoryModal.title", { categoryName: category.name })}
       submitText={t("general.create")}
       onConfirm={onConfirm}
       onClose={onClose}
