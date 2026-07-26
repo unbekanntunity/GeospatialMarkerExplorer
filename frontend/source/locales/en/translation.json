@@ -89,6 +89,7 @@
   },
   "section": {
     "name": "Name",
+    "description": "Description:",
     "markers": "Markers"
   },
   "tooltip": {

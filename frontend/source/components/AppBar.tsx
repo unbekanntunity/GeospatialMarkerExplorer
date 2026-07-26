@@ -266,11 +266,17 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 <Tooltip
                   enterDelay={TOOLTIP_DELAY}
                   title={t("tooltip.listCategories")}
+
                   onClick={() =>
                     onToggleCategoryListSlider(!!sliderState.categoryListSlider)
                   }
                 >
-                  <IconButton size="large">
+                  <IconButton
+                    color={
+                      !!sliderState.categoryListSlider ? "secondary" : "inherit"
+                    }
+                    size="large"
+                  >
                     <ReorderOutlinedIcon />
                   </IconButton>
                 </Tooltip>
@@ -305,7 +311,12 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                     onToggleSectionListSlider(!!sliderState.sectionListSlider)
                   }
                 >
-                  <IconButton size="large">
+                  <IconButton
+                    color={
+                      !!sliderState.sectionListSlider ? "secondary" : "inherit"
+                    }
+                    size="large"
+                  >
                     <ReorderOutlinedIcon />
                   </IconButton>
                 </Tooltip>

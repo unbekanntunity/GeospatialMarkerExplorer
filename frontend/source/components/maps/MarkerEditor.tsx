@@ -61,6 +61,8 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
     }));
   }, []);
 
+  console.log("current ", marker.id, position);
+
   return (
     <>
       <EditMarkerSlider
