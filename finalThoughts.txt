@@ -1,0 +1,13 @@
+Overall I am satisfied with my application, especially since I didnt really code much in the last months while searching for a new job.
+Some things I would change when having more time:
+
+- Expand models: The models are basic and can be improved for sure like reusing the image upload to add a new "image" property to the markers and also adding more data fields would be useful for markers.
+- Add validation and check for sql injection in any input fields
+- Improve error handling in the delete confirm modal. This is the only modal which does not display error messages when a operation fails (excluding query operations)
+- Being able to close single markers tooltips
+- Refactoring of some components. Especially in the end when the time got close I think I add some redudant code which can be combined by lifting states, inttroduce components or just refactor the flow of the data
+- Add pagination in the backend especially when swithcing from a list to a table to display more data and move the filtering to the backend
+- Add unit and integration tests as well as fast api documentation. I am sure there is a library / standard comment functions / endpoints better but I didnt do any research in that regard
+
+I used crowdin for the translations which I also highly recommend for future application. Easy setup and auto translate makes adding and managing strings 
+quite easy. The translations are up to date
