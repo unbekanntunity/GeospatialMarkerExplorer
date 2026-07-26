@@ -2,21 +2,21 @@ import { Box, CircularProgress, List, Typography } from "@mui/material";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useSections } from "../../models/SectionModel";
+import { SectionResponse } from "../../api/generated";
 import Slider from "../maps/Slider";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import SectionAccordion from "./SectionAccordion";
 
 interface ISectionListSliderProps {
+  sections: SectionResponse[];
+  isFetching: boolean;
   open: boolean;
   position: SliderPosition;
 }
 
 const SectionListSlider = (props: ISectionListSliderProps) => {
-  const { open, position } = props;
-
-  const { data: sections, isFetching } = useSections();
+  const { open, position, sections, isFetching } = props;
 
   const { dispatch } = useSlider();
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ const SectionListSlider = (props: ISectionListSliderProps) => {
             <CircularProgress color="secondary" />
           </Box>
         )}
-        {!isFetching && (!sections || sections.length === 0) && (
+        {!isFetching && sections.length === 0 && (
           <Box
             sx={{
               flex: 1,

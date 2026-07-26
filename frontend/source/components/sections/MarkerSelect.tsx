@@ -104,8 +104,6 @@ const MarkerSelect = (props: IMarkerSelectProps) => {
   const onKeyDownInput = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === "Enter") {
-        console.log(matchingMarker);
-
         if (matchingMarker) {
           toggleMarker(matchingMarker);
         }

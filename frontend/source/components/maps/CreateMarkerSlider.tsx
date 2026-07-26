@@ -2,34 +2,24 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useCreateMarker } from "../../models/MarkerModel";
-import { useSlider } from "../sliders/hooks/useSliders";
-import { SliderAction, SliderPosition } from "../sliders/SliderAction";
+import { SliderPosition } from "../sliders/SliderAction";
 import MarkerSlider from "./MarkerSlider";
-import { defaultFormState, IFormState } from "./types/IFormState";
+import { IFormState } from "./types/IFormState";
 
 interface ICreateMarkerSliderProps {
   open: boolean;
   position: SliderPosition;
   formState: IFormState;
   setFormState: Dispatch<SetStateAction<IFormState>>;
+  onClose: () => void;
 }
 
 const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
-  const { open, position, formState, setFormState } = props;
+  const { open, position, formState, setFormState, onClose } = props;
 
-  const { dispatch } = useSlider();
   const { t } = useTranslation();
 
   const createMarker = useCreateMarker();
-
-  const onClose = useCallback(() => {
-    setFormState(defaultFormState);
-
-    dispatch({
-      type: SliderAction.HideSlider,
-      slider: "createMarkerSlider"
-    });
-  }, [setFormState, dispatch]);
 
   const onSubmit = useCallback(async () => {
     if (formState.name === null) {

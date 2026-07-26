@@ -1,5 +1,5 @@
 import { useTheme } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { CircleMarker, Marker, useMapEvents } from "react-leaflet";
 
 import { useSlider } from "../sliders/hooks/useSliders";
@@ -8,7 +8,13 @@ import CreateMarkerSlider from "./CreateMarkerSlider";
 import { defaultFormState, IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
-const MarkerCreator = () => {
+interface IMarkerCreatorProps {
+  onClose: () => void;
+}
+
+const MarkerCreator = (props: IMarkerCreatorProps) => {
+  const { onClose: onParentClose } = props;
+
   const { state, dispatch } = useSlider();
   const theme = useTheme();
 
@@ -44,6 +50,12 @@ const MarkerCreator = () => {
     );
   }, [formState.latitude, formState.longitude]);
 
+  const onClose = useCallback(() => {
+    setFormState(defaultFormState);
+
+    onParentClose();
+  }, [setFormState, onParentClose]);
+
   return state.createMarkerSlider ? (
     <>
       <CreateMarkerSlider
@@ -51,6 +63,7 @@ const MarkerCreator = () => {
         position={state.createMarkerSlider.position}
         formState={formState}
         setFormState={setFormState}
+        onClose={onClose}
       />
       {position && (
         <>

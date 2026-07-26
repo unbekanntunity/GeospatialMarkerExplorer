@@ -21,7 +21,7 @@ import Slider from "./Slider";
 interface IMarkerListProps {
   open: boolean;
   position: SliderPosition;
-  markers?: MarkerResponse[];
+  markers: MarkerResponse[];
   searchName: string;
   setSearchName: Dispatch<SetStateAction<string>>;
   categoryIds: string[];

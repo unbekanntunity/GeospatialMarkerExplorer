@@ -2,8 +2,7 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useUpdateMarker } from "../../models/MarkerModel";
-import { useSlider } from "../sliders/hooks/useSliders";
-import { SliderAction, SliderPosition } from "../sliders/SliderAction";
+import { SliderPosition } from "../sliders/SliderAction";
 import MarkerSlider from "./MarkerSlider";
 import { IFormState } from "./types/IFormState";
 
@@ -13,12 +12,12 @@ interface IEditMarkerSliderProps {
   id: string;
   formState: IFormState;
   setFormState: Dispatch<SetStateAction<IFormState>>;
+  onClose: () => void;
 }
 
 const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
-  const { open, position, id, formState, setFormState } = props;
+  const { open, position, id, formState, setFormState, onClose } = props;
 
-  const { dispatch } = useSlider();
   const { t } = useTranslation();
 
   const updateMarker = useUpdateMarker();
@@ -30,13 +29,6 @@ const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
 
     updateMarker.mutate({ id, marker: formState });
   }, [id, formState, updateMarker]);
-
-  const onClose = useCallback(() => {
-    dispatch({
-      type: SliderAction.HideSlider,
-      slider: "editMarkerSlider"
-    });
-  }, [dispatch]);
 
   return (
     <MarkerSlider

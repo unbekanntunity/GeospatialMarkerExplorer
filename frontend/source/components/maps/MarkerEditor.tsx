@@ -1,23 +1,27 @@
 import { useTheme } from "@mui/material";
-import { DragEndEvent } from "leaflet";
+import { DragEndEvent, LatLngTuple } from "leaflet";
 import { useCallback, useMemo, useState } from "react";
-import { CircleMarker, Marker, useMapEvents } from "react-leaflet";
+import { CircleMarker, Marker, Polyline, useMapEvents } from "react-leaflet";
 
-import { MarkerResponse } from "../../api/generated";
-import { SliderPosition } from "../sliders/SliderAction";
+import { MarkerResponse, SectionResponse } from "../../api/generated";
+import { useSlider } from "../sliders/hooks/useSliders";
+import { SliderAction, SliderPosition } from "../sliders/SliderAction";
 import EditMarkerSlider from "./EditMarkerSlider";
 import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 interface IMarkerEditorProps {
+  sections: SectionResponse[];
   marker: MarkerResponse;
   open: boolean;
   sliderPosition: SliderPosition;
+  onClose: () => void;
 }
 
 const MarkerEditor = (props: IMarkerEditorProps) => {
-  const { marker, open, sliderPosition } = props;
+  const { sections, marker, open, sliderPosition, onClose } = props;
 
+  const { dispatch } = useSlider();
   const theme = useTheme();
 
   const [formState, setFormState] = useState<IFormState>({
@@ -30,11 +34,6 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
 
   useMapEvents({
     click(e) {
-      const target = e.originalEvent.target as HTMLElement;
-      if (!target.className.includes("leaflet-container")) {
-        return;
-      }
-
       setFormState((prev) => ({
         ...prev,
         latitude: e.latlng.lat,
@@ -61,7 +60,46 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
     }));
   }, []);
 
-  console.log("current ", marker.id, position);
+  const onClickPolyline = useCallback(
+    (section: SectionResponse) => {
+      onClose();
+
+      dispatch({
+        type: SliderAction.ShowSlider,
+        slider: "editSectionSlider",
+        payload: {
+          section,
+          position: "left"
+        }
+      });
+    },
+    [dispatch, onClose]
+  );
+
+  const updatedSections = useMemo(() => {
+    return sections.flatMap((s) => {
+      const unaffectedMarkers = s.markers.filter((m) => m.id !== marker.id);
+      const unaffectedMarkersPositions = unaffectedMarkers
+        .map((m) =>
+          convertToCoordinate(m.latitude.toString(), m.longitude.toString())
+        )
+        .filter((pos): pos is LatLngTuple => pos !== undefined);
+
+      const editedMarkerPosition = convertToCoordinate(
+        formState.latitude.toString(),
+        formState.longitude.toString()
+      );
+
+      if (!editedMarkerPosition) {
+        return [];
+      }
+
+      return {
+        section: s,
+        positions: [...unaffectedMarkersPositions, editedMarkerPosition]
+      };
+    });
+  }, [sections, formState, marker]);
 
   return (
     <>
@@ -71,6 +109,7 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
         id={marker.id}
         formState={formState}
         setFormState={setFormState}
+        onClose={onClose}
       />
       {position && (
         <>
@@ -92,6 +131,14 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
           />
         </>
       )}
+      {updatedSections.map((sectionsWithPositions) => (
+        <Polyline
+          eventHandlers={{
+            click: () => onClickPolyline(sectionsWithPositions.section)
+          }}
+          positions={sectionsWithPositions.positions}
+        />
+      ))}
     </>
   );
 };
