@@ -88,6 +88,5 @@ logs/
 *.tmp
 *.swp
 *.bak
-notes
 frontend/crowdin.local.yml
-backend/static/uploads
+backend/static/uploads/custom
