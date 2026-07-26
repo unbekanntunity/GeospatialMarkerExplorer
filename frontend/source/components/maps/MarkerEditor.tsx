@@ -1,7 +1,14 @@
-import { useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { DragEndEvent, LatLngTuple } from "leaflet";
 import { useCallback, useMemo, useState } from "react";
-import { CircleMarker, Marker, Polyline, useMapEvents } from "react-leaflet";
+import { useTranslation } from "react-i18next";
+import {
+  CircleMarker,
+  Marker,
+  Polyline,
+  Tooltip,
+  useMapEvents
+} from "react-leaflet";
 
 import { MarkerResponse, SectionResponse } from "../../api/generated";
 import { useSlider } from "../sliders/hooks/useSliders";
@@ -11,6 +18,7 @@ import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
 interface IMarkerEditorProps {
+  showDetailPoppers: boolean;
   sections: SectionResponse[];
   marker: MarkerResponse;
   open: boolean;
@@ -19,10 +27,12 @@ interface IMarkerEditorProps {
 }
 
 const MarkerEditor = (props: IMarkerEditorProps) => {
-  const { sections, marker, open, sliderPosition, onClose } = props;
+  const { showDetailPoppers, sections, marker, open, sliderPosition, onClose } =
+    props;
 
   const { dispatch } = useSlider();
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const [formState, setFormState] = useState<IFormState>({
     name: marker.name,
@@ -128,7 +138,40 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
               dragend: onDragEnd
             }}
             position={position}
-          />
+          >
+            {showDetailPoppers && (
+              <Tooltip
+                permanent
+                direction="top"
+                offset={[-15, -15]}
+                opacity={0.9}
+              >
+                <Box sx={{ p: 2 }}>
+                  <Typography
+                    sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+                  >
+                    {marker.name}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gap: "10px 20px",
+                      gridTemplateColumns: "auto auto"
+                    }}
+                  >
+                    <Typography>{t("marker.category")}</Typography>
+                    <Typography>{formState.category?.name ?? "-"}</Typography>
+                    <Typography>{t("marker.latitude")}</Typography>
+                    <Typography>{formState.latitude}</Typography>
+                    <Typography>{t("marker.longitude")}</Typography>
+                    <Typography>{formState.longitude}</Typography>
+                    <Typography>{t("marker.description")}</Typography>
+                    <Typography>{formState.description ?? "-"}</Typography>
+                  </Box>
+                </Box>
+              </Tooltip>
+            )}
+          </Marker>
         </>
       )}
       {updatedSections.map((sectionsWithPositions) => (

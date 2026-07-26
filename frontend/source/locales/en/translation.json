@@ -39,6 +39,10 @@
   "deleteConfirmModal": {
     "conten": "Are you sure you want to delete?\nThis action can not be undone!"
   },
+  "earthquake": {
+    "magnitude": "Magnitude:",
+    "type": "Type:"
+  },
   "editCategoryModal": {
     "title": "Edit a category: {{categoryName}}",
     "error": {

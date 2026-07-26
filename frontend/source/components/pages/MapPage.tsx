@@ -1,13 +1,17 @@
+import { LatLngBounds } from "leaflet";
 import { useCallback, useMemo, useState } from "react";
 import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 
 import { SectionResponse } from "../../api/generated";
 import useDebounce from "../../hooks/useDebounce";
+import { useEarthquakes } from "../../models/EarthquakeModel";
 import { useMarkers } from "../../models/MarkerModel";
 import { useSections } from "../../models/SectionModel";
 import { stringsByAlphabet } from "../../utils/StringUtils";
 import CustomAppBar from "../AppBar";
 import CategoryListSlider from "../categories/CategoryListSlider";
+import EarthquakeMarker from "../earthquake/EarthquakeMarker";
+import BoundsWatcher from "../maps/BoundsWatcher";
 import MapMarker from "../maps/MapMarker";
 import MarkerCreator from "../maps/MarkerCreator";
 import MarkerEditor from "../maps/MarkerEditor";
@@ -19,12 +23,15 @@ import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction } from "../sliders/SliderAction";
 
 const MapPage = () => {
+  const [bounds, setBounds] = useState<LatLngBounds | null>(null);
+
   const [showMarkerDetailPoppers, setShowMarkerDetailPoppers] = useState(true);
 
   const [searchMarkerName, setSearchMarkerName] = useState("");
   const [filterByCategoryIds, setFilterByCategoryIds] = useState<string[]>([]);
 
   const debouncedSearchMarkerName = useDebounce(searchMarkerName, 300);
+  const debouncedBounds = useDebounce(bounds, 300);
 
   const { state, dispatch } = useSlider();
 
@@ -34,6 +41,10 @@ const MapPage = () => {
   });
 
   const { data: sections, isFetching: isFetchingSections } = useSections();
+
+  const { data: earthquakes } = useEarthquakes({
+    bounds: debouncedBounds
+  });
 
   const sortedMarkers = useMemo(
     () => markers?.sort((a, b) => stringsByAlphabet(a.name, b.name)) ?? [],
@@ -95,11 +106,18 @@ const MapPage = () => {
             attribution="&copy; OpenStreetMap contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          <BoundsWatcher onBoundsChange={setBounds} />
           {markersWithoutTheOneEdited.map((m) => (
             <MapMarker
               key={m.id}
               showDetailPoppers={showMarkerDetailPoppers}
               marker={m}
+            />
+          ))}
+          {earthquakes?.features.map((e) => (
+            <EarthquakeMarker
+              earthquake={e}
+              showDetailPoppers={showMarkerDetailPoppers}
             />
           ))}
           {sectionsWithoutTheOneEdited.map((section) => (
@@ -127,6 +145,7 @@ const MapPage = () => {
           )}
           {state.editMarkerSlider && (
             <MarkerEditor
+              showDetailPoppers={showMarkerDetailPoppers}
               sections={sectionsAffectedByMarkerEdit}
               open={!!state.editMarkerSlider}
               sliderPosition={state.editMarkerSlider.position}

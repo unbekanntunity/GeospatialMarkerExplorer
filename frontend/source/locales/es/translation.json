@@ -39,6 +39,10 @@
   "deleteConfirmModal": {
     "conten": "¿Está seguro que desea eliminar?\n¡Esta acción no se puede deshacer!"
   },
+  "earthquake": {
+    "magnitude": "Magnitude:",
+    "type": "Tipo:"
+  },
   "editCategoryModal": {
     "title": "Editar una categoría: {{categoryName}}",
     "error": {
@@ -89,6 +93,7 @@
   },
   "section": {
     "name": "Nombre",
+    "description": "Descripción:",
     "markers": "Marcadores"
   },
   "tooltip": {

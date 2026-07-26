@@ -39,6 +39,10 @@
   "deleteConfirmModal": {
     "conten": "Sind Sie sicher, dass Sie löschen möchten?\nDiese Aktion kann nicht rückgängig gemacht werden!"
   },
+  "earthquake": {
+    "magnitude": "Magnitude:",
+    "type": "Typ:"
+  },
   "editCategoryModal": {
     "title": "Kategorie bearbeiten: {{categoryName}}",
     "error": {
@@ -89,6 +93,7 @@
   },
   "section": {
     "name": "Name",
+    "description": "Beschreibung:",
     "markers": "Marker"
   },
   "tooltip": {
