@@ -1,4 +1,9 @@
 {
+  "accordion": {
+    "id": "id: {{id}}",
+    "latitude": "lat: {{latitude}}",
+    "longitude": "largo: {{longitude}}"
+  },
   "appbar": {
     "title": "Explorador de marcadores geoespaciales"
   },
@@ -28,6 +33,9 @@
     "title": "Crear un nuevo marcador",
     "submit": "Crear marcador"
   },
+  "createSectionSlider": {
+    "title": "Crear una nueva sección"
+  },
   "deleteConfirmModal": {
     "conten": "¿Está seguro que desea eliminar?\n¡Esta acción no se puede deshacer!"
   },
@@ -40,6 +48,10 @@
   "editMarkerSlider": {
     "title": "Editar un marcador: {{markerName}}",
     "submit": "Actualizar marcador"
+  },
+  "editSectionSlider": {
+    "title": "Editar una sección: {{sectionName}}",
+    "submit": "Actualizar sección"
   },
   "general": {
     "cancel": "Cancelar",
@@ -60,6 +72,10 @@
     "title": "Marcadores",
     "empty": "Parece que no hay marcadores.\nVe y crea uno haciendo clic en el mapa"
   },
+  "listSectionsSlider": {
+    "title": "Secciones",
+    "empty": "Parece que no hay secciones.\nVe y crea una haciendo clic en varios marcadores"
+  },
   "marker": {
     "name": "Nombre:",
     "latitude": "Latitud:",
@@ -67,10 +83,17 @@
     "description": "Descripción:",
     "category": "Categoría:",
     "error": {
-      "404": "El marcador con la id: {{markerId}} no pudo ser encontrado!"
+      "404": "El marcador con la id: {{markerId}} no pudo ser encontrado!",
+      "400": "¡Categoría no válida!"
     }
   },
+  "section": {
+    "name": "Nombre",
+    "markers": "Marcadores"
+  },
   "tooltip": {
+    "createSection": "Crear sección",
+    "listSections": "Sección de lista",
     "toggleMarkersDetailPoppers": "Mostrar tooltips",
     "createMarker": "Crear marcadores",
     "listMarkers": "Listar marcadores",
@@ -79,6 +102,7 @@
   },
   "type": {
     "markers": "Marcadores",
-    "categories": "Categorías"
+    "categories": "Categorías",
+    "sections": "Secciones"
   }
 }

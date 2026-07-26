@@ -4,12 +4,13 @@ import {
   Select,
   SelectChangeEvent
 } from "@mui/material";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { CategoryResponse } from "../../api/generated";
 import { NONE_SELECTED } from "../../constants";
 import { useCategories } from "../../models/CategoryModel";
+import { stringsByAlphabet } from "../../utils/StringUtils";
 
 interface ICategorySelect {
   category: CategoryResponse | null;
@@ -22,6 +23,11 @@ const CategorySelect = (props: ICategorySelect) => {
   const { t } = useTranslation();
   const { data: categories, isFetching: isFetchingCategories } = useCategories(
     {}
+  );
+
+  const sortedCategories = useMemo(
+    () => categories?.sort((a, b) => stringsByAlphabet(a.name, b.name)),
+    [categories]
   );
 
   const onChangeCategory = useCallback(
@@ -51,7 +57,7 @@ const CategorySelect = (props: ICategorySelect) => {
         </MenuItem>
       )}
       {!isFetchingCategories &&
-        categories?.map((category) => (
+        sortedCategories?.map((category) => (
           <MenuItem key={category.id} value={category.id}>
             {category.name}
           </MenuItem>

@@ -4,15 +4,18 @@ import { forwardRef, JSX } from "react";
 import { SliderPosition } from "../sliders/SliderAction";
 import SliderBase from "./SliderBase";
 
-interface ISliderProps {
+export interface ISliderProps {
   open: boolean;
   title: string;
   position: SliderPosition;
-  children: JSX.Element;
   onClose: () => void;
 }
 
-const Slider = forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
+interface IBaseSliderProps extends ISliderProps {
+  children: JSX.Element;
+}
+
+const Slider = forwardRef<HTMLDivElement, IBaseSliderProps>((props, ref) => {
   const { open, title, position, children, onClose } = props;
 
   return (

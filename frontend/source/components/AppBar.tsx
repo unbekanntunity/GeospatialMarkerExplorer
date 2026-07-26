@@ -109,6 +109,46 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
     [sliderDispatch]
   );
 
+  const onToggleCreateSectionSlider = useCallback(
+    (isOpen: boolean) => {
+      if (isOpen) {
+        sliderDispatch({
+          type: SliderAction.HideSlider,
+          slider: "createSectionSlider"
+        });
+      } else {
+        sliderDispatch({
+          type: SliderAction.ShowSlider,
+          slider: "createSectionSlider",
+          payload: {
+            position: "left"
+          }
+        });
+      }
+    },
+    [sliderDispatch]
+  );
+
+  const onToggleSectionListSlider = useCallback(
+    (isOpen: boolean) => {
+      if (isOpen) {
+        sliderDispatch({
+          type: SliderAction.HideSlider,
+          slider: "sectionListSlider"
+        });
+      } else {
+        sliderDispatch({
+          type: SliderAction.ShowSlider,
+          slider: "sectionListSlider",
+          payload: {
+            position: "right"
+          }
+        });
+      }
+    },
+    [sliderDispatch]
+  );
+
   const onChangeType = useCallback((event: SelectChangeEvent) => {
     setSelectedType(event.target.value);
   }, []);
@@ -153,8 +193,9 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
               value={selectedType}
               onChange={onChangeType}
             >
-              <MenuItem value={"markers"}>{t("type.markers")}</MenuItem>
-              <MenuItem value={"categories"}>{t("type.categories")}</MenuItem>
+              <MenuItem value="markers">{t("type.markers")}</MenuItem>
+              <MenuItem value="sections">{t("type.sections")}</MenuItem>
+              <MenuItem value="categories">{t("type.categories")}</MenuItem>
             </Select>
             {selectedType === "markers" && (
               <>
@@ -164,7 +205,6 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 >
                   <IconButton
                     size="large"
-                    aria-label="toggle poppers"
                     color={showMarkerDetailPoppers ? "secondary" : "inherit"}
                     onClick={onToggleMarkerDetailPopopers}
                   >
@@ -177,7 +217,6 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 >
                   <IconButton
                     size="large"
-                    aria-label="create markers"
                     color={
                       !!sliderState.createMarkerSlider ? "secondary" : "inherit"
                     }
@@ -196,7 +235,6 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                 >
                   <IconButton
                     size="large"
-                    aria-label="list markers"
                     color={
                       !!sliderState.markerListSlider ? "secondary" : "inherit"
                     }
@@ -220,7 +258,6 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                       !!modalState.createCategoryModal ? "secondary" : "inherit"
                     }
                     size="large"
-                    aria-label="create categories"
                     onClick={onOpenCreateCategoryModal}
                   >
                     <AddOutlinedIcon />
@@ -233,7 +270,42 @@ const CustomAppBar = (props: ICustomAppBarProps) => {
                     onToggleCategoryListSlider(!!sliderState.categoryListSlider)
                   }
                 >
-                  <IconButton size="large" aria-label="list categories">
+                  <IconButton size="large">
+                    <ReorderOutlinedIcon />
+                  </IconButton>
+                </Tooltip>
+              </>
+            )}
+            {selectedType === "sections" && (
+              <>
+                <Tooltip
+                  enterDelay={TOOLTIP_DELAY}
+                  title={t("tooltip.createSection")}
+                >
+                  <IconButton
+                    color={
+                      !!sliderState.createSectionSlider
+                        ? "secondary"
+                        : "inherit"
+                    }
+                    size="large"
+                    onClick={() =>
+                      onToggleCreateSectionSlider(
+                        !!sliderState.createSectionSlider
+                      )
+                    }
+                  >
+                    <AddOutlinedIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip
+                  enterDelay={TOOLTIP_DELAY}
+                  title={t("tooltip.listSections")}
+                  onClick={() =>
+                    onToggleSectionListSlider(!!sliderState.sectionListSlider)
+                  }
+                >
+                  <IconButton size="large">
                     <ReorderOutlinedIcon />
                   </IconButton>
                 </Tooltip>

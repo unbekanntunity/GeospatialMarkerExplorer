@@ -11,8 +11,8 @@ from sqlalchemy.orm import selectinload
 class SectionRepository:
     async def create(self, section: CreateSectionRequest):
         async with SessionLocal() as session:
-            statement = select(Marker).where(Marker.id.in_(section.marker_ids))
-            result = await session.execute(statement)
+            marker_statement = select(Marker).where(Marker.id.in_(section.marker_ids))
+            result = await session.execute(marker_statement)
             markers = result.scalars().all()
 
             new_section = Section(
@@ -23,7 +23,12 @@ class SectionRepository:
 
             session.add(new_section)
             await session.commit()
-            await session.refresh(new_section)
+
+            section_statement = select(Section).options(
+                selectinload(Section.markers).selectinload(Marker.category)
+            )
+            result = await session.execute(section_statement)
+            new_section = result.scalar_one()
 
             return new_section
 
@@ -36,14 +41,14 @@ class SectionRepository:
         return queried_section.scalar_one_or_none()
 
     async def get_all(self) -> list[Section]:
-            statement = select(Section).options(
-                selectinload(Section.markers)
-            )
-    
-            async with SessionLocal() as session:
-                result = await session.execute(statement)
-    
-                return result.scalars().all()
+        statement = select(Section).options(
+            selectinload(Section.markers).selectinload(Marker.category)
+        )
+
+        async with SessionLocal() as session:
+            result = await session.execute(statement)
+
+            return result.scalars().all()
 
     async def update(self, id, marker: UpdateSectionRequest) -> Marker | None:
         statement = (

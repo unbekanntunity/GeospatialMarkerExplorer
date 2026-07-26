@@ -49,17 +49,24 @@ async def seed_database():
                         category = parking
                     )
 
-        marker_b = Marker(
-                        name="Paris museum",
-                        description="Another example marker",
-                        latitude=48.8566,
-                        longitude=2.3522,
-                        category = museum
+        marker_b =  Marker(
+                        name="Berlin parking",
+                        description="Example marker",
+                        latitude=52.4820,
+                        longitude=13.6173,
+                        category = parking
                     )
 
         markers = [
             marker_a,
             marker_b,
+            Marker(
+                name="Paris museum",
+                description="Another example marker",
+                latitude=48.8566,
+                longitude=2.3522,
+                category = museum
+            ),
             Marker(
                 name="Restaurant al fonso",
                 description="Another example marker",

@@ -19,22 +19,17 @@ import { useMapEvents } from "react-leaflet";
 import { CategoryResponse } from "../../api/generated";
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
 import CategorySelect from "../categories/CategorySelect";
-import { SliderPosition } from "../sliders/SliderAction";
-import Slider from "./Slider";
+import Slider, { ISliderProps } from "./Slider";
 import { IFormState } from "./types/IFormState";
 import { convertToCoordinate } from "./utils/CoordinationUtils";
 
-interface IMarkerSliderProps {
+interface IMarkerSliderProps extends ISliderProps {
   errorMessage?: string;
-  open: boolean;
-  title: string;
   submitText: string;
-  position: SliderPosition;
   formState: IFormState;
   setFormState: Dispatch<SetStateAction<IFormState>>;
   isSubmitting: boolean;
   onSubmit: () => void;
-  onClose: () => void;
 }
 
 const MarkerSlider = forwardRef<HTMLDivElement, IMarkerSliderProps>(

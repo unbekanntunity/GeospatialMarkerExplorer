@@ -1,4 +1,4 @@
-import { MarkerResponse } from "../../api/generated";
+import { MarkerResponse, SectionResponse } from "../../api/generated";
 
 export type SliderPosition = "left" | "right";
 
@@ -14,6 +14,16 @@ export interface ISliderState {
     position: SliderPosition;
   };
   categoryListSlider?: {
+    position: SliderPosition;
+  };
+  createSectionSlider?: {
+    position: SliderPosition;
+  };
+  editSectionSlider?: {
+    section: SectionResponse;
+    position: SliderPosition;
+  };
+  sectionListSlider?: {
     position: SliderPosition;
   };
 }

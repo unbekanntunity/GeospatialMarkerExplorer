@@ -1,4 +1,9 @@
 {
+  "accordion": {
+    "id": "id: {{id}}",
+    "latitude": "lat: {{latitude}}",
+    "longitude": "lang: {{longitude}}"
+  },
   "appbar": {
     "title": "Geospatial Marker Entdecker"
   },
@@ -28,6 +33,9 @@
     "title": "Erstelle einen neuen Marker",
     "submit": "Marker erstellen"
   },
+  "createSectionSlider": {
+    "title": "Eine neue Sektion erstellen"
+  },
   "deleteConfirmModal": {
     "conten": "Sind Sie sicher, dass Sie löschen möchten?\nDiese Aktion kann nicht rückgängig gemacht werden!"
   },
@@ -40,6 +48,10 @@
   "editMarkerSlider": {
     "title": "Marker bearbeiten: {{markerName}}",
     "submit": "Marker aktualisieren"
+  },
+  "editSectionSlider": {
+    "title": "Abschnitt bearbeiten: {{sectionName}}",
+    "submit": "Abschnitt aktualisieren"
   },
   "general": {
     "cancel": "Abbrechen",
@@ -60,6 +72,10 @@
     "title": "Marker",
     "empty": "Es sieht so aus, als gäbe es keine Marker.\nGeh und erstelle eine durch Klicken auf die Karte"
   },
+  "listSectionsSlider": {
+    "title": "Abschnitte",
+    "empty": "Es sieht so aus, als gäbe es keine Abschnitte.\nGeh und erstelle eine durch Klicken auf mehrere Marker"
+  },
   "marker": {
     "name": "Name:",
     "latitude": "Breitengrad:",
@@ -67,10 +83,17 @@
     "description": "Beschreibung:",
     "category": "Kategorie:",
     "error": {
-      "404": "Der Marker mit der Id: {{markerId}} konnte nicht gefunden werden!"
+      "404": "Der Marker mit der Id: {{markerId}} konnte nicht gefunden werden!",
+      "400": "Ungültige Kategorie!"
     }
   },
+  "section": {
+    "name": "Name",
+    "markers": "Marker"
+  },
   "tooltip": {
+    "createSection": "Sektion erstellen",
+    "listSections": "Listenabschnitt",
     "toggleMarkersDetailPoppers": "Tooltips anzeigen",
     "createMarker": "Marker erstellen",
     "listMarkers": "Listenmarker",
@@ -79,6 +102,7 @@
   },
   "type": {
     "markers": "Marker",
-    "categories": "Kategorien"
+    "categories": "Kategorien",
+    "sections": "Abschnitte"
   }
 }

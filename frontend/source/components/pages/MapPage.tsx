@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 
 import useDebounce from "../../hooks/useDebounce";
 import { useMarkers } from "../../models/MarkerModel";
+import { stringsByAlphabet } from "../../utils/StringUtils";
 import CustomAppBar from "../AppBar";
 import CategoryListSlider from "../categories/CategoryListSlider";
 import MapMarker from "../maps/MapMarker";
 import MarkerCreator from "../maps/MarkerCreator";
 import MarkerEditor from "../maps/MarkerEditor";
 import MarkerListSlider from "../maps/MarkerListSlider";
+import CreateSectionSlider from "../sections/CreateSectionSlider";
+import EditSectionSlider from "../sections/EditSectionSlider";
+import SectionListSlider from "../sections/SectionListSlider";
 import { useSlider } from "../sliders/hooks/useSliders";
 
 const MapPage = () => {
@@ -25,6 +29,11 @@ const MapPage = () => {
     name: debouncedSearchMarkerName,
     category_ids: filterByCategoryIds
   });
+
+  const sortedMarkers = useMemo(
+    () => markers?.sort((a, b) => stringsByAlphabet(a.name, b.name)),
+    [markers]
+  );
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
@@ -69,7 +78,7 @@ const MapPage = () => {
           )}
           {state.markerListSlider && (
             <MarkerListSlider
-              markers={markers}
+              markers={sortedMarkers}
               isFetching={isFetching}
               searchName={searchMarkerName}
               setSearchName={setSearchMarkerName}
@@ -77,6 +86,25 @@ const MapPage = () => {
               setCategoryIds={setFilterByCategoryIds}
               open={!!state.markerListSlider}
               position={state.markerListSlider.position}
+            />
+          )}
+          {state.createSectionSlider && (
+            <CreateSectionSlider
+              open={!!state.createSectionSlider}
+              position={state.createSectionSlider.position}
+            />
+          )}
+          {state.editSectionSlider && (
+            <EditSectionSlider
+              section={state.editSectionSlider.section}
+              open={!!state.editSectionSlider}
+              position={state.editSectionSlider.position}
+            />
+          )}
+          {state.sectionListSlider && (
+            <SectionListSlider
+              open={!!state.sectionListSlider}
+              position={state.sectionListSlider.position}
             />
           )}
         </MapContainer>

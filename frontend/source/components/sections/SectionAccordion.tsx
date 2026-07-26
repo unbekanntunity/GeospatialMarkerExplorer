@@ -14,20 +14,20 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { MarkerResponse } from "../../api/generated";
-import { useDeleteMarker } from "../../models/MarkerModel";
+import { SectionResponse } from "../../api/generated";
+import { useDeleteSection } from "../../models/SectionModel";
 import { isNullOrWhiteSpace } from "../../utils/StringUtils";
 import { useModal } from "../modals/hooks/useModal";
 import { ModalAction } from "../modals/ModalAction";
 import { useSlider } from "../sliders/hooks/useSliders";
 import { SliderAction } from "../sliders/SliderAction";
 
-interface IMarkerAccordionProps {
-  marker: MarkerResponse;
+interface ISectionAccordionProps {
+  section: SectionResponse;
 }
 
-const MarkerAccordion = (props: IMarkerAccordionProps) => {
-  const { marker } = props;
+const SectionAccordion = (props: ISectionAccordionProps) => {
+  const { section } = props;
 
   const { state } = useSlider();
   const { t } = useTranslation();
@@ -37,20 +37,20 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
   const { dispatch: sliderDispatch } = useSlider();
   const { dispatch: modalDispatch } = useModal();
 
-  const deleteMarker = useDeleteMarker();
+  const deleteSection = useDeleteSection();
 
-  const onEditMarker = useCallback(
+  const onEditSection = useCallback(
     (
       e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
-      marker: MarkerResponse
+      section: SectionResponse
     ) => {
       e.stopPropagation();
 
-      sliderDispatch({
+      return sliderDispatch({
         type: SliderAction.ShowSlider,
-        slider: "editMarkerSlider",
+        slider: "editSectionSlider",
         payload: {
-          marker,
+          section,
           position: "left"
         }
       });
@@ -58,10 +58,10 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
     [sliderDispatch]
   );
 
-  const onDeleteMarker = useCallback(
+  const onDeleteSection = useCallback(
     (
       e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
-      marker: MarkerResponse
+      section: SectionResponse
     ) => {
       e.stopPropagation();
 
@@ -74,21 +74,21 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
         type: ModalAction.ShowModal,
         modal: "confirmDeleteModal",
         payload: {
-          entityName: marker.name,
-          onConfirm: () => deleteMarker.mutateAsync(marker.id)
+          entityName: section.name,
+          onConfirm: () => deleteSection.mutateAsync(section.id)
         }
       });
     },
-    [deleteMarker, modalDispatch, sliderDispatch]
+    [deleteSection, modalDispatch, sliderDispatch]
   );
 
   return (
     <Accordion
-      key={marker.id}
+      key={section.id}
       disableGutters
       expanded={expanded}
       onChange={() => {
-        if (isNullOrWhiteSpace(marker.description)) {
+        if (isNullOrWhiteSpace(section.description)) {
           return;
         }
 
@@ -99,7 +99,7 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
         expandIcon={
           <ExpandMoreIcon
             sx={{
-              visibility: isNullOrWhiteSpace(marker.description)
+              visibility: isNullOrWhiteSpace(section.description)
                 ? "hidden"
                 : "visible"
             }}
@@ -115,49 +115,24 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
       >
         <ListItem>
           <ListItemText
-            primary={marker.name}
-            secondary={
-              <>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ display: "block" }}
-                >
-                  {t("accordion.latitude", { latitude: marker.latitude })}
-                </Typography>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ display: "block" }}
-                >
-                  {t("accordion.longitude", { longitude: marker.longitude })}
-                </Typography>
-                <br />
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ display: "block" }}
-                >
-                  {t("accordion.id", { id: marker.id })}
-                </Typography>
-              </>
-            }
+            primary={section.name}
+            secondary={t("accordion.id", { id: section.id })}
           />
           <IconButton
             color={
-              !!state.editMarkerSlider &&
-              state.editMarkerSlider.marker.id === marker.id
+              !!state.editSectionSlider &&
+              state.editSectionSlider.section.id === section.id
                 ? "secondary"
                 : "inherit"
             }
             component="span"
-            onClick={(e) => onEditMarker(e, marker)}
+            onClick={(e) => onEditSection(e, section)}
           >
             <CreateOutlinedIcon />
           </IconButton>
           <IconButton
             component="span"
-            onClick={(e) => onDeleteMarker(e, marker)}
+            onClick={(e) => onDeleteSection(e, section)}
           >
             <DeleteOutlineOutlinedIcon />
           </IconButton>
@@ -170,14 +145,14 @@ const MarkerAccordion = (props: IMarkerAccordionProps) => {
             gridTemplateColumns: "auto auto"
           }}
         >
-          <Typography>{t("marker.category")}</Typography>
-          <Typography>{marker.category?.name ?? "-"}</Typography>
           <Typography>{t("marker.description")}</Typography>
-          <Typography>{marker.description}</Typography>
+          <Typography>
+            {isNullOrWhiteSpace(section.description) || "-"}
+          </Typography>
         </Box>
       </AccordionDetails>
     </Accordion>
   );
 };
 
-export default MarkerAccordion;
+export default SectionAccordion;

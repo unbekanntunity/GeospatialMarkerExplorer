@@ -45,6 +45,7 @@ const CreateMarkerSlider = (props: ICreateMarkerSliderProps) => {
 
     onClose();
   }, [formState, createMarker, onClose]);
+
   return (
     <MarkerSlider
       open={open}

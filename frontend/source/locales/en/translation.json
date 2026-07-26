@@ -1,4 +1,9 @@
 {
+  "accordion": {
+    "id": "id: {{id}}",
+    "latitude": "lat: {{latitude}}",
+    "longitude": "long: {{longitude}}"
+  },
   "appbar": {
     "title": "Geospatial Marker Explorer"
   },
@@ -28,6 +33,9 @@
     "title": "Create a new marker",
     "submit": "Create marker"
   },
+  "createSectionSlider": {
+    "title": "Create a new section"
+  },
   "deleteConfirmModal": {
     "conten": "Are you sure you want to delete?\nThis action can not be undone!"
   },
@@ -40,6 +48,10 @@
   "editMarkerSlider": {
     "title": "Edit a marker: {{markerName}}",
     "submit": "Update marker"
+  },
+  "editSectionSlider": {
+    "title": "Edit a section: {{sectionName}}",
+    "submit": "Update section"
   },
   "general": {
     "cancel": "Cancel",
@@ -60,6 +72,10 @@
     "title": "Markers",
     "empty": "Seems like there are no markers.\nGo and create one by clicking on the map"
   },
+  "listSectionsSlider": {
+    "title": "Sections",
+    "empty": "Seems like there are no sections.\nGo and create one by clicking multiple markers"
+  },
   "marker": {
     "name": "Name:",
     "latitude": "Latitude:",
@@ -71,7 +87,13 @@
       "400": "Invalid category!"
     }
   },
+  "section": {
+    "name": "Name",
+    "markers": "Markers"
+  },
   "tooltip": {
+    "createSection": "Create section",
+    "listSections": "List section",
     "toggleMarkersDetailPoppers": "Show tooltips",
     "createMarker": "Create markers",
     "listMarkers": "List markers",
@@ -80,6 +102,7 @@
   },
   "type": {
     "markers": "Markers",
-    "categories": "Categories"
+    "categories": "Categories",
+    "sections": "Sections"
   }
 }

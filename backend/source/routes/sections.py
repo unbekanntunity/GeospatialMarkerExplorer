@@ -12,7 +12,7 @@ section_service = sectionService.SectionService()
 
 @router.post("/", response_model=SectionResponse)
 async def create_section(marker: CreateSectionRequest):
-    created_marker = await section_service.create(marker)
+    created_marker = await section_service.create_section(marker)
     response = SectionResponse.model_validate(created_marker)
     return response
 
