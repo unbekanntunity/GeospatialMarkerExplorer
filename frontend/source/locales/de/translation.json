@@ -94,7 +94,11 @@
   "section": {
     "name": "Name",
     "description": "Beschreibung:",
-    "markers": "Marker"
+    "markers": "Marker",
+    "error": {
+      "404": "Der Abschnitt mit der Id: {{sectionId}} konnte nicht gefunden werden!",
+      "400": "Eine oder mehrere Markierungen konnten nicht gefunden werden!"
+    }
   },
   "tooltip": {
     "createSection": "Sektion erstellen",

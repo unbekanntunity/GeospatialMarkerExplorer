@@ -41,6 +41,11 @@ const CreateSectionSlider = (props: ICreateSectionSliderProps) => {
 
   return (
     <SectionSlider
+      errorMessage={
+        createSection.error
+          ? t(`section.error.${createSection.error?.name}`)
+          : undefined
+      }
       open={open}
       position={position}
       title={t("createSectionSlider.title")}

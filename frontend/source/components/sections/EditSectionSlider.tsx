@@ -50,10 +50,15 @@ const EditSectionSlider = (props: IEditSectionSliderProps) => {
     onClose();
   }, [section, updateSection, formState, onClose]);
 
-  console.log(formState);
-
   return (
     <SectionSlider
+      errorMessage={
+        updateSection.error
+          ? t(`section.error.${updateSection.error?.name}`, {
+              sectionId: section.id
+            })
+          : undefined
+      }
       open={open}
       position={position}
       title={t("editSectionSlider.title", { sectionName: formState.name })}

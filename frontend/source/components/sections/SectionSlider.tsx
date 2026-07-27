@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -15,6 +16,7 @@ import MarkerSelect from "./MarkerSelect";
 import { IFormState } from "./types/IFormState";
 
 interface ISectionSliderProps extends ISliderProps {
+  errorMessage?: string;
   formState: IFormState;
   submitText: string;
   isSubmitting: boolean;
@@ -24,6 +26,7 @@ interface ISectionSliderProps extends ISliderProps {
 
 const SectionSlider = (props: ISectionSliderProps) => {
   const {
+    errorMessage,
     open,
     title,
     position,
@@ -103,6 +106,16 @@ const SectionSlider = (props: ISectionSliderProps) => {
         >
           {submitText}
         </Button>
+        <Box sx={{ flex: 1 }} />
+        {errorMessage && (
+          <Alert sx={{ m: 4 }} severity="error">
+            <Typography
+              sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+            >
+              {errorMessage}
+            </Typography>
+          </Alert>
+        )}
       </>
     </Slider>
   );
