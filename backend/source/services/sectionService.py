@@ -10,6 +10,9 @@ section_repository = sectionRepository.SectionRepository()
 
 class SectionService:
     async def create_section(self, request: CreateSectionRequest):
+        if len(request.marker_ids) <= 1:
+            raise ValueError("You need at least two markers")
+
         for marker_id in request.marker_ids:
             marker = await marker_repository.get_by_id(marker_id)
             if marker is None:
@@ -29,6 +32,9 @@ class SectionService:
         return await section_repository.get_all()
     
     async def update(self, id: UUID, request: UpdateSectionRequest):
+        if len(request.marker_ids) <= 1:
+            raise ValueError("You need at least two markers")
+
         for marker_id in request.marker_ids:
             marker = await marker_repository.get_by_id(marker_id)
             if marker is None:

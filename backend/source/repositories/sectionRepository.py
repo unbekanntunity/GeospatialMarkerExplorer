@@ -54,7 +54,7 @@ class SectionRepository:
 
             return result.scalars().all()
 
-    async def update(self, id, marker: UpdateSectionRequest) -> Marker | None:
+    async def update(self, id, marker: UpdateSectionRequest) -> Section | None:
         statement = (
             select(Section)
             .options(
@@ -72,6 +72,13 @@ class SectionRepository:
 
             for key, value in marker.model_dump(exclude_unset=True).items():
                 setattr(existing_section, key, value)
+
+
+            if marker.marker_ids is not None:
+                markers_result = await session.execute(
+                    select(Marker).where(Marker.id.in_(marker.marker_ids))
+                )
+                existing_section.markers = list(markers_result.scalars().all())
 
             await session.commit()
             await session.refresh(existing_section)

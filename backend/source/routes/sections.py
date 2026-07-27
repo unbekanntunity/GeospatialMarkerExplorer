@@ -2,6 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Response
 
+from errors.markerNotFoundError import MarkerNotFoundError
 from errors.sectionNotFoundError import SectionNotFoundError
 from schemas.section import CreateSectionRequest, SectionResponse, UpdateSectionRequest
 from services import sectionService
@@ -12,9 +13,15 @@ section_service = sectionService.SectionService()
 
 @router.post("/", response_model=SectionResponse)
 async def create_section(marker: CreateSectionRequest):
-    created_marker = await section_service.create_section(marker)
-    response = SectionResponse.model_validate(created_marker)
-    return response
+    try:
+        created_section = await section_service.create_section(marker)
+        response = SectionResponse.model_validate(created_section)
+        return response
+    except (MarkerNotFoundError, ValueError) as e:
+        raise HTTPException(
+            status_code=400,
+            detail=str(e)
+        )
 
 @router.get("/", response_model=list[SectionResponse])
 async def get_sections():
@@ -40,6 +47,11 @@ async def update_section(id: UUID, marker: UpdateSectionRequest):
         updated_section = await section_service.update(id, marker)
         response = SectionResponse.model_validate(updated_section)
         return response
+    except (MarkerNotFoundError, ValueError) as e:
+        raise HTTPException(
+            status_code=400,
+            detail=str(e)
+        )
     except SectionNotFoundError as e:
         raise HTTPException(
             status_code=404,

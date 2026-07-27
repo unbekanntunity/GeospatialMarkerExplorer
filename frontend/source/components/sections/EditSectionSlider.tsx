@@ -36,16 +36,21 @@ const EditSectionSlider = (props: IEditSectionSliderProps) => {
   }, [dispatch]);
 
   const onSubmit = useCallback(() => {
+    console.log("submit", formState);
+
     updateSection.mutate({
       id: section.id,
       section: {
-        ...formState,
+        name: formState.name,
+        description: formState.description,
         marker_ids: formState.markers.map((m) => m.id)
       }
     });
 
     onClose();
   }, [section, updateSection, formState, onClose]);
+
+  console.log(formState);
 
   return (
     <SectionSlider
