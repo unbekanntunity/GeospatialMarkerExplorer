@@ -33,8 +33,12 @@ class SectionRepository:
             return new_section
 
     async def get_by_id(self, id) -> Section:
-        statement = select(Section).where(Section.id == id)
-
+        statement = (
+            select(Section)
+            .options(selectinload(Section.markers).selectinload(Marker.category))
+            .where(Section.id == id)
+        )
+        
         async with SessionLocal() as session:
             queried_section = await session.execute(statement)
 
@@ -53,6 +57,9 @@ class SectionRepository:
     async def update(self, id, marker: UpdateSectionRequest) -> Marker | None:
         statement = (
             select(Section)
+            .options(
+                selectinload(Section.markers).selectinload(Marker.category)
+            )
             .where(Section.id == id)
         )
 

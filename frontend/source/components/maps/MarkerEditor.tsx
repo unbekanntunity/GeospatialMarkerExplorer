@@ -44,6 +44,11 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
 
   useMapEvents({
     click(e) {
+      const target = e.originalEvent.target as HTMLElement;
+      if (!target.className.includes("leaflet-container")) {
+        return;
+      }
+
       setFormState((prev) => ({
         ...prev,
         latitude: e.latlng.lat,
@@ -176,6 +181,7 @@ const MarkerEditor = (props: IMarkerEditorProps) => {
       )}
       {updatedSections.map((sectionsWithPositions) => (
         <Polyline
+          key={sectionsWithPositions.section.id}
           eventHandlers={{
             click: () => onClickPolyline(sectionsWithPositions.section)
           }}

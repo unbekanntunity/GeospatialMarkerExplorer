@@ -28,7 +28,9 @@ const EditMarkerSlider = (props: IEditMarkerSliderProps) => {
     }
 
     updateMarker.mutate({ id, marker: formState });
-  }, [id, formState, updateMarker]);
+
+    onClose();
+  }, [id, formState, updateMarker, onClose]);
 
   return (
     <MarkerSlider

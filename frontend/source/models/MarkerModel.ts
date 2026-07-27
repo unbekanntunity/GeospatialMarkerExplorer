@@ -70,6 +70,10 @@ export const useUpdateMarker = () => {
       queryClient.invalidateQueries({
         queryKey: ["markers"]
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["sections"]
+      });
     }
   });
 };
@@ -94,6 +98,10 @@ export const useDeleteMarker = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["markers"]
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["sections"]
       });
     }
   });

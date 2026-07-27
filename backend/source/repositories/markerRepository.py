@@ -58,6 +58,7 @@ class MarkerRepository:
     async def update(self, id, marker: UpdateMarkerRequest) -> Marker | None:
         statement = (
             select(Marker)
+            .options(selectinload(Marker.category))
             .where(Marker.id == id)
         )
 

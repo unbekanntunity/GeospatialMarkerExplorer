@@ -44,13 +44,11 @@ const Slider = forwardRef<HTMLDivElement, IBaseSliderProps>((props, ref) => {
 
     element.addEventListener("mouseenter", disableMapInteractions);
     element.addEventListener("mouseleave", enableMapInteractions);
-    // For touch devices, pointerdown catches it before drag starts
-    element.addEventListener("touchstart", disableMapInteractions);
 
     return () => {
+      enableMapInteractions();
       element.removeEventListener("mouseenter", disableMapInteractions);
       element.removeEventListener("mouseleave", enableMapInteractions);
-      element.removeEventListener("touchstart", disableMapInteractions);
     };
   }, [enableMapInteractions, disableMapInteractions]);
 

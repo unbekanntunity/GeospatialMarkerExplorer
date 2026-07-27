@@ -30,8 +30,8 @@ class SectionService:
     
     async def update(self, id: UUID, request: UpdateSectionRequest):
         for marker_id in request.marker_ids:
-            section = await marker_repository.get_by_id(marker_id)
-            if section is None:
+            marker = await marker_repository.get_by_id(marker_id)
+            if marker is None:
                 raise MarkerNotFoundError(marker_id)
 
         updated_Section = await section_repository.update(id, request)

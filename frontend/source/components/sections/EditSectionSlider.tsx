@@ -28,6 +28,13 @@ const EditSectionSlider = (props: IEditSectionSliderProps) => {
 
   const updateSection = useUpdateSection();
 
+  const onClose = useCallback(() => {
+    dispatch({
+      type: SliderAction.HideSlider,
+      slider: "editSectionSlider"
+    });
+  }, [dispatch]);
+
   const onSubmit = useCallback(() => {
     updateSection.mutate({
       id: section.id,
@@ -36,14 +43,9 @@ const EditSectionSlider = (props: IEditSectionSliderProps) => {
         marker_ids: formState.markers.map((m) => m.id)
       }
     });
-  }, [section, updateSection, formState]);
 
-  const onClose = useCallback(() => {
-    dispatch({
-      type: SliderAction.HideSlider,
-      slider: "editSectionSlider"
-    });
-  }, [dispatch]);
+    onClose();
+  }, [section, updateSection, formState, onClose]);
 
   return (
     <SectionSlider
